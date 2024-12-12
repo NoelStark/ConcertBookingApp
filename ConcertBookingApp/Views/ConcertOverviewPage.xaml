@@ -1,19 +1,99 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels"
+             xmlns:models="clr-namespace:ConcertBookingApp.Models"
              x:Class="ConcertBookingApp.Views.ConcertOverviewPage"
              Title="ConcertOverviewPage">
-    <VerticalStackLayout>
-        <VerticalStackLayout Margin="20,20,0,0">
-            <Label FontSize="20" FontAttributes="Bold" Text="Hello John" Width="60"/>
-            <Label FontSize="16" Text="There are 9 events near you"/>
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto, *" Margin="20,0,20,0">
+        <VerticalStackLayout  Grid.Row="0">
+            <Label FontSize="20" FontAttributes="Bold" Text="Hello John"/>
+            <Label FontSize="16" Text="There are 9 events near you" Margin="0,5,0,0"
+                   WidthRequest="140" HorizontalOptions="Start" TextColor="#5E0ABF"/>
         </VerticalStackLayout>
-        <SearchBar />
-        <Grid ColumnDefinitions="*,*,*,*" Margin="20,10,20,0">
-            <ImageButton Source="violin.png"/>
-            <ImageButton Source="saxophone.png"/>
-            <ImageButton Source="guitar.png"/>
-            <ImageButton Source="headphones.png"/>
+
+        <Grid Grid.Row="1" HeightRequest="40"  Margin="0,20,0,0">
+            <Frame BorderColor="Gray" CornerRadius="10" Padding="0" HasShadow="False">
+                <SearchBar Placeholder="Search product" Margin="0" />
+            </Frame>
         </Grid>
-    </VerticalStackLayout>
+
+        <CollectionView Grid.Row="2" Margin="0,20,0,10" ItemsSource="{Binding Categories}">
+            <CollectionView.ItemsLayout >
+                <GridItemsLayout Orientation="Vertical"  Span="4" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+              <DataTemplate x:DataType="models:Category">
+                  <Frame WidthRequest="80" HeightRequest="70" Padding="0" Margin="0">
+                      <Grid RowDefinitions="Auto,Auto" HorizontalOptions="Center" VerticalOptions="Center">
+                          <ImageButton Source="{Binding ImageSource}" Grid.Row="0" HeightRequest="32"/>
+                            <Label Text="{Binding Title}" Grid.Row="1" HorizontalOptions="Center"/>
+                      </Grid>
+                  </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label HeightRequest="50" Text="Upcoming Events (9)" Grid.Row="3" Margin="0,0,0,10" FontSize="20" FontAttributes="Bold"/>
+        <ScrollView Grid.Row="4" HeightRequest="450" Padding="0,0,0,40">
+            <CollectionView  ItemsSource="{Binding Concerts}">
+
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="20"/>
+                </CollectionView.ItemsLayout>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:Concert">
+                        <Grid RowDefinitions="*,Auto,Auto" RowSpacing="0">
+                            <Border Grid.Row="0" BackgroundColor="Transparent"
+                                    Stroke="{StaticResource Secondary}" StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,0,0"/>
+                                </Border.StrokeShape>
+                                <Grid HeightRequest="200">
+                                    <!-- Background Image -->
+                                    <Image Source="{Binding ImageUrl}" Aspect="AspectFill" />
+
+                                    <!-- Date -->
+                                    <Border BackgroundColor="White"
+                                            WidthRequest="50" HeightRequest="50" VerticalOptions="Start" HorizontalOptions="End" Margin="0,10,10,0">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="10"/>
+                                        </Border.StrokeShape>
+
+                                        <VerticalStackLayout WidthRequest="40" HeightRequest="40">
+                                            <Label Text="17" HorizontalOptions="Center"/>
+                                            <Label Text="May" HorizontalOptions="Center" VerticalOptions="Center" FontAttributes="Bold"/>
+                                        </VerticalStackLayout>
+                                    </Border>
+
+                                    <!-- Title -->
+                                    <Grid HeightRequest="40" WidthRequest="150" VerticalOptions="Fill" Margin="0,100,0,0"
+                                          BackgroundColor="{StaticResource Secondary}" HorizontalOptions="Start">
+                                        <Label Text="Lorem" TextColor="White" Padding="0" 
+                                               HorizontalOptions="Start" VerticalOptions="Center" Margin="10,0,0,0"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                            <!-- Bottom Section -->
+                            <Border Grid.Row="2" StrokeThickness="0" BackgroundColor="{StaticResource Secondary}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="0,0,10,10"/>
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="*, Auto, Auto">
+                                    <Label Text="{Binding Description}" WidthRequest="150" Grid.Column="0" 
+                                           TextColor="White" Margin="0,20,0,10"/>
+                                    <Button Text="Buy" Grid.Column="1" BackgroundColor="{StaticResource Accent}" 
+                                            HeightRequest="40" WidthRequest="100"/>
+                                    <ImageButton Source="heart.png" WidthRequest="32" Grid.Column="2" Margin="20"/>
+                                </Grid>
+                            </Border>
+
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+</ScrollView>
+       
+    </Grid>
 </ContentPage>

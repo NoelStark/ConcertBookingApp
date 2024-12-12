@@ -23,13 +23,13 @@ namespace ConcertBookingApp
             builder.Services.AddSingleton<ConcertDetailsPage>();
             builder.Services.AddSingleton<BookingsPage>();
             builder.Services.AddSingleton<BookingsPageViewModel>();
-            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
-            {
-#if ANDROID
-				h.PlatformView.BackgroundTintList =
-				Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
-#endif
-            });
+//            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
+//            {
+//#if ANDROID
+//				h.PlatformView.BackgroundTintList =
+//				Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
+//#endif
+//            });
 
 #if DEBUG
             builder.Logging.AddDebug();
