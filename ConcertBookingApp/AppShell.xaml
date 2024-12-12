@@ -7,6 +7,17 @@
     Shell.FlyoutBehavior="Disabled"
     Title="ConcertBookingApp">
 
-    <ShellContent Title="ConcertDetailPage" ContentTemplate="{DataTemplate local:ConcertDetailsPage}" Route="ConcertDetailsPage" />
+    <ShellContent
+        Title="ConcertOverviewPage"
+        ContentTemplate="{DataTemplate local:ConcertOverviewPage}"
+        Route="ConcertOverviewPage" />
+    <ShellContent
+        Title="ConcertDetailsPage"
+        ContentTemplate="{DataTemplate local:ConcertDetailsPage}"
+        Route="ConcertDetailsPage" />
+    <ShellContent
+        Title="BookingsPage"
+        ContentTemplate="{DataTemplate local:BookingsPage}"
+        Route="BookingsPage" />
 
 </Shell>
