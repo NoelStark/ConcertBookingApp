@@ -17,8 +17,8 @@ namespace ConcertBookingApp
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
             {
 #if ANDROID
-				h.PlatformView.BackgroundTintList =
-				Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
+				//h.PlatformView.BackgroundTintList =
+				//Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
 #endif
             });
 
