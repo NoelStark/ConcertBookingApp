@@ -24,20 +24,16 @@ namespace ConcertBookingApp.ViewModels
         {
             new Concert
             {
-                ConcertId = 1, Description = "Lorem ipsum dolor sit amet consectetur.",
-                Genre = "Pop", ImageUrl = "edm.png", Name = "Lorem Ipsum"
+                ConcertId = 1, Description = "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.",
+                Genre = "Pop", ImageUrl = "edm.png", Name = "Pop Pulse Festival"
             },
             new Concert
             {
-                ConcertId = 1, Description = "Lorem ipsum dolor sit amet consectetur.",
-                Genre = "Pop", ImageUrl = "edm.png", Name = "Lorem Ipsum"
+                ConcertId = 1, Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
+                Genre = "Pop", ImageUrl = "edm.png", Name = "Starlight Pop Jam"
             }
         };
 
-        public List<Performance> Performances = new List<Performance>()
-        {
-
-        };
         [RelayCommand]
         private async void InspectConcert(Concert concert)
         {
