@@ -19,5 +19,10 @@
         Title="BookingsPage"
         ContentTemplate="{DataTemplate local:BookingsPage}"
         Route="BookingsPage" />
+    
+    
+    
+
+    <!--<ShellContent Title="ConcertDetailPage" ContentTemplate="{DataTemplate local:BookingsPage}" Route="ConcertDetailsPage" />-->
 
 </Shell>

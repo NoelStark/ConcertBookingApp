@@ -14,5 +14,6 @@ namespace ConcertBookingApp.Models
         public string Location { get; set; } = string.Empty;
         public int TotalSeats { get; set; } = 0;
         public int AvailableSeats { get; set; } = 0;
+        public double Price { get; set; } = 0;
     }
 }

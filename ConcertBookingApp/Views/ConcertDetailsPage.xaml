@@ -2,11 +2,117 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertBookingApp.Views.ConcertDetailsPage"
+             xmlns:viewmodels="clr-namespace:ConcertBookingApp.ViewModels"
+             xmlns:models="clr-namespace:ConcertBookingApp.Models"
+             x:DataType="viewmodels:ConcertDetailsViewModel"
              Title="ConcertDetailsPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    
+    <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="5">
+        <Frame Grid.Row="0" HeightRequest="250" Padding="0" CornerRadius="0" BorderColor="Transparent">
+            <Grid RowDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                <Image Source="testconcert.jpg" Aspect="Fill" HorizontalOptions="Fill" VerticalOptions="Fill"></Image>
+                
+                <ImageButton Source="heart.png" HeightRequest="25" VerticalOptions="Start" HorizontalOptions="Start" Margin="20,30,20,0"></ImageButton>
+                <ImageButton Source="heart.png" HeightRequest="25" VerticalOptions="Start" HorizontalOptions="End" Margin="20,30,20,0"></ImageButton>
+
+                <HorizontalStackLayout Margin="20,80,0,0">
+                    <Frame HeightRequest="30" WidthRequest="80" BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="20" BorderColor="Transparent">
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Image Source="headphones.png" WidthRequest="15"></Image>
+                            <Label Text="EDM" TextColor="White" FontSize="12"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+
+                    <Frame HeightRequest="30" WidthRequest="80" BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="20" BorderColor="Transparent">
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label Text="Concert" TextColor="White" FontSize="12"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Margin="20,0,10,30">
+                    <Frame VerticalOptions="End" HeightRequest="40" WidthRequest="160" BackgroundColor="{StaticResource Secondary}" Padding="0" CornerRadius="5" BorderColor="Transparent">
+                        <HorizontalStackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Label Text="Concert" TextColor="White" FontSize="16"/>
+                        </HorizontalStackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+            </Grid>
+        </Frame>
+
+        <Frame Grid.Row="1" HeightRequest="140" BorderColor="Transparent" CornerRadius="0">
+            <Grid RowDefinitions="Auto, *, Auto" RowSpacing="10">
+                <VerticalStackLayout Grid.Row="0">
+                    <Label Grid.Row="0" FontSize="20" Text="Date And Location" FontAttributes="Bold"/>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="2" Grid.Row="1">
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="calender.png" HorizontalOptions="Start" />
+                        <Label FontSize="14" Text="6th of August" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10" Grid.Row="1" Margin="0,4,0,0">
+                        <Image Source="location.png" HorizontalOptions="Start" />
+                        <Label FontSize="14" Text="Lagerkrantsvägen 19" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Grid>
+        </Frame>
+
+        <Frame Grid.Row="2" HeightRequest="180" BorderColor="Transparent" Margin="0,-30,0,0">
+            <VerticalStackLayout Spacing="10">
+                <Label FontSize="20" Text="About Event" FontAttributes="Bold"/>
+                <Label FontSize="16" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Grid RowDefinitions="Auto, *" Grid.Row="3" Margin="0,-30,0,0">
+            <VerticalStackLayout Grid.Row="0" HorizontalOptions="Start" Margin="20,0,0,0">
+                <Label FontSize="20" Text="Tickets" FontAttributes="Bold" />
+            </VerticalStackLayout>
+
+            <ScrollView Grid.Row="1" HeightRequest="100">
+                <VerticalStackLayout >
+                    <!--<CollectionView SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>-->
+                                <Frame BorderColor="Transparent">
+                                    <Grid RowDefinitions="Auto, Auto" RowSpacing="10">
+                                        <Frame HeightRequest="60" Padding="0" CornerRadius="0" Grid.Row="1">
+                                            <Grid ColumnDefinitions="Auto, Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                                                <Image Grid.Column="0" Source="ticket.png" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" Margin="10,0,10,0" />
+
+                                                <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="Gray" VerticalOptions="Fill" HorizontalOptions="Center" />
+
+                                                <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Column="2" Margin="10,0,0,0">
+                                                    <Label Text="6th of August" FontSize="Small" />
+                                                    <Label Text="200kr" FontSize="Small" FontAttributes="Bold" VerticalOptions="Center" />
+                                                </VerticalStackLayout>
+
+                                                <HorizontalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,0,0" Spacing="10">
+                                                    <Frame HeightRequest="30" WidthRequest="110" Padding="0" CornerRadius="0" BorderColor="DimGray" VerticalOptions="Center">
+                                                        <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">
+                                                            <ImageButton Source="minus.png" Command="{Binding DecreaseQuantityCommand}" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                            <Label Text="{Binding AmountOfTickets}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                            <ImageButton Source="plus.png" Command="{Binding IncreaseQuantityCommand}" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                        </HorizontalStackLayout>
+                                                    </Frame>
+                                                    <ImageButton Source="trashcan.png" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center" />
+                                                </HorizontalStackLayout>
+                                            </Grid>
+                                        </Frame>
+                                    </Grid>
+                                </Frame>
+                            <!--</DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>-->
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <Frame Grid.Row="4" Padding="0" BorderColor="Transparent">
+            <Button Text="Buy Tickets" Command="{Binding BuyTicketsCommand}" FontSize="20" BackgroundColor="{StaticResource Accent}" Margin="20,0,20,0"/>
+        </Frame>
+    </Grid>
 </ContentPage>
