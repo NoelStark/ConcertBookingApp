@@ -1,4 +1,5 @@
-﻿using ConcertBookingApp.ViewModels;
+﻿using CommunityToolkit.Maui;
+using ConcertBookingApp.ViewModels;
 using ConcertBookingApp.Views;
 using Microsoft.Extensions.Logging;
 
@@ -11,6 +12,7 @@ namespace ConcertBookingApp
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

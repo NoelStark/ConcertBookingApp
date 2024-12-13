@@ -41,5 +41,28 @@ namespace ConcertBookingApp.ViewModels
             string encodedConcert = Uri.EscapeDataString(serializedConcert);
             await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={encodedConcert}");
         }
+
+        [RelayCommand]
+        private async void FilterCategory(Category value)
+        {
+            Category? category = Categories.FirstOrDefault(x => x.Title == value.Title);
+            if (category != null)
+            {
+                category.IsSelected = !category.IsSelected;
+                OnPropertyChanged(nameof(category.IsSelected));
+            }
+        }
+        [RelayCommand]
+        private async void MakeFavorite(Concert value)
+        {
+            Concert? concert = Concerts.FirstOrDefault(x => x.Name== value.Name);
+            if (concert != null)
+            {
+                concert.IsFavorite = !concert.IsFavorite;
+                OnPropertyChanged(nameof(concert.IsFavorite));
+            }
+        }
+
+
     }
 }
