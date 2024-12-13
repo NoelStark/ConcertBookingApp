@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -40,7 +41,9 @@ namespace ConcertBookingApp.ViewModels
         [RelayCommand]
         private async void InspectConcert(Concert concert)
         {
-            await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={concert}");
+            string serializedConcert = JsonSerializer.Serialize(concert);
+            string encodedConcert = Uri.EscapeDataString(serializedConcert);
+            await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={encodedConcert}");
         }
     }
 }

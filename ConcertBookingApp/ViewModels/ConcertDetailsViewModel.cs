@@ -6,15 +6,24 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ConcertBookingApp.ViewModels
 {
-    [QueryProperty(nameof(_totalCartCost), "totalCartCost")]
+    [QueryProperty(nameof(ConvertFromJson), "concert")]
     public partial class ConcertDetailsViewModel : ObservableObject
     {
-        private Concert? _totalCartCost;
-        private Concert _concert;
+        [ObservableProperty]
+        private Concert concert;
+
+        public string ConvertFromJson
+        {
+            set
+            {
+                Concert = JsonSerializer.Deserialize<Concert>(Uri.UnescapeDataString(value));
+            }
+        }
 
         private ObservableCollection<Performance> Concerts = new ObservableCollection<Performance>();
 
@@ -22,7 +31,7 @@ namespace ConcertBookingApp.ViewModels
         private int amountOfTickets = 0;
         public ConcertDetailsViewModel()
         {
-            _concert = new Concert();
+            //_concert = new Concert();
         }
 
         [RelayCommand]

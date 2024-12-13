@@ -49,7 +49,7 @@
                             <Border Grid.Row="0" BackgroundColor="Transparent"
                                     Stroke="{StaticResource Secondary}" StrokeThickness="0">
                                 <Border.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertOverviewViewModel}}, Path=InspectConcertCommand}"/>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertOverviewViewModel}}, Path=InspectConcertCommand}" CommandParameter="{Binding .}"/>
                                 </Border.GestureRecognizers>
 
 
