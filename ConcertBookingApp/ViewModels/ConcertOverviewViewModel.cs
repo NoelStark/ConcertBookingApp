@@ -30,5 +30,15 @@ namespace ConcertBookingApp.ViewModels
                 Genre = "Pop", ImageUrl = "edm.png", Name = "Lorem Ipsum"
             }
         };
+
+        public List<Performance> Performances = new List<Performance>()
+        {
+
+        };
+
+        async void Buy(Concert concert)
+        {
+            await Shell.Current.GoToAsync($"ConcertDetailsPage?concert={concert}");
+        }
     }
 }

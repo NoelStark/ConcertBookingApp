@@ -10,8 +10,10 @@ using System.Threading.Tasks;
 
 namespace ConcertBookingApp.ViewModels
 {
+    [QueryProperty(nameof(_totalCartCost), "totalCartCost")]
     public partial class ConcertDetailsViewModel : ObservableObject
     {
+        private Concert? _totalCartCost;
         private Concert _concert;
 
         private ObservableCollection<Performance> Concerts = new ObservableCollection<Performance>();
