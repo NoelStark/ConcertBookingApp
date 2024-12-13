@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ConcertBookingApp.Models;
 
 namespace ConcertBookingApp.ViewModels
 {
-    public class ConcertOverviewViewModel
+    public partial class ConcertOverviewViewModel : ObservableObject
     {
         public List<Category> Categories { get; set; }= new List<Category>()
         {
@@ -35,10 +37,10 @@ namespace ConcertBookingApp.ViewModels
         {
 
         };
-
-        async void Buy(Concert concert)
+        [RelayCommand]
+        private async void InspectConcert(Concert concert)
         {
-            await Shell.Current.GoToAsync($"ConcertDetailsPage?concert={concert}");
+            await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={concert}");
         }
     }
 }

@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels"
              xmlns:models="clr-namespace:ConcertBookingApp.Models"
+             x:DataType="vm:ConcertOverviewViewModel"
              x:Class="ConcertBookingApp.Views.ConcertOverviewPage"
              Title="ConcertOverviewPage">
     <Grid RowDefinitions="Auto,Auto,Auto,Auto, *" Margin="20,0,20,0">
@@ -47,6 +48,11 @@
                         <Grid RowDefinitions="*,Auto,Auto" RowSpacing="0">
                             <Border Grid.Row="0" BackgroundColor="Transparent"
                                     Stroke="{StaticResource Secondary}" StrokeThickness="0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertOverviewViewModel}}, Path=InspectConcertCommand}"/>
+                                </Border.GestureRecognizers>
+
+
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,0,0"/>
                                 </Border.StrokeShape>
@@ -83,8 +89,8 @@
                                 <Grid ColumnDefinitions="*, Auto, Auto">
                                     <Label Text="{Binding Description}" WidthRequest="150" Grid.Column="0" 
                                            TextColor="White" Margin="0,20,0,10"/>
-                                    <Button Text="Buy" Grid.Column="1" BackgroundColor="{StaticResource Accent}" 
-                                            HeightRequest="40" WidthRequest="100"/>
+                                    <Button Text="View" Grid.Column="1" BackgroundColor="{StaticResource Accent}" 
+                                            HeightRequest="40" WidthRequest="100" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertOverviewViewModel}}, Path=InspectConcertCommand}"/>
                                     <ImageButton Source="heart.png" WidthRequest="32" Grid.Column="2" Margin="20"/>
                                 </Grid>
                             </Border>
