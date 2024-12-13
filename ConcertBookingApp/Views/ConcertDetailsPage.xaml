@@ -2,7 +2,11 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertBookingApp.Views.ConcertDetailsPage"
+             xmlns:viewmodels="clr-namespace:ConcertBookingApp.ViewModels"
+             xmlns:models="clr-namespace:ConcertBookingApp.Models"
+             x:DataType="viewmodels:ConcertDetailsViewModel"
              Title="ConcertDetailsPage">
+    
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="5">
         <Frame Grid.Row="0" HeightRequest="250" Padding="0" CornerRadius="0" BorderColor="Transparent">
             <Grid RowDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
@@ -86,12 +90,12 @@
                                                     <Label Text="200kr" FontSize="Small" FontAttributes="Bold" VerticalOptions="Center" />
                                                 </VerticalStackLayout>
 
-                                                <HorizontalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,10,0" Spacing="10">
+                                                <HorizontalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,0,0" Spacing="10">
                                                     <Frame HeightRequest="30" WidthRequest="110" Padding="0" CornerRadius="0" BorderColor="DimGray" VerticalOptions="Center">
                                                         <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">
-                                                            <ImageButton Source="minus.png" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
-                                                            <Label Text="1" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
-                                                            <ImageButton Source="plus.png" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                            <ImageButton Source="minus.png" Command="{Binding DecreaseQuantityCommand}" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                            <Label Text="{Binding AmountOfTickets}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                            <ImageButton Source="plus.png" Command="{Binding IncreaseQuantityCommand}" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" />
                                                         </HorizontalStackLayout>
                                                     </Frame>
                                                     <ImageButton Source="trashcan.png" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center" />
@@ -108,7 +112,7 @@
         </Grid>
 
         <Frame Grid.Row="4" Padding="0" BorderColor="Transparent">
-            <Button Text="Buy Tickets" FontSize="20" BackgroundColor="{StaticResource Accent}" Margin="20,0,20,0"/>
+            <Button Text="Buy Tickets" Command="{Binding BuyTicketsCommand}" FontSize="20" BackgroundColor="{StaticResource Accent}" Margin="20,0,20,0"/>
         </Frame>
     </Grid>
 </ContentPage>

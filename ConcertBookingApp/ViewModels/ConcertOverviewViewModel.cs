@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConcertBookingApp.ViewModels
 {
-    internal class ConcertOverviewViewModel
+    public class ConcertOverviewViewModel
     {
     }
 }
