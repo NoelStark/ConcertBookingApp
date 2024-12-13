@@ -32,7 +32,7 @@
               <DataTemplate x:DataType="models:Category">
                   <Frame WidthRequest="80" HeightRequest="70" Padding="0" Margin="0">
                       <Frame.BackgroundColor>
-                          <x:Binding Path="IsSelected" Converter="{StaticResource BoolToColorConverter}"/>
+                          <x:Binding Path="IsSelected" Converter="{StaticResource BoolToColorConverter}" ConverterParameter="Category"/>
                       </Frame.BackgroundColor>
 
                       <Frame.GestureRecognizers>
