@@ -9,13 +9,30 @@
              Title="ConcertOverviewPage">
 
     <ContentPage.Resources>
+        <Style x:Key="CardFrameStyle" TargetType ="Frame">
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
+
+        <Style x:Key="CardLabelStyle" TargetType ="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+        </Style>
+
+        <Style x:Key="CategoryImageStyle" TargetType ="Image">
+            <Setter Property="HeightRequest" Value="32"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+        </Style>
         <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
     </ContentPage.Resources>
+
     <Grid RowDefinitions="Auto,Auto,Auto,Auto, *" Margin="20,0,20,0">
         <VerticalStackLayout  Grid.Row="0">
             <Label FontSize="20" FontAttributes="Bold" Text="Hello John"/>
-            <Label FontSize="16" Text="There are 9 events near you" Margin="0,5,0,0"
-                   WidthRequest="140" HorizontalOptions="Start" TextColor="#5E0ABF"/>
+            <Label FontSize="16" Text="There are 9 events near you" Margin="0,5,0,0" HorizontalOptions="Start" TextColor="#5E0ABF"/>
         </VerticalStackLayout>
 
         <Grid Grid.Row="1" HeightRequest="40"  Margin="0,20,0,0">
@@ -24,31 +41,28 @@
             </Frame>
         </Grid>
 
-        <CollectionView Grid.Row="2" Margin="0,20,0,10" ItemsSource="{Binding Categories}">
-            <CollectionView.ItemsLayout >
-                <GridItemsLayout Orientation="Vertical"  Span="4" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-              <DataTemplate x:DataType="models:Category">
-                  <Frame WidthRequest="80" HeightRequest="70" Padding="0" Margin="0">
-                      <Frame.BackgroundColor>
-                          <x:Binding Path="IsSelected" Converter="{StaticResource BoolToColorConverter}" ConverterParameter="Category"/>
-                      </Frame.BackgroundColor>
+        <HorizontalStackLayout Grid.Row="2" BindableLayout.ItemsSource="{Binding Categories}" Margin="0,10,0,10" Spacing="10">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="models:Category">
+                    <Frame Style="{StaticResource CardFrameStyle}" HeightRequest="70" WidthRequest="80">
+                        <Frame.BackgroundColor>
+                            <x:Binding Path="IsSelected" Converter="{StaticResource BoolToColorConverter}" ConverterParameter="Category"/>
+                        </Frame.BackgroundColor>
 
-                      <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertOverviewViewModel}}, Path=FilterCategoryCommand}" CommandParameter="{Binding .}"/>
-                      </Frame.GestureRecognizers>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertOverviewViewModel}}, Path=SelectedFilterCommand}" CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
 
-                      <Grid RowDefinitions="Auto,Auto" HorizontalOptions="Center" VerticalOptions="Center">
-                          <Image Source="{Binding ImageSource}" Grid.Row="0" HeightRequest="32"/>
-                            <Label Text="{Binding Title}" Grid.Row="1" HorizontalOptions="Center"/>
-                      </Grid>
-                  </Frame>
+                        <Grid RowDefinitions="Auto,Auto" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image Source="{Binding ImageSource}" Grid.Row="0" Style="{StaticResource CategoryImageStyle}"/>
+                            <Label Text="{Binding Title}" Grid.Row="1" Style="{StaticResource CardLabelStyle}"/>
+                        </Grid>
+                    </Frame>
                 </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            </BindableLayout.ItemTemplate>
+        </HorizontalStackLayout>
 
-        <Label HeightRequest="50" Text="Upcoming Events (9)" Grid.Row="3" Margin="0,0,0,10" FontSize="20" FontAttributes="Bold"/>
+        <Label HeightRequest="30" Text="Upcoming Events (9)" Grid.Row="3" Margin="0,0,0,10" FontSize="20" FontAttributes="Bold"/>
         <ScrollView Grid.Row="4" HeightRequest="450" Padding="0,0,0,40">
             <!--Card Creation-->
             <CollectionView  ItemsSource="{Binding Concerts}">
@@ -62,8 +76,7 @@
                                 <Grid.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:ConcertOverviewViewModel}}, Path=InspectConcertCommand}" CommandParameter="{Binding .}"/>
                                 </Grid.GestureRecognizers>
-                            <Border Grid.Row="0" BackgroundColor="Transparent"
-                                    Stroke="{StaticResource Secondary}" StrokeThickness="0">
+                            <Border Grid.Row="0" BackgroundColor="Transparent" Stroke="{StaticResource Secondary}" StrokeThickness="0">
 
 
                                 <Border.StrokeShape>
@@ -74,8 +87,7 @@
                                     <Image Source="{Binding ImageUrl}" Aspect="AspectFill" />
 
                                     <!-- Date -->
-                                    <Border BackgroundColor="White"
-                                            WidthRequest="50" HeightRequest="50" VerticalOptions="Start" HorizontalOptions="End" Margin="0,10,10,0">
+                                    <Border BackgroundColor="White" WidthRequest="50" HeightRequest="50" VerticalOptions="Start" HorizontalOptions="End" Margin="0,10,10,0">
                                         <Border.StrokeShape>
                                             <RoundRectangle CornerRadius="10"/>
                                         </Border.StrokeShape>
