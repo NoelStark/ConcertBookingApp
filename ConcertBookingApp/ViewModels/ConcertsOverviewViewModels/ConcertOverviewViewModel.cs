@@ -68,7 +68,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 
         private List<Concert> FilterConcerts(List<Concert> concerts, string? searchText = null, DateTime? startDate = null, DateTime? endDate = null, List<Category> selectedCategories = null)
         {
-
+            return new List<Concert>();
         }
        
 
