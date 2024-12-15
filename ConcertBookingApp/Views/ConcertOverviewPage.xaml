@@ -34,7 +34,7 @@
     <Grid RowDefinitions="Auto, Auto ,Auto,Auto,Auto, *" Margin="20,0,20,0">
         <VerticalStackLayout  Grid.Row="0">
             <Label FontSize="20" FontAttributes="Bold" Text="Hello John"/>
-            <Label FontSize="16" Text="There are 9 events near you" Margin="0,5,0,0" HorizontalOptions="Start" TextColor="#5E0ABF"/>
+            <Label FontSize="16" Text="{Binding ConcertCount, StringFormat='There are {0} event(s) near you'}" Margin="0,5,0,0" HorizontalOptions="Start" TextColor="#5E0ABF"/>
         </VerticalStackLayout>
 
         <Grid Grid.Row="1" Grid.ColumnDefinitions="*, Auto" HeightRequest="40"  Margin="0,20,0,0">
@@ -52,7 +52,7 @@
                 </syncfusion:SfCalendar.Behaviors>
             </syncfusion:SfCalendar>
 
-        <HorizontalStackLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Categories}" Margin="0,0,0,10" Spacing="10">
+        <HorizontalStackLayout Grid.Row="3" BindableLayout.ItemsSource="{Binding Categories}" Margin="0,20,0,10" Spacing="10">
             <BindableLayout.ItemTemplate>
                 <DataTemplate x:DataType="models:Category">
                     <Frame Style="{StaticResource CardFrameStyle}" HeightRequest="70" WidthRequest="80">
@@ -73,7 +73,7 @@
             </BindableLayout.ItemTemplate>
         </HorizontalStackLayout>
 
-        <Label HeightRequest="30" Text="Upcoming Events (9)" Grid.Row="4" Margin="0,0,0,10" FontSize="20" FontAttributes="Bold"/>
+        <Label HeightRequest="30" Text="{Binding ConcertCount, StringFormat='Upcoming Events {0}'}" Grid.Row="4" Margin="0,0,0,10" FontSize="20" FontAttributes="Bold"/>
         <ScrollView Grid.Row="5" HeightRequest="450" Padding="0,0,0,40">
             <!--Card Creation-->
             <CollectionView  ItemsSource="{Binding Concerts}">

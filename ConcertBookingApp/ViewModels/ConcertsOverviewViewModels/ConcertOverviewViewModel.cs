@@ -14,6 +14,10 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 {
     public partial class ConcertOverviewViewModel : ObservableObject
     {
+        public ConcertOverviewViewModel()
+        {
+            UpdateConcerts(AllConcerts);
+        }
 
         private void UpdateConcerts(List<Concert> concerts)
         {
@@ -22,7 +26,10 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             {
                 Concerts.Add(concert);
             }
+
+            ConcertCount = Concerts.Count;
             OnPropertyChanged(nameof(Concerts));
+            OnPropertyChanged(nameof(ConcertCount));
         }
 
 
@@ -31,7 +38,8 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             if (!string.IsNullOrEmpty(value)) 
                 _cachedConcerts = ApplyFilter(_cachedConcerts, value);
 
-            CategoryFilter();
+            else 
+                CategoryFilter();
             return _cachedConcerts;
            
         }
@@ -56,6 +64,11 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             });
             _cachedConcerts = filteredConcerts;
             Concerts = new ObservableCollection<Concert>(_cachedConcerts);
+        }
+
+        private List<Concert> FilterConcerts(List<Concert> concerts, string? searchText = null, DateTime? startDate = null, DateTime? endDate = null, List<Category> selectedCategories = null)
+        {
+
         }
        
 

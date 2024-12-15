@@ -13,6 +13,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
     {
         [ObservableProperty] private string searchInput = string.Empty;
         [ObservableProperty] private bool isVisible = false;
+        [ObservableProperty] private int concertCount;
         partial void OnSearchInputChanged(string value)
         {
             UpdateConcerts(FilterSearch(value));
