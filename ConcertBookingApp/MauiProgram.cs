@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using ConcertBookingApp.ViewModels;
+using ConcertBookingApp.ViewModels.ConcertsOverviewViewModels;
 using ConcertBookingApp.Views;
 using Microsoft.Extensions.Logging;
+using Syncfusion.Maui.Core.Hosting;
 
 namespace ConcertBookingApp
 {
@@ -13,6 +15,7 @@ namespace ConcertBookingApp
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .ConfigureSyncfusionCore()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
