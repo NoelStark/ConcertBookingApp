@@ -41,7 +41,9 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                 Genre = "Pop", ImageUrl = "edm.png", Name = "Pop Pulse Festival",
                 Performances = new List<Performance>()
                 {
-                    new Performance{ AvailableSeats = 100, ConcertId = 1, Date = DateTime.Now}
+                    new Performance{ AvailableSeats = 100, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 100, PerformanceId = 1},
+                    new Performance{ AvailableSeats = 150, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 200, PerformanceId = 2},
+                    new Performance{ AvailableSeats = 200, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 300, PerformanceId = 3}
                 }
             },
             new Concert
@@ -50,7 +52,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                 Genre = "Jazz", ImageUrl = "edm.png", Name = "Starlight Pop Jazz",
                 Performances = new List<Performance>()
                 {
-                    new Performance{ AvailableSeats = 100, ConcertId = 1, Date = DateTime.Parse("2024-10-04")}
+                    new Performance{ AvailableSeats = 100, ConcertId = 2, Date = DateTime.Parse("2024-10-04")}
                 }
             },
             new Concert
@@ -59,7 +61,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                 Genre = "Classical", ImageUrl = "edm.png", Name = "Classical",
                 Performances = new List<Performance>()
                 {
-                    new Performance{ AvailableSeats = 100, ConcertId = 1, Date = DateTime.Parse("2025-09-22")}
+                    new Performance{ AvailableSeats = 100, ConcertId = 3, Date = DateTime.Parse("2025-09-22")}
                 }
             }
         };
