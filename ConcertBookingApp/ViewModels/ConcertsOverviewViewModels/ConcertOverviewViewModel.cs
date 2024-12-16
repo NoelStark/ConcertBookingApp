@@ -32,43 +32,46 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             OnPropertyChanged(nameof(ConcertCount));
         }
 
-
-        private List<Concert> FilterSearch(string value)
+        private void FilterConcerts(List<Concert> concerts, string? searchText = null, DateTime? startDate = null, DateTime? endDate = null, List<Category>? selectedCategories = null)
         {
-            if (!string.IsNullOrEmpty(value)) 
-                _cachedConcerts = ApplyFilter(_cachedConcerts, value);
-
-            else 
-                CategoryFilter();
-            return _cachedConcerts;
-           
-        }
-
-        private List<Concert> ApplyFilter(List<Concert> cachedConcerts, string value)
-        {
-            value = value.ToLower();
-            return cachedConcerts.Where(c => c.Genre.ToLower().Contains(value) || c.Name.ToLower().Contains(value)).ToList();
-        }
-
-        private List<Concert> ApplyFilter(List<Concert> cachedConcerts, DateTime? startDate, DateTime? endDate)
-        {
-            return cachedConcerts.Where(x => x.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
-        }
-
-        private async Task CategoryFilter()
-        {
-            List<Concert> filteredConcerts = await Task.Run(() =>
+            List<Concert> filteredConcerts = new List<Concert>(concerts);
+            if (!string.IsNullOrEmpty(searchText))
             {
-                List<Category> selectedCategories = Categories.Where(x => x.IsSelected == true).ToList();
-                return AllConcerts.Where(x => selectedCategories.Any(category => category.Title == x.Genre)).ToList();
-            });
-            _cachedConcerts = filteredConcerts;
-            Concerts = new ObservableCollection<Concert>(_cachedConcerts);
-        }
+                if (startDate != null && endDate != null)
+                {
+                    filteredConcerts = filteredConcerts.Where(x => x.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
+                }
+                filteredConcerts = filteredConcerts.Where(c => c.Genre.ToLower().Contains(searchText) || c.Name.ToLower().Contains(searchText)).ToList();
+                Categories.ForEach(c => c.IsSelected = false);
+                OnPropertyChanged(nameof(Categories));
+                _lastSearchInput = searchText;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(_lastSearchInput))
+                {
+                    if (startDate != null && endDate != null)
+                    {
+                        filteredConcerts = filteredConcerts.Where(x => x.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
+                    }
+                    else
+                        filteredConcerts = AllConcerts;
+                }
+            }
 
-        private List<Concert> FilterConcerts(List<Concert> concerts, string? searchText = null, DateTime? startDate = null, DateTime? endDate = null, List<Category> selectedCategories = null)
-        {
-            return new List<Concert>();
+            if (startDate != null && endDate != null)
+            {
+                filteredConcerts = filteredConcerts.Where(x => x.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
+            }
+
+            if (selectedCategories != null)
+            {
+                List<Category> categories = Categories.Where(x => x.IsSelected == true).ToList();
+                filteredConcerts = AllConcerts.Where(x => categories.Any(category => category.Title == x.Genre)).ToList();
+            }
+
+            _cachedConcerts = filteredConcerts;
+            UpdateConcerts(filteredConcerts);
         }
        
 

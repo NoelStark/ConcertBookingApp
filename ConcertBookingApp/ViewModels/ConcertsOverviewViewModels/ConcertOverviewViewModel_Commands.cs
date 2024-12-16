@@ -34,7 +34,8 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             bool isAnySelected = Categories.Any(x => x.IsSelected == true);
             if (isAnySelected)
             {
-                await CategoryFilter();
+                List<Category> selectedCategories = Categories.Where(x => x.IsSelected == true).ToList();
+                FilterConcerts(_cachedConcerts, selectedCategories: selectedCategories);
             }
             else
             {
@@ -58,7 +59,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             {
                 var startDate = selectedRange.StartDate;
                 var endDate = selectedRange.EndDate;
-                UpdateConcerts(ApplyFilter(_cachedConcerts, startDate, endDate));
+                FilterConcerts(_cachedConcerts, startDate: startDate, endDate: endDate);
             }
         }
 

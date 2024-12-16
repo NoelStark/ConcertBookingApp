@@ -9,21 +9,20 @@ using System.Collections.ObjectModel;
 
 namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 {
-    public partial class ConcertOverviewViewModel : ObservableObject
+    public partial class ConcertOverviewViewModel
     {
         [ObservableProperty] private string searchInput = string.Empty;
         [ObservableProperty] private bool isVisible = false;
         [ObservableProperty] private int concertCount;
+        private string _lastSearchInput = string.Empty;
+        private List<Concert> _cachedConcerts = AllConcerts;
+
         partial void OnSearchInputChanged(string value)
         {
-            UpdateConcerts(FilterSearch(value));
+            FilterConcerts(_cachedConcerts, searchText:value);
         }
         public ObservableCollection<Concert> Concerts { get; set; } = new ObservableCollection<Concert>(AllConcerts);
 
-
-        private string _lastSearchInput = string.Empty;
-
-        private List<Concert> _cachedConcerts = AllConcerts;
 
         public List<Category> Categories { get; set; } = new List<Category>()
         {
