@@ -12,7 +12,7 @@ using Syncfusion.Maui.Calendar;
 
 namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 {
-    public partial class ConcertOverviewViewModel : ObservableObject
+    public partial class ConcertOverviewViewModel
     {
 
         [RelayCommand]
@@ -24,7 +24,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         }
 
         [RelayCommand]
-        private async void SelectedFilter(Category value)
+        private void SelectedFilter(Category value)
         {
             Category? category = Categories.FirstOrDefault(x => x.Title == value.Title);
             if (category == null) return;
@@ -53,9 +53,9 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             OnPropertyChanged(nameof(concert.IsFavorite));
         }
         [RelayCommand]
-        async void SelectionChanged(CalendarDateRange selectedRange)
+        void SelectionChanged(CalendarDateRange selectedRange)
         {
-            if (selectedRange.StartDate != null && selectedRange.EndDate != null)
+            if (selectedRange is { StartDate: not null, EndDate: not null })
             {
                 var startDate = selectedRange.StartDate;
                 var endDate = selectedRange.EndDate;

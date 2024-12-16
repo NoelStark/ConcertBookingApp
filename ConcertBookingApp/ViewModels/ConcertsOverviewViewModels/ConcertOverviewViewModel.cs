@@ -34,7 +34,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 
         private void FilterConcerts(List<Concert> concerts, string? searchText = null, DateTime? startDate = null, DateTime? endDate = null, List<Category>? selectedCategories = null)
         {
-            List<Concert> filteredConcerts = new List<Concert>(concerts);
+            List<Concert> filteredConcerts = new List<Concert>(AllConcerts);
             if (!string.IsNullOrEmpty(searchText))
             {
                 if (startDate != null && endDate != null)

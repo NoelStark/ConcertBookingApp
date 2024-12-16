@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ConcertBookingApp.Services;
 
 namespace ConcertBookingApp.ViewModels
 {
@@ -30,10 +31,13 @@ namespace ConcertBookingApp.ViewModels
         [ObservableProperty]
         private double totalPrice = 0;
 
-        private ObservableCollection<Performance> SelectedTickets { get; set; } = new ObservableCollection<Performance>();
-        private ObservableCollection<Booking> Bookings { get; set; } = new ObservableCollection<Booking>();
+       // private ObservableCollection<Performance> SelectedTickets { get; set; } = new ObservableCollection<Performance>();
+       //private ObservableCollection<Booking> Bookings { get; set; } = new ObservableCollection<Booking>();
 
-        public ObservableCollection<Performance> AllPerformancesForConcert { get; set; } = new ObservableCollection<Performance>();
+        //public ObservableCollection<Performance> AllPerformancesForConcert { get; set; } = new ObservableCollection<Performance>();
+
+        public ObservableCollection<BookingPerformance> AllPerformancesForConcert { get; set; } =
+            new ObservableCollection<BookingPerformance>();
 
         public string ConvertFromJson
         {
@@ -46,31 +50,31 @@ namespace ConcertBookingApp.ViewModels
             }
         }
 
-        private ObservableCollection<Performance> Concerts = new ObservableCollection<Performance>();
-
-        public ConcertDetailsViewModel()
-        {
-            //AmountOfTickets = 0;
-            //OnPropertyChanged(nameof(AmountOfTickets));
-        }
-
         private async Task LoadPerfomances()
         {
             //Fast hämta från databasen
             AllPerformancesForConcert.Clear();
             List<Performance> result = Concert.Performances.Where(a => a.ConcertId.Equals(Performance.ConcertId)).ToList();
             foreach (Performance item in result)
-                AllPerformancesForConcert.Add(item);
-
+            {
+                AllPerformancesForConcert.Add(new BookingPerformance{Performance = item});
+            }
+            //Test.Add(new BookingPerformance
+            //{
+            //    Booking = booking2,
+            //    Performance = AllPerformancesForConcert[0],
+            //    BookingId = booking2.BookingId,
+            //    PerformanceId = AllPerformancesForConcert[0].PerformanceId
+            //});
             //OnPropertyChanged(nameof(AmountOfTickets));
         }
 
         private void UpdatePrice(Performance performance, string value)
         {
-            if (value == "Increase")
-                SelectedTickets.Add(performance);
-            else if (value == "Decrease")
-                SelectedTickets.Remove(performance);
+            //if (value == "Increase")
+            //    SelectedTickets.Add(performance);
+            //else if (value == "Decrease")
+            //    SelectedTickets.Remove(performance);
 
             //Performance? doesexist = SelectedTickets.FirstOrDefault(a => a.PerformanceId.Equals(performance.PerformanceId));
 
@@ -81,38 +85,42 @@ namespace ConcertBookingApp.ViewModels
             //else if (value == "Increase")
             //    SelectedTickets.Add(performance);
         }
+       
 
         [RelayCommand]
-        void IncreaseQuantity(Performance performance)
+        void IncreaseQuantity(BookingPerformance bookingPerformance)
         {
             string value = "Increase";
-            AmountOfTickets += 1;
-            //OnPropertyChanged(nameof(AmountOfTickets));
-            UpdatePrice(performance, value);
+            bookingPerformance.SeatsBooked++;
+            UpdatePrice(bookingPerformance.Performance, value);
 
         }
 
         [RelayCommand]
-        void DecreaseQuantity(Performance performance)
+        void DecreaseQuantity(BookingPerformance bookingPerformance)
         {
-            if (AmountOfTickets > 0)
+            if (bookingPerformance.SeatsBooked > 0)
             { 
-                AmountOfTickets -= 1;
                 string value = "Decrease";
-                //OnPropertyChanged(nameof(AmountOfTickets));
-                UpdatePrice(performance, value);
+                bookingPerformance.SeatsBooked--;
+                UpdatePrice(bookingPerformance.Performance, value);
             }
         }
 
         [RelayCommand]
         private async Task BuyTickets()
         {
-            if (SelectedTickets.Any())
+           
+            BookingService bookingService = new BookingService();
+            bookingService.Bookings.Add(new Booking
             {
-                string serializedTickets = JsonSerializer.Serialize(SelectedTickets);
-                string encodedTickets = Uri.EscapeDataString(serializedTickets);
-                await Shell.Current.GoToAsync($"///BookingsPage?concert={encodedTickets}");
-            }
+                BookingPerformances = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList()
+            });
+            //string serializedTickets = JsonSerializer.Serialize(SelectedTickets);
+            //string encodedTickets = Uri.EscapeDataString(serializedTickets);
+            await Shell.Current.GoToAsync($"///BookingsPage");
+            
+
         }
 
         //On
