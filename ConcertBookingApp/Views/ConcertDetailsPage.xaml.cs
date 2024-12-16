@@ -4,9 +4,10 @@ namespace ConcertBookingApp.Views;
 
 public partial class ConcertDetailsPage : ContentPage
 {
-	public ConcertDetailsPage()
+
+	public ConcertDetailsPage(ConcertDetailsViewModel hasse)
 	{
 		InitializeComponent();
-		BindingContext = new ConcertDetailsViewModel();
+		BindingContext = hasse;
 	}
 }

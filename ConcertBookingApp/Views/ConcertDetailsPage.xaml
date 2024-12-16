@@ -10,7 +10,7 @@
     <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="5">
         <Frame Grid.Row="0" HeightRequest="250" Padding="0" CornerRadius="0" BorderColor="Transparent">
             <Grid RowDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
-                <Image Source="testconcert.jpg" Aspect="Fill" HorizontalOptions="Fill" VerticalOptions="Fill"></Image>
+                <Image Source="{Binding Concert.ImageUrl}" Aspect="Fill" HorizontalOptions="Fill" VerticalOptions="Fill"></Image>
                 
                 <ImageButton Source="heart.png" HeightRequest="25" VerticalOptions="Start" HorizontalOptions="Start" Margin="20,30,20,0"></ImageButton>
                 <ImageButton Source="heart.png" HeightRequest="25" VerticalOptions="Start" HorizontalOptions="End" Margin="20,30,20,0"></ImageButton>
@@ -19,7 +19,7 @@
                     <Frame HeightRequest="30" WidthRequest="80" BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="20" BorderColor="Transparent">
                         <HorizontalStackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
                             <Image Source="headphones.png" WidthRequest="15"></Image>
-                            <Label Text="EDM" TextColor="White" FontSize="12"/>
+                            <Label Text="{Binding Concert.Genre}" TextColor="White" FontSize="12"/>
                         </HorizontalStackLayout>
                     </Frame>
 
@@ -33,7 +33,7 @@
                 <HorizontalStackLayout Margin="20,0,10,30">
                     <Frame VerticalOptions="End" HeightRequest="40" WidthRequest="160" BackgroundColor="{StaticResource Secondary}" Padding="0" CornerRadius="5" BorderColor="Transparent">
                         <HorizontalStackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
-                            <Label Text="Concert" TextColor="White" FontSize="16"/>
+                            <Label Text="{Binding Concert.Name}" TextColor="White" FontSize="16"/>
                         </HorizontalStackLayout>
                     </Frame>
                 </HorizontalStackLayout>
@@ -49,12 +49,12 @@
                 <VerticalStackLayout Spacing="2" Grid.Row="1">
                     <HorizontalStackLayout Spacing="10">
                         <Image Source="calender.png" HorizontalOptions="Start" />
-                        <Label FontSize="14" Text="6th of August" VerticalOptions="Center" />
+                        <Label FontSize="14" Text="{Binding Performance.Date}" VerticalOptions="Center" />
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Spacing="10" Grid.Row="1" Margin="0,4,0,0">
                         <Image Source="location.png" HorizontalOptions="Start" />
-                        <Label FontSize="14" Text="Lagerkrantsvägen 19" VerticalOptions="Center" />
+                        <Label FontSize="14" Text="{Binding Performance.Location}" VerticalOptions="Center" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </Grid>
@@ -63,7 +63,7 @@
         <Frame Grid.Row="2" HeightRequest="180" BorderColor="Transparent" Margin="0,-30,0,0">
             <VerticalStackLayout Spacing="10">
                 <Label FontSize="20" Text="About Event" FontAttributes="Bold"/>
-                <Label FontSize="16" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam"/>
+                <Label FontSize="16" Text="{Binding Concert.Description}"/>
             </VerticalStackLayout>
         </Frame>
 
@@ -73,29 +73,29 @@
             </VerticalStackLayout>
 
             <ScrollView Grid.Row="1" HeightRequest="100">
-                <VerticalStackLayout >
-                    <!--<CollectionView SelectionMode="None">
+                <VerticalStackLayout>
+                    <CollectionView ItemsSource="{Binding AllPerformancesForConcert}" SelectionMode="None">
                         <CollectionView.ItemTemplate>
-                            <DataTemplate>-->
-                                <Frame BorderColor="Transparent">
-                                    <Grid RowDefinitions="Auto, Auto" RowSpacing="10">
+                            <DataTemplate>
+                                <Frame BorderColor="Transparent" Padding="5" Margin="15,0,15,0">
+                                    <Grid RowDefinitions="Auto, Auto" >
                                         <Frame HeightRequest="60" Padding="0" CornerRadius="0" Grid.Row="1">
                                             <Grid ColumnDefinitions="Auto, Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
                                                 <Image Grid.Column="0" Source="ticket.png" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" Margin="10,0,10,0" />
 
                                                 <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="Gray" VerticalOptions="Fill" HorizontalOptions="Center" />
 
-                                                <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Column="2" Margin="10,0,0,0">
-                                                    <Label Text="6th of August" FontSize="Small" />
-                                                    <Label Text="200kr" FontSize="Small" FontAttributes="Bold" VerticalOptions="Center" />
+                                                <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Column="2" Margin="10,0,0,0" x:DataType="models:Performance">
+                                                    <Label Text="{Binding Date}" FontSize="Small" />
+                                                    <Label Text="{Binding Price, StringFormat='{0} kr'}" FontSize="Small" FontAttributes="Bold" VerticalOptions="Center" />
                                                 </VerticalStackLayout>
 
                                                 <HorizontalStackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="End" Margin="0,0,0,0" Spacing="10">
                                                     <Frame HeightRequest="30" WidthRequest="110" Padding="0" CornerRadius="0" BorderColor="DimGray" VerticalOptions="Center">
                                                         <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">
-                                                            <ImageButton Source="minus.png" Command="{Binding DecreaseQuantityCommand}" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
-                                                            <Label Text="{Binding AmountOfTickets}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
-                                                            <ImageButton Source="plus.png" Command="{Binding IncreaseQuantityCommand}" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                            <ImageButton Source="minus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ConcertDetailsViewModel}}, Path=DecreaseQuantityCommand}" CommandParameter="{Binding}" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                            <Label Text="{Binding AmountOfTickets}" TextColor="Black" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center" />
+                                                            <ImageButton Source="plus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:ConcertDetailsViewModel}}, Path=IncreaseQuantityCommand}" CommandParameter="{Binding}" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center" />
                                                         </HorizontalStackLayout>
                                                     </Frame>
                                                     <ImageButton Source="trashcan.png" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center" />
@@ -104,9 +104,9 @@
                                         </Frame>
                                     </Grid>
                                 </Frame>
-                            <!--</DataTemplate>
+                            </DataTemplate>
                         </CollectionView.ItemTemplate>
-                    </CollectionView>-->
+                    </CollectionView>
                 </VerticalStackLayout>
             </ScrollView>
         </Grid>
