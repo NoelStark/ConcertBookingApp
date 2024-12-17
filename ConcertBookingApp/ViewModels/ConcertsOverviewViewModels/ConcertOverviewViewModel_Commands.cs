@@ -31,17 +31,13 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 
             category.IsSelected = !category.IsSelected;
             OnPropertyChanged(nameof(category.IsSelected));
-            bool isAnySelected = Categories.Any(x => x.IsSelected == true);
-            if (isAnySelected)
-            {
-                List<Category> selectedCategories = Categories.Where(x => x.IsSelected == true).ToList();
-                FilterConcerts(_cachedConcerts, selectedCategories: selectedCategories);
-            }
-            else
-            {
-                Concerts = new ObservableCollection<Concert>(AllConcerts);
-            }
-            OnPropertyChanged(nameof(Concerts));
+            //bool isAnySelected = Categories.Any(x => x.IsSelected == true);
+            //if (isAnySelected)
+            //{
+                _selectedCategories = Categories.Where(x => x.IsSelected == true).ToList();
+                FilterConcerts();
+            //}
+            //OnPropertyChanged(nameof(Concerts));
         }
 
         [RelayCommand]
@@ -55,18 +51,33 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         [RelayCommand]
         void SelectionChanged(CalendarDateRange selectedRange)
         {
-            if (selectedRange is { StartDate: not null, EndDate: not null })
-            {
-                var startDate = selectedRange.StartDate;
-                var endDate = selectedRange.EndDate;
-                FilterConcerts(_cachedConcerts, startDate: startDate, endDate: endDate);
-            }
+            if (selectedRange is not { StartDate: not null, EndDate: not null }) return;
+
+            DateTime? start = selectedRange.StartDate;
+            DateTime? end = selectedRange.EndDate;
+
+            if (!start.HasValue || !end.HasValue) return;
+
+            startDate = (DateTime)start;
+            endDate = (DateTime)end;
+            FilterConcerts();
         }
 
         [RelayCommand]
         void ToggleCalender()
         {
             IsVisible = !IsVisible;
+        }
+
+        [RelayCommand]
+        void ClearFilters()
+        {
+            RangeSelected = null;
+            startDate = null;
+            endDate = null;
+            Categories.ForEach(c => c.IsSelected = false);
+            filteredConcerts = AllConcerts;
+            UpdateConcerts(AllConcerts);
         }
     }
 }

@@ -32,9 +32,9 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             OnPropertyChanged(nameof(ConcertCount));
         }
 
-        private void FilterConcerts(List<Concert> concerts, string? searchText = null, DateTime? startDate = null, DateTime? endDate = null, List<Category>? selectedCategories = null)
+        private List<Concert> filteredConcerts = new List<Concert>(AllConcerts);
+        private void FilterConcerts(string? searchText = null)
         {
-            List<Concert> filteredConcerts = new List<Concert>(AllConcerts);
             if (!string.IsNullOrEmpty(searchText))
             {
                 if (startDate != null && endDate != null)
@@ -58,17 +58,22 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                         filteredConcerts = AllConcerts;
                 }
             }
+            if (_selectedCategories.Any())
+            {
+                List<Category> categories = Categories.Where(x => x.IsSelected == true).ToList();
+                filteredConcerts = filteredConcerts.Where(x => categories.Any(category => category.Title == x.Genre)).ToList();
+                
+            }
+            else
+            {
+                filteredConcerts = AllConcerts;
+            }
 
             if (startDate != null && endDate != null)
             {
                 filteredConcerts = filteredConcerts.Where(x => x.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
             }
 
-            if (selectedCategories != null)
-            {
-                List<Category> categories = Categories.Where(x => x.IsSelected == true).ToList();
-                filteredConcerts = AllConcerts.Where(x => categories.Any(category => category.Title == x.Genre)).ToList();
-            }
 
             _cachedConcerts = filteredConcerts;
             UpdateConcerts(filteredConcerts);
