@@ -39,9 +39,13 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             {
                 if (startDate != null && endDate != null)
                 {
-                    filteredConcerts = filteredConcerts.Where(x => x.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
+                    filteredConcerts = AllConcerts.Where(x => x.Performances.Any(p => p.Date > startDate && p.Date < endDate) && x.Genre.ToLower().Contains(searchText)).ToList();
                 }
-                filteredConcerts = filteredConcerts.Where(c => c.Genre.ToLower().Contains(searchText) || c.Name.ToLower().Contains(searchText)).ToList();
+                else
+                {
+                    filteredConcerts = filteredConcerts.Where(c => c.Genre.ToLower().Contains(searchText) || c.Name.ToLower().Contains(searchText)).ToList();
+
+                }
                 Categories.ForEach(c => c.IsSelected = false);
                 OnPropertyChanged(nameof(Categories));
                 _lastSearchInput = searchText;
@@ -57,16 +61,16 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                     else
                         filteredConcerts = AllConcerts;
                 }
-            }
-            if (_selectedCategories.Any())
-            {
-                List<Category> categories = Categories.Where(x => x.IsSelected == true).ToList();
-                filteredConcerts = filteredConcerts.Where(x => categories.Any(category => category.Title == x.Genre)).ToList();
-                
-            }
-            else
-            {
-                filteredConcerts = AllConcerts;
+                if (_selectedCategories.Any())
+                {
+                    List<Category> categories = Categories.Where(x => x.IsSelected == true).ToList();
+                    filteredConcerts = filteredConcerts.Where(x => categories.Any(category => category.Title == x.Genre)).ToList();
+                    
+                }
+                else
+                {
+                    filteredConcerts = AllConcerts;
+                }
             }
 
             if (startDate != null && endDate != null)

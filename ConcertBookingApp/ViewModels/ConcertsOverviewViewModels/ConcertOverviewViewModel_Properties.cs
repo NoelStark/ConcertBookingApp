@@ -23,7 +23,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         private DateTime? endDate = null;
         partial void OnSearchInputChanged(string value)
         {
-            FilterConcerts(searchText:value);
+            FilterConcerts(searchText:value.ToLower());
         }
         public ObservableCollection<Concert> Concerts { get; set; } = new ObservableCollection<Concert>(AllConcerts);
 

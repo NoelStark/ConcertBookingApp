@@ -31,22 +31,20 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 
             category.IsSelected = !category.IsSelected;
             OnPropertyChanged(nameof(category.IsSelected));
-            //bool isAnySelected = Categories.Any(x => x.IsSelected == true);
-            //if (isAnySelected)
-            //{
-                _selectedCategories = Categories.Where(x => x.IsSelected == true).ToList();
-                FilterConcerts();
-            //}
-            //OnPropertyChanged(nameof(Concerts));
+            _selectedCategories = Categories.Where(x => x.IsSelected == true).ToList();
+            FilterConcerts();
         }
 
         [RelayCommand]
         private void MakeFavorite(Concert value)
         {
+            //Changes the color of the heart
             Concert? concert = Concerts.FirstOrDefault(x => x.Name == value.Name);
             if (concert == null) return;
             concert.IsFavorite = !concert.IsFavorite;
             OnPropertyChanged(nameof(concert.IsFavorite));
+
+            //Not Implemented
         }
         [RelayCommand]
         void SelectionChanged(CalendarDateRange selectedRange)
