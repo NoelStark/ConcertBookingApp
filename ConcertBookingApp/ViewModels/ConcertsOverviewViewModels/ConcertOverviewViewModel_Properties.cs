@@ -36,7 +36,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             new Category { ImageSource = "headphones.png", Title = "EDM" }
         };
 
-        private static readonly List<Concert> AllConcerts = new List<Concert>()
+        public static List<Concert> AllConcerts = new List<Concert>()
         {
             new Concert
             {

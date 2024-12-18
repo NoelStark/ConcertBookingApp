@@ -25,7 +25,7 @@ namespace ConcertBookingApp.ViewModels
         [ObservableProperty] private bool showDateError = false;
         [ObservableProperty] private bool showCVCError = false;
 
-        [ObservableProperty] private string name;
+        [ObservableProperty] private string name = string.Empty;
         [ObservableProperty] private string creditCardNumber;
         [ObservableProperty] private string expireDate;
         [ObservableProperty] private string cardImage;
@@ -33,14 +33,25 @@ namespace ConcertBookingApp.ViewModels
         [ObservableProperty] private int totalCartCost;
 
         private static readonly Regex EmailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-        private static readonly Regex firstNameRegex = new Regex(@"^[a-z]+$", RegexOptions.IgnoreCase);
-        private static readonly Regex lastNameRegex = new Regex(@"^[a-z]+$", RegexOptions.IgnoreCase);
+        private static readonly Regex NameRegex = new Regex(@"^[a-z]+$", RegexOptions.IgnoreCase);
         private string _lastValidFirstName = string.Empty;
         private string _lastValidLastName = string.Empty;
         private string _lastValidEmail = string.Empty;
+        private string _lastValidName = string.Empty;
+
+        partial void OnNameChanged(string value)
+        {
+            var validatedInput = ValidateInput(value, NameRegex, _lastValidName);
+            if (validatedInput != Name)
+            {
+                _lastValidName = validatedInput;
+                Name = _lastValidName;
+            }
+        }
+
         partial void OnFirstNameChanged(string value)
         {
-            var validatedInput= ValidateInput(value, firstNameRegex, _lastValidFirstName);
+            var validatedInput= ValidateInput(value, NameRegex, _lastValidFirstName);
             if (validatedInput != FirstName)
             {
                 _lastValidFirstName = validatedInput;
@@ -51,7 +62,7 @@ namespace ConcertBookingApp.ViewModels
 
         partial void OnLastNameChanged(string value)
         {
-            _lastValidLastName = ValidateInput(value, lastNameRegex, _lastValidLastName);
+            _lastValidLastName = ValidateInput(value, NameRegex, _lastValidLastName);
             LastName = _lastValidLastName;
             //ValidateForm();
         }
@@ -62,6 +73,7 @@ namespace ConcertBookingApp.ViewModels
             Email = _lastValidEmail;
             //ValidateForm();
         }
+        
 
         private string ValidateInput(string input, Regex regex, string lastValidValue)
         {
