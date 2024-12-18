@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using ConcertBookingApp.Services;
 using ConcertBookingApp.ViewModels;
 using ConcertBookingApp.ViewModels.ConcertsOverviewViewModels;
 using ConcertBookingApp.Views;
@@ -26,8 +27,9 @@ namespace ConcertBookingApp
             builder.Services.AddSingleton<ConcertOverviewViewModel>();
             builder.Services.AddSingleton<ConcertDetailsViewModel>();
             builder.Services.AddSingleton<ConcertDetailsPage>();
-            builder.Services.AddSingleton<BookingsPage>();
-            builder.Services.AddSingleton<BookingsPageViewModel>();
+            builder.Services.AddSingleton<CheckoutPage>();
+            builder.Services.AddTransient<CheckoutViewModel>();
+            builder.Services.AddSingleton<BookingService>();
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
             {
 #if ANDROID

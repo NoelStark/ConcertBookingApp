@@ -16,8 +16,8 @@
         ContentTemplate="{DataTemplate local:ConcertDetailsPage}"
         Route="ConcertDetailsPage" />
     <ShellContent
-        Title="BookingsPage"
-        ContentTemplate="{DataTemplate local:BookingsPage}"
+        Title="CheckoutPage"
+        ContentTemplate="{DataTemplate local:CheckoutPage}"
         Route="BookingsPage" />
     
     
