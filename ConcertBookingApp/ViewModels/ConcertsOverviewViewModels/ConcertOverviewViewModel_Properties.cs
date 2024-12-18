@@ -44,7 +44,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                 Genre = "Pop", ImageUrl = "edm.png", Name = "Pop Pulse Festival",
                 Performances = new List<Performance>()
                 {
-                    new Performance{ TotalSeats = 100, AvailableSeats = 100, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 100, PerformanceId = 1},
+                    new Performance{ TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 100, PerformanceId = 1},
                     new Performance{ TotalSeats = 150, AvailableSeats = 150, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 200, PerformanceId = 2},
                     new Performance{ TotalSeats = 200, AvailableSeats = 200, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 300, PerformanceId = 3}
                 }
