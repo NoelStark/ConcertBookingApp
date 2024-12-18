@@ -9,13 +9,14 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using ConcertBookingApp.Services;
+using ConcertBookingApp.Views;
 
 namespace ConcertBookingApp.ViewModels
 {
     [QueryProperty(nameof(ConvertFromJson), "concert")]
     public partial class ConcertDetailsViewModel : ObservableObject
     {
-
+        private readonly BookingService bookingService;
         [ObservableProperty]
         private Concert concert;
 
@@ -31,10 +32,11 @@ namespace ConcertBookingApp.ViewModels
         [ObservableProperty]
         private double totalPrice = 0;
 
-       // private ObservableCollection<Performance> SelectedTickets { get; set; } = new ObservableCollection<Performance>();
-       //private ObservableCollection<Booking> Bookings { get; set; } = new ObservableCollection<Booking>();
+        [ObservableProperty]
+        private bool addTicketsVisible = true;
 
-        //public ObservableCollection<Performance> AllPerformancesForConcert { get; set; } = new ObservableCollection<Performance>();
+        [ObservableProperty]
+        private bool canBeClicked = false;
 
         public ObservableCollection<BookingPerformance> AllPerformancesForConcert { get; set; } =
             new ObservableCollection<BookingPerformance>();
@@ -47,9 +49,14 @@ namespace ConcertBookingApp.ViewModels
                 Performance = Concert.Performances.FirstOrDefault(a => a.ConcertId == Concert.ConcertId);
                 AmountOfTickets = 0;
                 _ = LoadPerfomances();
+                UpdateButton();
             }
         }
 
+        public ConcertDetailsViewModel(BookingService bookingservice)
+        {
+            bookingService = bookingservice;
+        }
         private async Task LoadPerfomances()
         {
             //Fast hämta från databasen
@@ -69,21 +76,13 @@ namespace ConcertBookingApp.ViewModels
             //OnPropertyChanged(nameof(AmountOfTickets));
         }
 
-        private void UpdatePrice(Performance performance, string value)
+        private void UpdateButton()
         {
-            //if (value == "Increase")
-            //    SelectedTickets.Add(performance);
-            //else if (value == "Decrease")
-            //    SelectedTickets.Remove(performance);
-
-            //Performance? doesexist = SelectedTickets.FirstOrDefault(a => a.PerformanceId.Equals(performance.PerformanceId));
-
-            //if (doesexist != null && value == "Increase")
-            //    SelectedTickets.Add(performance);
-            //else if (doesexist != null && value == "Decrease")
-            //    SelectedTickets.Remove(performance);
-            //else if (value == "Increase")
-            //    SelectedTickets.Add(performance);
+            List<BookingPerformance> result = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
+            if(result.Any())
+                CanBeClicked = true;
+            else 
+                CanBeClicked = false;
         }
        
 
@@ -92,8 +91,13 @@ namespace ConcertBookingApp.ViewModels
         {
             string value = "Increase";
             bookingPerformance.SeatsBooked++;
-            UpdatePrice(bookingPerformance.Performance, value);
+            bookingPerformance.Performance.AvailableSeats--;
+            if(bookingPerformance.Performance.AvailableSeats == 0)
+                AddTicketsVisible = false;
+            UpdateButton();
 
+            //BookingPerformance result = AllPerformancesForConcert.FirstOrDefault(a => a.PerformanceId == bookingPerformance.PerformanceId);
+            //int index = AllPerformancesForConcert.IndexOf(result);
         }
 
         [RelayCommand]
@@ -103,24 +107,23 @@ namespace ConcertBookingApp.ViewModels
             { 
                 string value = "Decrease";
                 bookingPerformance.SeatsBooked--;
-                UpdatePrice(bookingPerformance.Performance, value);
+                bookingPerformance.Performance.AvailableSeats++;
+                AddTicketsVisible = true;
+                UpdateButton();
             }
         }
 
         [RelayCommand]
         private async Task BuyTickets()
         {
-           
-            BookingService bookingService = new BookingService();
             bookingService.Bookings.Add(new Booking
             {
                 BookingPerformances = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList()
             });
-            //string serializedTickets = JsonSerializer.Serialize(SelectedTickets);
-            //string encodedTickets = Uri.EscapeDataString(serializedTickets);
-            await Shell.Current.GoToAsync($"///BookingsPage");
-            
-
+            //string serializedBookings = JsonSerializer.Serialize(bookingService.Bookings);
+            //string encodedBookings = Uri.EscapeDataString(serializedBookings);
+            await Shell.Current.GoToAsync(nameof(CheckoutPage));
+            //await Shell.Current.GoToAsync($"///BookingsPage?bookings={encodedBookings}");
         }
 
         //On
