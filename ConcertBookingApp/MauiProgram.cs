@@ -5,6 +5,7 @@ using ConcertBookingApp.ViewModels.ConcertsOverviewViewModels;
 using ConcertBookingApp.Views;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
+using Microsoft.Maui.Platform; // Provides the ToPlatform() extension method
 
 namespace ConcertBookingApp
 {
@@ -30,11 +31,13 @@ namespace ConcertBookingApp
             builder.Services.AddSingleton<CheckoutPage>();
             builder.Services.AddTransient<CheckoutViewModel>();
             builder.Services.AddSingleton<BookingService>();
+            builder.Services.AddSingleton<PaymentViewModel>();
+            builder.Services.AddSingleton<PaymentPage>();
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>
             {
 #if ANDROID
-				//h.PlatformView.BackgroundTintList =
-				//Android.Content.Res.ColorStateList.ValueOf(Colors.Transparent.ToPlatform());
+                h.PlatformView.BackgroundTintList =
+                Android.Content.Res.ColorStateList.ValueOf(Microsoft.Maui.Graphics.Colors.Transparent.ToPlatform());
 #endif
             });
 
