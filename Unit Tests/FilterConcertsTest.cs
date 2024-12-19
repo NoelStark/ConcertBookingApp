@@ -150,5 +150,19 @@ namespace Unit_Tests
             Assert.Equal("Pop", viewModel.filteredConcerts.First().Genre);
 
         }
+
+        [Fact]
+        public void FilterConcerts_ByCategory_ReturnsMatches()
+        {
+            ConcertOverviewViewModel viewModel = new ConcertOverviewViewModel
+            {
+                Categories = MockCategories,
+                filteredConcerts = new List<Concert>(AllConcerts),
+            };
+            var methodInfo = typeof(ConcertOverviewViewModel).GetMethod("SelectedFilter", BindingFlags.NonPublic | BindingFlags.Instance);
+            methodInfo.Invoke(viewModel, new object?[] { MockCategories.FirstOrDefault(x => x.Title == "Pop") });
+            Assert.Equal("Pop", viewModel.filteredConcerts.First().Genre);
+
+        }
     }
 }

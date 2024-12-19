@@ -91,9 +91,9 @@
                 <VerticalStackLayout>
                     <Grid HorizontalOptions="FillAndExpand">
                         <Label Text="Credit Card Number"/>
-                        <!--<Label Text="Invalid Card Type" TextColor="Red" IsVisible="{Binding ShowErrorMessage}" HorizontalOptions="End"/>-->
+                        <Label Text="Invalid Card Type" TextColor="Red" IsVisible="{Binding ShowCreditError}" HorizontalOptions="End"/>
                     </Grid>
-                    <Frame HeightRequest="50" BorderColor="#C8C8C8">
+                    <Frame HeightRequest="50" BorderColor="{Binding CreditValidation.BorderColor}">
                         <Grid ColumnDefinitions="Auto, Auto,*" HeightRequest="50">
                             <Image Source="{Binding CardImage}" IsVisible="{Binding IsValidCard}" HorizontalOptions="Start" VerticalOptions="Center" HeightRequest="16" Grid.Column="0"/>
                             <BoxView BackgroundColor="Transparent" WidthRequest="10" Grid.Column="1" IsVisible="{Binding IsValidCard}"/>
