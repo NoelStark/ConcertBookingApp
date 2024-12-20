@@ -19,9 +19,13 @@
         Title="CheckoutPage"
         ContentTemplate="{DataTemplate local:CheckoutPage}"
         Route="BookingsPage" />
-    
-    
-    
+    <ShellContent
+        Title="PaymentPage"
+        ContentTemplate="{DataTemplate local:PaymentPage}"
+        Route="PaymentPage" />
+
+
+
 
     <!--<ShellContent Title="ConcertDetailPage" ContentTemplate="{DataTemplate local:BookingsPage}" Route="ConcertDetailsPage" />-->
 

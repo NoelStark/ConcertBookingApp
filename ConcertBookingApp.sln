@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConcertBookingApp", "ConcertBookingApp\ConcertBookingApp.csproj", "{5519AB34-AA97-4ECC-B36D-3857602B70B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{95F5EFAA-2F9F-430F-8560-93F24C783549}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{5519AB34-AA97-4ECC-B36D-3857602B70B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5519AB34-AA97-4ECC-B36D-3857602B70B8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5519AB34-AA97-4ECC-B36D-3857602B70B8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{95F5EFAA-2F9F-430F-8560-93F24C783549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F5EFAA-2F9F-430F-8560-93F24C783549}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F5EFAA-2F9F-430F-8560-93F24C783549}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F5EFAA-2F9F-430F-8560-93F24C783549}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

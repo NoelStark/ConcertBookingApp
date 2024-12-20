@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ConcertBookingApp.Models;
 using System.Collections.ObjectModel;
+using Syncfusion.Maui.Calendar;
 
 namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 {
@@ -14,12 +15,15 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         [ObservableProperty] private string searchInput = string.Empty;
         [ObservableProperty] private bool isVisible = false;
         [ObservableProperty] private int concertCount;
+        [ObservableProperty] private CalendarDateRange? rangeSelected;
         private string _lastSearchInput = string.Empty;
         private List<Concert> _cachedConcerts = AllConcerts;
-
+        private List<Category> _selectedCategories = new List<Category>();
+        private DateTime? startDate = null;
+        private DateTime? endDate = null;
         partial void OnSearchInputChanged(string value)
         {
-            FilterConcerts(_cachedConcerts, searchText:value);
+            FilterConcerts(searchText:value.ToLower());
         }
         public ObservableCollection<Concert> Concerts { get; set; } = new ObservableCollection<Concert>(AllConcerts);
 
@@ -32,7 +36,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             new Category { ImageSource = "headphones.png", Title = "EDM" }
         };
 
-        private static readonly List<Concert> AllConcerts = new List<Concert>()
+        public static List<Concert> AllConcerts = new List<Concert>()
         {
             new Concert
             {

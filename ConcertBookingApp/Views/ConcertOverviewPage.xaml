@@ -37,14 +37,17 @@
             <Label FontSize="16" Text="{Binding ConcertCount, StringFormat='There are {0} event(s) near you'}" Margin="0,5,0,0" HorizontalOptions="Start" TextColor="#5E0ABF"/>
         </VerticalStackLayout>
 
-        <Grid Grid.Row="1" Grid.ColumnDefinitions="*, Auto" HeightRequest="40"  Margin="0,20,0,0">
+        <Grid Grid.Row="1" ColumnDefinitions="*, Auto" HeightRequest="40"  Margin="0,20,0,0">
             <Frame BorderColor="Gray" CornerRadius="10" Padding="0" HasShadow="False" Grid.Column="0">
                 <SearchBar Placeholder="Search product" Margin="0" Text="{Binding SearchInput, Mode=TwoWay}"/>
             </Frame>
             <ImageButton Source="calender.png" HeightRequest="32" Grid.Column="1" Command="{Binding ToggleCalenderCommand}"/>
 
         </Grid>
-            <syncfusion:SfCalendar x:Name="calendar" SelectionMode="Range" IsVisible="{Binding IsVisible}" Grid.Row="2" Margin="0,0,0,0">
+            <syncfusion:SfCalendar x:Name="calendar" 
+                                   SelectionMode="Range" IsVisible="{Binding IsVisible}"
+                                   SelectedDateRange="{Binding RangeSelected, Mode=TwoWay}"
+                                   Grid.Row="2" Margin="0,0,0,0">
                 <syncfusion:SfCalendar.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="SelectionChanged"
                                                       Command="{Binding SelectionChangedCommand}"
@@ -72,8 +75,12 @@
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </HorizontalStackLayout>
-
-        <Label HeightRequest="30" Text="{Binding ConcertCount, StringFormat='Upcoming Events {0}'}" Grid.Row="4" Margin="0,0,0,10" FontSize="20" FontAttributes="Bold"/>
+        <Grid HeightRequest="30" Grid.Row="4" Margin="0,0,0,10">
+            <Label Text="{Binding ConcertCount, StringFormat='Upcoming Events {0}'}"  FontSize="20" FontAttributes="Bold"/>
+            <Button Text="Clear Filters" BackgroundColor="Transparent" TextColor="Blue" 
+                    HorizontalOptions="End" HeightRequest="40" Command="{Binding ClearFiltersCommand}"/>
+        </Grid>
+        
         <ScrollView Grid.Row="5" HeightRequest="450" Padding="0,0,0,40">
             <!--Card Creation-->
             <CollectionView  ItemsSource="{Binding Concerts}">
