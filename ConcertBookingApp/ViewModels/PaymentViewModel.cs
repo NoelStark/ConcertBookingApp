@@ -9,14 +9,18 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace ConcertBookingApp.ViewModels
 {
+    
+
     public class ValidationState
     {
         public Color BorderColor { get; set; } = Color.FromArgb("C8C8C8");
         public bool ShowError { get; set; } = false;
     }
+
     public partial class PaymentViewModel : ObservableObject
     {
         [ObservableProperty] private bool isVisible = true;
+
         //Personal Information
         [ObservableProperty] private string firstName;
         [ObservableProperty] private string lastName;
@@ -38,14 +42,11 @@ namespace ConcertBookingApp.ViewModels
         [ObservableProperty] private string cVC;
         [ObservableProperty] private int totalCartCost;
 
-        [ObservableProperty]
-        private ValidationState creditValidation = new ValidationState();
+        [ObservableProperty] private ValidationState creditValidation = new ValidationState();
 
-        [ObservableProperty]
-        private ValidationState dateValidation = new ValidationState();
+        [ObservableProperty] private ValidationState dateValidation = new ValidationState();
 
-        [ObservableProperty]
-        private ValidationState securityValidation = new ValidationState();
+        [ObservableProperty] private ValidationState securityValidation = new ValidationState();
 
         private readonly Color _red = Color.FromArgb("D22B2B");
         private readonly Color _grey = Color.FromArgb("C8C8C8");
@@ -65,8 +66,10 @@ namespace ConcertBookingApp.ViewModels
             { "FirstName", string.Empty },
             { "LastName", string.Empty },
             { "Email", string.Empty },
-            { "Name", string.Empty }
+            { "Name", string.Empty },
+            { "CreditCard", string.Empty}
         };
+
         partial void OnNameChanged(string value)
         {
             var validatedInput = ValidateInput(value, _regexPatterns["Name"], _lastValidValues["Name"]);
@@ -79,7 +82,7 @@ namespace ConcertBookingApp.ViewModels
 
         partial void OnFirstNameChanged(string value)
         {
-            var validatedInput= ValidateInput(value, _regexPatterns["Name"], _lastValidValues["FirstName"]);
+            var validatedInput = ValidateInput(value, _regexPatterns["Name"], _lastValidValues["FirstName"]);
             if (validatedInput != FirstName)
             {
                 _lastValidValues["FirstName"] = validatedInput;
@@ -105,38 +108,58 @@ namespace ConcertBookingApp.ViewModels
 
         partial void OnCreditCardNumberChanged(string value)
         {
-            if (!_isCreditUpdating)
+            if (_isCreditUpdating) return;
+            _isCreditUpdating = true;
+            string formatValue = value.Replace(" ", "");
+            if (formatValue.Length >= 20)
             {
-                _isCreditUpdating = true;
-                value = value.Replace(" ", "");
-                if (value.Length % 4 == 0)
-                    CreditCardNumber += " ";
-                string type = GetCardType(value);
-                if (!string.IsNullOrEmpty(type))
-                {
-                    if (type == "Maestro")
-                        CardImage = "maestro.png";
-                    else if (type == "Mastercard")
-                        CardImage = "mastercard.png";
-                    else
-                        CardImage = "visa.png";
-                    IsValidCard = true;
-                    ShowCreditError = false;
-                    CreditValidation.BorderColor = _grey;
-                }
-                else
-                {
-                    CreditValidation.BorderColor = _red;
-                    IsValidCard = false;
-                    ShowCreditError = true;
-                }
-                OnPropertyChanged(nameof(CreditCardNumber));
-                OnPropertyChanged(nameof(CreditValidation));
+                CreditCardNumber = _lastValidValues["CreditCard"];
+                _isCreditUpdating = false;
+                return;
             }
 
+            string result = FormatCreditCardNumber(formatValue);
+            CreditCardNumber = result;
+            _lastValidValues["CreditCard"] = result;
+            UpdateCardType(formatValue);
             _isCreditUpdating = false;
         }
+        private string FormatCreditCardNumber(string value)
+        {
+            StringBuilder builder = new StringBuilder();
 
+            for (int i = 0; i < value.Length; i++)
+            {
+                if (i > 0 && i % 4 == 0)
+                    builder.Append(' ');
+                builder.Append(value[i]);
+            }
+            return builder.ToString();
+        }
+
+        private void UpdateCardType(string value)
+        {
+            string cardType = GetCardType(value);
+
+            if (!string.IsNullOrEmpty(cardType))
+            {
+                CardImage = cardType switch
+                {
+                    "Maestro" => "maestro.png",
+                    "Mastercard" => "mastercard.png",
+                    _ => "visa.png",
+                };
+                IsValidCard = true;
+                ShowCreditError = false;
+                CreditValidation.BorderColor = _grey;
+            }
+            else
+            {
+                IsValidCard = false;
+                ShowCreditError = true;
+                CreditValidation.BorderColor = _red;
+            }
+        }
 
         private string ValidateInput(string input, Regex regex, string lastValidValue)
         {

@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ConcertBookingApp.Services;
 using ConcertBookingApp.Views;
@@ -45,7 +46,12 @@ namespace ConcertBookingApp.ViewModels
         {
             set
             {
-                Concert = JsonSerializer.Deserialize<Concert>(Uri.UnescapeDataString(value));
+                string decoded = Uri.UnescapeDataString(value);
+                var options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve
+                };
+                Concert = JsonSerializer.Deserialize<Concert>(decoded,options);
                 Performance = Concert.Performances.FirstOrDefault(a => a.ConcertId == Concert.ConcertId);
                 AmountOfTickets = 0;
                 _ = LoadPerfomances();
@@ -104,7 +110,7 @@ namespace ConcertBookingApp.ViewModels
         private async Task BuyTickets()
         {
             List<BookingPerformance> hasse = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
-
+          
             bookingService.Bookings.Add(new Booking
             {
                 BookingPerformances = new List<BookingPerformance>(hasse)

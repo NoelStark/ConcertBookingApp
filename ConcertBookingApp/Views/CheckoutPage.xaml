@@ -11,32 +11,32 @@
     </ContentPage.ToolbarItems>-->
 
     <Grid  RowDefinitions="Auto, Auto, Auto">
-        <CollectionView Grid.ColumnSpan="2" Grid.Row="0" ItemsSource="{Binding AllPerformances}" SelectionMode="None" HeightRequest="450" VerticalOptions="Start">
+        <CollectionView Grid.ColumnSpan="2" Grid.Row="0" ItemsSource="{Binding FlattenedBookingPerformances}" SelectionMode="None" HeightRequest="450" VerticalOptions="Start">
             <CollectionView.ItemTemplate>
-                <DataTemplate>
+                <DataTemplate x:DataType="models:BookingPerformance">
                     <Grid>
-                        <Frame HeightRequest="170" Margin="20,10,20,0" x:DataType="models:Performance">
+                        <Frame HeightRequest="170" Margin="20,10,20,0">
                             <HorizontalStackLayout Spacing="40">
                                 <VerticalStackLayout>
-                                    <Image Source="{Binding Concert.ImageUrl}" HeightRequest="80" WidthRequest="120" VerticalOptions="Start" HorizontalOptions="Start"/>
+                                    <Image Source="{Binding Performance.Concert.ImageUrl}" HeightRequest="80" WidthRequest="120" VerticalOptions="Start" HorizontalOptions="Start"/>
 
                                     <Frame HeightRequest="35" WidthRequest="120" Padding="0" Margin="0,10,0,0" BorderColor="DimGray" VerticalOptions="Start" HorizontalOptions="Start">
                                         <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">
-                                            <ImageButton Source="minus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CheckoutViewModel}}, Path=DecreaseQuantityCommand}" CommandParameter="{Binding}" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center"/>
-                                            <Label Text="{Binding BookingPerformance.SeatsBooked}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"></Label>
-                                            <ImageButton Source="plus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CheckoutViewModel}}, Path=IncreaseQuantityCommand}" CommandParameter="{Binding}" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <ImageButton Source="minus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CheckoutViewModel}}, Path=DecreaseQuantityCommand}" CommandParameter="{Binding .}" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <Label Text="{Binding SeatsBooked}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"></Label>
+                                            <ImageButton Source="plus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CheckoutViewModel}}, Path=IncreaseQuantityCommand}" CommandParameter="{Binding .}" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"/>
                                         </HorizontalStackLayout>
                                     </Frame>
                                 </VerticalStackLayout>
 
                                 <VerticalStackLayout Margin="0,-10,0,0" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand">
-                                    <Label Text="{Binding Concert.Name}" FontSize="Large" FontAttributes="Bold"/>
-                                    <Label Text="{Binding Concert.Genre}" FontSize="Small" FontAttributes="Bold"/>
-                                    <Label Text="{Binding Location}" FontSize="Small"/>
-                                    <Label Text="{Binding Date, StringFormat='{0:yyyy-MM-dd}'}" FontSize="Small"/>
+                                    <Label Text="{Binding Performance.Concert.Name}" FontSize="Large" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Performance.Concert.Genre}" FontSize="Small" FontAttributes="Bold"/>
+                                    <Label Text="{Binding Performance.Location}" FontSize="Small"/>
+                                    <Label Text="{Binding Performance.Date, StringFormat='{0:yyyy-MM-dd}'}" FontSize="Small"/>
 
                                     <Grid Margin="0,10,0,0" RowDefinitions="Auto, Auto" MinimumWidthRequest="120">
-                                        <Label Text="{Binding Price, StringFormat = '{0} :-'}" FontSize="Large" TextColor="Green" VerticalOptions="Center" Grid.Row="1"/>
+                                        <Label Text="{Binding Performance.Price, StringFormat = '{0} :-'}" FontSize="Large" TextColor="Green" VerticalOptions="Center" Grid.Row="1"/>
                                         
                                     </Grid>
                                 </VerticalStackLayout>

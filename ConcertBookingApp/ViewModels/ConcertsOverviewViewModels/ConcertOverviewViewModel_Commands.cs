@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using ConcertBookingApp.Models;
 using Syncfusion.Maui.Calendar;
@@ -18,7 +19,12 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         [RelayCommand]
         private async Task InspectConcert(Concert concert)
         {
-            string serializedConcert = JsonSerializer.Serialize(concert);
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+            string serializedConcert = JsonSerializer.Serialize(concert, options);
             string encodedConcert = Uri.EscapeDataString(serializedConcert);
             await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={encodedConcert}");
         }

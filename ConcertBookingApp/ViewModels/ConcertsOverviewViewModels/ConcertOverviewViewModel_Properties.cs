@@ -48,25 +48,25 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                     new Performance{ TotalSeats = 150, AvailableSeats = 150, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 200, PerformanceId = 2},
                     new Performance{ TotalSeats = 200, AvailableSeats = 200, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 300, PerformanceId = 3}
                 }
-            },
-            new Concert
-            {
-                ConcertId = 2, Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
-                Genre = "Jazz", ImageUrl = "testconcert.png", Name = "Starlight Pop Jazz",
-                Performances = new List<Performance>()
-                {
-                    new Performance{TotalSeats = 150, AvailableSeats = 100, ConcertId = 2, Date = DateTime.Parse("2024-10-04"), Location = "Aspvägen", Price = 100, PerformanceId = 4}
-                }
-            },
-            new Concert
-            {
-                ConcertId = 3, Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
-                Genre = "Classical", ImageUrl = "edm.png", Name = "Classical",
-                Performances = new List<Performance>()
-                {
-                    new Performance{TotalSeats = 150, AvailableSeats = 100, ConcertId = 3, Date = DateTime.Parse("2025-09-22"), Location = "Aspvägen", Price = 100, PerformanceId = 5}
-                }
             }
+            //new Concert
+            //{
+            //    ConcertId = 2, Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
+            //    Genre = "Jazz", ImageUrl = "testconcert.png", Name = "Starlight Pop Jazz",
+            //    Performances = new List<Performance>()
+            //    {
+            //        new Performance{TotalSeats = 150, AvailableSeats = 100, ConcertId = 2, Date = DateTime.Parse("2024-10-04"), Location = "Aspvägen", Price = 100, PerformanceId = 4}
+            //    }
+            //},
+            //new Concert
+            //{
+            //    ConcertId = 3, Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
+            //    Genre = "Classical", ImageUrl = "edm.png", Name = "Classical",
+            //    Performances = new List<Performance>()
+            //    {
+            //        new Performance{TotalSeats = 150, AvailableSeats = 100, ConcertId = 3, Date = DateTime.Parse("2025-09-22"), Location = "Aspvägen", Price = 100, PerformanceId = 5}
+            //    }
+            //}
         };
     }
 }

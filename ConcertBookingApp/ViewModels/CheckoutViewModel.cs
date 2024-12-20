@@ -42,16 +42,23 @@ namespace ConcertBookingApp.ViewModels
 
         private readonly BookingService _bookingService;
 
-        private readonly ConcertOverviewViewModel _concertViewModel; 
+        private static ConcertOverviewViewModel _concertViewModel = new ConcertOverviewViewModel();
+
         public ObservableCollection<List<Booking>> BookingsCart { get; set; } = new ObservableCollection<List<Booking>>();
-        public ObservableCollection<Booking> AllBookings { get; set; } = new ObservableCollection<Booking>();
+        public static ObservableCollection<Booking> AllBookings { get; set; } = new ObservableCollection<Booking>();
+        public List<Concert> allConcerts = _concertViewModel.Concerts.ToList();
+
+        public ObservableCollection<BookingPerformance> FlattenedBookingPerformances { get; set; }
         public ObservableCollection<Concert> SelectedConcerts { get; set; } = new ObservableCollection<Concert>();
         public ObservableCollection<Performance> AllPerformances { get; set; } = new ObservableCollection<Performance>();
         public CheckoutViewModel(BookingService bookingService)
         {
             _bookingService = bookingService;
-            _concertViewModel = new ConcertOverviewViewModel();
             LoadBookings();
+            FlattenedBookingPerformances = new ObservableCollection<BookingPerformance>
+            (
+                AllBookings.SelectMany(x => x.BookingPerformances)
+            );
             UpdatePrice();
         }
 
@@ -71,7 +78,6 @@ namespace ConcertBookingApp.ViewModels
 
             List<Performance> findPerformances = AllBookings.SelectMany(a => a.BookingPerformances).Select(a => a.Performance).ToList();
             List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
-            List<Concert> allConcerts = _concertViewModel.Concerts.ToList();
             List<Concert> matchingConcerts = allConcerts.Where(a => findPerformances.Any(b => b.ConcertId == a.ConcertId)).ToList();
             foreach (Concert concert in matchingConcerts)
                 SelectedConcerts.Add(concert);
@@ -103,26 +109,26 @@ namespace ConcertBookingApp.ViewModels
         }
 
         [RelayCommand]
-        void IncreaseQuantity(Performance performance)
+        void IncreaseQuantity(BookingPerformance performance)
         {
-            BookingPerformance findPerformances = AllBookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performance.PerformanceId);
-            findPerformances.SeatsBooked++;
-            findPerformances.Performance.AvailableSeats--;
-            if (findPerformances.Performance.AvailableSeats == 0)
+            //BookingPerformance findPerformances = AllBookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performance.PerformanceId);
+            performance.SeatsBooked++;
+            performance.Performance.AvailableSeats--;
+            if (performance.Performance.AvailableSeats == 0)
                 AddTicketsVisible = false;
             _ = UpdatePrice();
         }
 
         [RelayCommand]
-        void DecreaseQuantity(Performance performance)
+        void DecreaseQuantity(BookingPerformance performance)
         {
-            BookingPerformance findPerformances = AllBookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performance.PerformanceId);
-            findPerformances.SeatsBooked--;
-            findPerformances.Performance.AvailableSeats++;
-            if (findPerformances.SeatsBooked == 0)
+            //BookingPerformance findPerformances = AllBookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performance.PerformanceId);
+            performance.SeatsBooked--;
+            performance.Performance.AvailableSeats++;
+            if (performance.SeatsBooked == 0)
             {
                 Booking findBooking = _bookingService.Bookings.FirstOrDefault(a => a.Performances.Any(b => b.PerformanceId == performance.PerformanceId));
-                AllPerformances.Remove(performance);
+                AllPerformances.Remove(performance.Performance);
                 if (findBooking != null)
                     if (!findBooking.BookingPerformances.Any())
                     {
