@@ -48,10 +48,10 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             new Concert
             {
                 ConcertId = 2, Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
-                Genre = "Jazz", ImageUrl = "edm.png", Name = "Starlight Pop Jazz",
+                Genre = "Jazz", ImageUrl = "testconcert.png", Name = "Starlight Pop Jazz",
                 Performances = new List<Performance>()
                 {
-                    new Performance{ AvailableSeats = 100, ConcertId = 2, Date = DateTime.Parse("2024-10-04")}
+                    new Performance{TotalSeats = 150, AvailableSeats = 100, ConcertId = 2, Date = DateTime.Parse("2024-10-04"), Location = "Aspvägen", Price = 100, PerformanceId = 4}
                 }
             },
             new Concert
@@ -60,11 +60,9 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                 Genre = "Classical", ImageUrl = "edm.png", Name = "Classical",
                 Performances = new List<Performance>()
                 {
-                    new Performance{ AvailableSeats = 100, ConcertId = 3, Date = DateTime.Parse("2025-09-22")}
+                    new Performance{TotalSeats = 150, AvailableSeats = 100, ConcertId = 3, Date = DateTime.Parse("2025-09-22"), Location = "Aspvägen", Price = 100, PerformanceId = 5}
                 }
             }
         };
-
-     
     }
 }

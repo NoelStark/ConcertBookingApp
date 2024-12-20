@@ -18,5 +18,8 @@ namespace ConcertBookingApp.Models
         [ObservableProperty]
         private int availableSeats = 0;
         public double Price { get; set; } = 0;
+        public Concert Concert { get; set; }
+
+        public BookingPerformance BookingPerformance { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace ConcertBookingApp.Models
 
         [ObservableProperty] private bool isFavorite = false;
         public List<Performance> Performances { get; set; } = new List<Performance>();
+        
 
     }
 }

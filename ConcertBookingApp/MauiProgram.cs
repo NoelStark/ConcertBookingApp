@@ -27,7 +27,7 @@ namespace ConcertBookingApp
             builder.Services.AddSingleton<ConcertOverviewViewModel>();
             builder.Services.AddSingleton<ConcertDetailsViewModel>();
             builder.Services.AddSingleton<ConcertDetailsPage>();
-            builder.Services.AddSingleton<CheckoutPage>();
+            builder.Services.AddTransient<CheckoutPage>();
             builder.Services.AddTransient<CheckoutViewModel>();
             builder.Services.AddSingleton<BookingService>();
             Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("NoUnderline", (h, v) =>

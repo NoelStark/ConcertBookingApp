@@ -59,21 +59,12 @@ namespace ConcertBookingApp.ViewModels
         }
         private async Task LoadPerfomances()
         {
-            //Fast hämta från databasen
             AllPerformancesForConcert.Clear();
             List<Performance> result = Concert.Performances.Where(a => a.ConcertId.Equals(Performance.ConcertId)).ToList();
             foreach (Performance item in result)
             {
                 AllPerformancesForConcert.Add(new BookingPerformance{Performance = item});
             }
-            //Test.Add(new BookingPerformance
-            //{
-            //    Booking = booking2,
-            //    Performance = AllPerformancesForConcert[0],
-            //    BookingId = booking2.BookingId,
-            //    PerformanceId = AllPerformancesForConcert[0].PerformanceId
-            //});
-            //OnPropertyChanged(nameof(AmountOfTickets));
         }
 
         private void UpdateButton()
@@ -95,9 +86,6 @@ namespace ConcertBookingApp.ViewModels
             if(bookingPerformance.Performance.AvailableSeats == 0)
                 AddTicketsVisible = false;
             UpdateButton();
-
-            //BookingPerformance result = AllPerformancesForConcert.FirstOrDefault(a => a.PerformanceId == bookingPerformance.PerformanceId);
-            //int index = AllPerformancesForConcert.IndexOf(result);
         }
 
         [RelayCommand]
@@ -105,7 +93,6 @@ namespace ConcertBookingApp.ViewModels
         {
             if (bookingPerformance.SeatsBooked > 0)
             { 
-                string value = "Decrease";
                 bookingPerformance.SeatsBooked--;
                 bookingPerformance.Performance.AvailableSeats++;
                 AddTicketsVisible = true;
@@ -116,16 +103,18 @@ namespace ConcertBookingApp.ViewModels
         [RelayCommand]
         private async Task BuyTickets()
         {
+            List<BookingPerformance> hasse = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
+
             bookingService.Bookings.Add(new Booking
             {
-                BookingPerformances = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList()
-            });
-            //string serializedBookings = JsonSerializer.Serialize(bookingService.Bookings);
-            //string encodedBookings = Uri.EscapeDataString(serializedBookings);
-            await Shell.Current.GoToAsync(nameof(CheckoutPage));
-            //await Shell.Current.GoToAsync($"///BookingsPage?bookings={encodedBookings}");
-        }
+                BookingPerformances = new List<BookingPerformance>(hasse)
 
-        //On
+            });
+            //bookingService.Bookings.Add(new Booking
+            //{
+            //    BookingPerformances = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList()
+            //});
+            await Shell.Current.GoToAsync(nameof(CheckoutPage));
+        }
     }
 }
