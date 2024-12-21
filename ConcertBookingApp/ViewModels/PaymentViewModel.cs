@@ -29,6 +29,7 @@ namespace ConcertBookingApp.ViewModels
 
         //Payment Information
         [ObservableProperty] private bool isValidCard = false;
+        [ObservableProperty] private bool isValidDate = false;
         [ObservableProperty] private bool agreeToTerms = false;
 
         [ObservableProperty] private bool showDateError = false;
@@ -59,6 +60,7 @@ namespace ConcertBookingApp.ViewModels
             { "Maestro", new Regex(@"^(50|5[6-9]|6[0-9])\d{10,17}$") },
             { "Mastercard", new Regex(@"^(5[1-5])\d{14}$") },
             { "Visa", new Regex(@"^(4)\d{11,17}$") },
+            { "Expire", new Regex(@"^[0-9]\d{0,3}$")}
         };
 
         private readonly Dictionary<string, string> _lastValidValues = new Dictionary<string, string>
@@ -67,7 +69,9 @@ namespace ConcertBookingApp.ViewModels
             { "LastName", string.Empty },
             { "Email", string.Empty },
             { "Name", string.Empty },
-            { "CreditCard", string.Empty}
+            { "CreditCard", string.Empty},
+            { "CVC", string.Empty},
+            { "Date", string.Empty},
         };
 
         partial void OnNameChanged(string value)
@@ -88,21 +92,29 @@ namespace ConcertBookingApp.ViewModels
                 _lastValidValues["FirstName"] = validatedInput;
                 FirstName = _lastValidValues["FirstName"];
             }
-            //ValidateForm();
         }
 
         partial void OnLastNameChanged(string value)
         {
             _lastValidValues["LastName"] = ValidateInput(value, _regexPatterns["Name"], _lastValidValues["LastName"]);
             LastName = _lastValidValues["LastName"];
-            //ValidateForm();
         }
 
         partial void OnEmailChanged(string value)
         {
             _lastValidValues["Email"] = ValidateInput(value, _regexPatterns["Email"], _lastValidValues["Email"]);
             Email = _lastValidValues["Email"];
-            //ValidateForm();
+        }
+
+        partial void OnCVCChanged(string value)
+        {
+            if (value.Length <= 3)
+            {
+                CVC = value;
+                _lastValidValues["CVC"] = value;
+            }
+            else
+                CVC = _lastValidValues["CVC"];
         }
 
 
@@ -124,6 +136,82 @@ namespace ConcertBookingApp.ViewModels
             UpdateCardType(formatValue);
             _isCreditUpdating = false;
         }
+
+        partial void OnExpireDateChanged(string value)
+        {
+
+            if (string.IsNullOrEmpty(value)) return;
+
+            string parsedValue = value.Replace("/", "");
+            string dateToday = DateTime.Now.ToString("MM/YY");
+            DateTime currentDate = DateTime.ParseExact(dateToday, "MM/YY", null);
+
+            value = FormattedDate(value);
+            if (_regexPatterns["Expire"].IsMatch(parsedValue) && parsedValue.Length <= 4)
+            {
+                _lastValidValues["Date"] = value;
+                if (IsValidExpire(value, currentDate, out DateTime parsedDate))
+                {
+                    UpdateValidDate(value);
+                }
+                else
+                    UpdateInvalidDate();
+
+            }
+            else
+                ExpireDate = _lastValidValues["Date"];
+        }
+
+        private string FormattedDate(string value)
+        {
+            int index = 2;
+
+            if (value.Length < _lastValidValues["Date"].Length && value.EndsWith("/"))
+            {
+                value = value.Substring(0, value.Length - 1);
+            }
+            else if (value.Length > _lastValidValues["Date"].Length && !value.Contains("/"))
+            {
+                if (value.Length == 2)
+                    value += "/";
+                else if (value.Length == 3)
+                {
+                    value = value.Substring(0, index) + "/" + value.Substring(index);
+                }
+
+            }
+
+            return value;
+
+        }
+
+        private bool IsValidExpire(string value, DateTime currentDate, out DateTime parsedDate)
+        {
+            parsedDate = DateTime.MinValue;
+            return value.Length == 5 &&
+                   DateTime.TryParseExact(value, "MM/yy", null, System.Globalization.DateTimeStyles.None,
+                       out parsedDate) &&
+                   parsedDate >= currentDate &&
+                   parsedDate <= currentDate.AddYears(10); 
+        }
+
+        private void UpdateInvalidDate()
+        {
+            IsValidDate = false;
+            DateValidation.BorderColor = _red;
+            ShowDateError = true;
+            ExpireDate = _lastValidValues["Date"];
+        }
+
+        private void UpdateValidDate(string value)
+        {
+            IsValidDate = true;
+            DateValidation.BorderColor = _grey;
+            ShowDateError = false;
+            ExpireDate = value;
+
+        }
+
         private string FormatCreditCardNumber(string value)
         {
             StringBuilder builder = new StringBuilder();
@@ -170,8 +258,16 @@ namespace ConcertBookingApp.ViewModels
                     return input;
                 }
             }
+            ValidateForm();
 
             return lastValidValue;
+        }
+
+        private void ValidateForm()
+        {
+            var t = IsValidCard && IsValidDate && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName) &&
+                    !string.IsNullOrEmpty(Email);
+            Console.WriteLine();
         }
 
         [RelayCommand]

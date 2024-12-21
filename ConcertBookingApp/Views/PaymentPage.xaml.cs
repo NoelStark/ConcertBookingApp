@@ -17,6 +17,8 @@ public partial class PaymentPage : ContentPage
         Entry? entry = null;
         if (e.PropertyName == nameof(PaymentViewModel.CreditCardNumber))
             entry = CreditCardNumber;
+        if (e.PropertyName == nameof(PaymentViewModel.ExpireDate))
+            entry = ExpireDateEntry;
         if (entry != null)
         {
             Dispatcher.Dispatch(() =>
