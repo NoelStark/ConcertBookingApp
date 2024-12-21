@@ -30,6 +30,7 @@ namespace ConcertBookingApp.ViewModels
         //Payment Information
         [ObservableProperty] private bool isValidCard = false;
         [ObservableProperty] private bool isValidDate = false;
+        [ObservableProperty] private bool isValidCVC = false;
         [ObservableProperty] private bool agreeToTerms = false;
 
         [ObservableProperty] private bool showDateError = false;
@@ -112,6 +113,8 @@ namespace ConcertBookingApp.ViewModels
             {
                 CVC = value;
                 _lastValidValues["CVC"] = value;
+                if (value.Length == 3)
+                    IsValidCVC = true;
             }
             else
                 CVC = _lastValidValues["CVC"];
@@ -265,7 +268,7 @@ namespace ConcertBookingApp.ViewModels
 
         private void ValidateForm()
         {
-            var t = IsValidCard && IsValidDate && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName) &&
+            var t = IsValidCard && IsValidDate && IsValidCVC && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName) &&
                     !string.IsNullOrEmpty(Email);
             Console.WriteLine();
         }
