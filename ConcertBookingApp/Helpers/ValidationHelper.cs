@@ -9,7 +9,7 @@ namespace ConcertBookingApp.Helpers
 {
     public static class ValidationHelper
     {
-        private static readonly Dictionary<string, Regex> _regexPatterns = new Dictionary<string, Regex>
+        private static readonly Dictionary<string, Regex> RegexPatterns = new Dictionary<string, Regex>
         {
             { "Email", new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$") },
             { "Name", new Regex(@"^[a-z\s]+$", RegexOptions.IgnoreCase) },
@@ -22,21 +22,12 @@ namespace ConcertBookingApp.Helpers
         public static bool ValidateInput(string input, string fieldType, string lastValidValue, out string validatedValue)
         {
             string formatted = input.Replace(" ", "");
-            if (_regexPatterns.ContainsKey(fieldType) && _regexPatterns[fieldType].IsMatch(formatted))
+            if (RegexPatterns.ContainsKey(fieldType) && RegexPatterns[fieldType].IsMatch(formatted))
             {
                 validatedValue = input;
                 return true;
             }
-            //if (regex.IsMatch(formatted))
-            //{
-            //    if (!formatted.EndsWith(" ") && !lastValidValue.EndsWith(" "))
-            //    {
-            //        ValidateForm();
-            //        return input;
-            //    }
-            //}
-
-            //return lastValidValue;
+           
             validatedValue = lastValidValue;
             return false;
         }
@@ -44,7 +35,7 @@ namespace ConcertBookingApp.Helpers
         public static string GetCardType(string value)
         {
             var formatString = value.Replace(" ", "");
-            return _regexPatterns.FirstOrDefault(x => x.Key != "Email" && x.Key != "Name" && x.Key != "Expire" && x.Value.IsMatch(formatString)).Key ?? string.Empty;
+            return RegexPatterns.FirstOrDefault(x => x.Key != "Email" && x.Key != "Name" && x.Key != "Expire" && x.Value.IsMatch(formatString)).Key ?? string.Empty;
 
         }
         public static bool IsValidExpire(string value, DateTime currentDate, out DateTime parsedDate)
