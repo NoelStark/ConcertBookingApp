@@ -47,7 +47,7 @@
             <syncfusion:SfCalendar x:Name="calendar" 
                                    SelectionMode="Range" IsVisible="{Binding IsVisible}"
                                    SelectedDateRange="{Binding RangeSelected, Mode=TwoWay}"
-                                   Grid.Row="2" Margin="0,0,0,0">
+                                   Grid.Row="2" Margin="0,0,0,120" >
                 <syncfusion:SfCalendar.Behaviors>
                     <behaviors:EventToCommandBehavior EventName="SelectionChanged"
                                                       Command="{Binding SelectionChangedCommand}"
