@@ -11,8 +11,6 @@ using Microsoft.Extensions.Primitives;
 
 namespace ConcertBookingApp.ViewModels.PaymentViewModels
 {
-    
-
     public partial class ValidationState : ObservableObject
     {
         [ObservableProperty]
@@ -162,26 +160,21 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
 
             if (string.IsNullOrEmpty(value)) return;
 
-            // Remove slashes and prepare the date for parsing
             string parsedValue = value.Replace("/", "");
             DateTime currentDate = DateTime.Now;
 
-            // Format the input value (e.g., add slashes where necessary)
             value = PaymentUtils.FormattedDate(value, _lastValidValues["Date"]);
 
-            // Check if the parsed value matches the "Expire" regex and has valid length
             if (ValidationHelper.ValidateInput(parsedValue, "Expire", _lastValidValues["Date"], out string validatedValue) &&
                 parsedValue.Length <= 4)
             {
                 _lastValidValues["Date"] = value;
 
-                // Validate the expiry date and update the UI state
                 bool isValid = ValidationHelper.IsValidExpire(value, currentDate, out DateTime parsedDate);
                 UpdateDate(isValid);
             }
             else
             {
-                // Revert to the last valid date if invalid
                 ExpireDate = _lastValidValues["Date"];
             }
         }
