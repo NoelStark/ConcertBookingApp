@@ -28,43 +28,27 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         {
             string validatedInput;
             bool isValid = ValidationHelper.ValidateInput(value, "Name", _lastValidValues["Name"], out validatedInput);
-            if (isValid)
-            {
-                _lastValidValues["Name"] = validatedInput;
-                Name = validatedInput;
-            }
+            if (!isValid) return;
+            _lastValidValues["Name"] = validatedInput;
+            Name = validatedInput;
         }
 
         partial void OnFirstNameChanged(string value)
         {
             string validatedInput;
             bool isValid = ValidationHelper.ValidateInput(value, "Name", _lastValidValues["FirstName"], out validatedInput);
-            if (isValid)
-            {
-                _lastValidValues["FirstName"] = validatedInput;
-                FirstName = validatedInput;
-            }
-
-            //var validatedInput = ValidateInput(value, _regexPatterns["Name"], _lastValidValues["FirstName"]);
-            //if (validatedInput == FirstName) return;
-            //_lastValidValues["FirstName"] = validatedInput;
-            //FirstName = _lastValidValues["FirstName"];
+            if (!isValid) return;
+            _lastValidValues["FirstName"] = validatedInput;
+            FirstName = validatedInput;
         }
 
         partial void OnLastNameChanged(string value)
         {
             string validatedInput;
             bool isValid = ValidationHelper.ValidateInput(value, "Name", _lastValidValues["LastName"], out validatedInput);
-            if (isValid)
-            {
-                _lastValidValues["LastName"] = validatedInput;
-                LastName = validatedInput;
-            }
-
-            //var validatedInput = ValidateInput(value, _regexPatterns["Name"], _lastValidValues["LastName"]);
-            //if (validatedInput == LastName) return;
-            //_lastValidValues["LastName"] = validatedInput;
-            //LastName = _lastValidValues["LastName"];
+            if (!isValid) return;
+            _lastValidValues["LastName"] = validatedInput;
+            LastName = validatedInput;
         }
 
         partial void OnEmailChanged(string value)
@@ -227,7 +211,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
 
         private void ValidateForm()
         {
-            var t = IsValidCard && IsValidDate && IsValidCVC && IsValidEmail && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName);
+            var isValidForm = IsValidCard && IsValidDate && IsValidCVC && IsValidEmail && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName);
             Console.WriteLine();
         }
 
