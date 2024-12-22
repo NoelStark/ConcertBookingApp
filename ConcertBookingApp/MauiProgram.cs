@@ -2,6 +2,7 @@
 using ConcertBookingApp.Services;
 using ConcertBookingApp.ViewModels;
 using ConcertBookingApp.ViewModels.ConcertsOverviewViewModels;
+using ConcertBookingApp.ViewModels.PaymentViewModels;
 using ConcertBookingApp.Views;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;

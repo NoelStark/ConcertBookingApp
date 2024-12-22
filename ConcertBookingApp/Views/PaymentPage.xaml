@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels"
-             x:DataType="vm:PaymentViewModel"
+             xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels.PaymentViewModels"
+             x:DataType="paymentViewModels:PaymentViewModel"
              x:Class="ConcertBookingApp.Views.PaymentPage"
              xmlns:converters="clr-namespace:ConcertBookingApp.Converters"
+             xmlns:paymentViewModels="clr-namespace:ConcertBookingApp.ViewModels.PaymentViewModels"
              Title="PaymentPage">
     <ContentPage.Resources>
         <converters:BoolToOppositeConverter x:Key="BoolToOpposite"/>
@@ -47,7 +48,7 @@
                     <Label Text="Invalid email" TextColor="Red" IsVisible="{Binding ShowErrorEmail}" HorizontalOptions="End"/>
                     <Label Text="Email" FontSize="16" FontAttributes="Bold"></Label>
                 </Grid>
-                <Frame BorderColor="#C8C8C8" CornerRadius="5" Padding="0">
+                <Frame BorderColor="{Binding EmailValidation.BorderColor}" CornerRadius="5" Padding="0">
                     <Entry Placeholder="example@gmail.com" Text="{Binding Email}"/>
                 </Frame>
             </VerticalStackLayout>
@@ -110,7 +111,7 @@
                             <Label Text="Invalid Date" TextColor="Red" IsVisible="{Binding ShowDateError}" HorizontalOptions="End"/>
                         </Grid>
 
-                        <Frame HeightRequest="50" WidthRequest="160" BorderColor="#C8C8C8">
+                        <Frame HeightRequest="50" WidthRequest="160" BorderColor="{Binding DateValidation.BorderColor}">
                             <Entry x:Name="ExpireDateEntry" Keyboard="Numeric" Placeholder="MM/YY" VerticalOptions="Center" HeightRequest="50" Text="{Binding ExpireDate}"></Entry>
                         </Frame>
                     </VerticalStackLayout>
@@ -120,7 +121,7 @@
                             <Label Text="CVC"/>
                             <Label Text="Invalid CVC" IsVisible="{Binding ShowCVCError}" HorizontalOptions="End" TextColor="Red"/>
                         </Grid>
-                        <Frame HeightRequest="50" WidthRequest="160" BorderColor="#C8C8C8">
+                        <Frame HeightRequest="50" WidthRequest="160" BorderColor="{Binding SecurityValidation.BorderColor}">
                             <Entry Placeholder="xxx" Keyboard="Numeric" VerticalOptions="Center" HeightRequest="50" Text="{Binding CVC}"></Entry>
                         </Frame>
 
