@@ -24,36 +24,38 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
 
         partial void OnNameChanged(string value)
         {
-            string validatedInput;
-            bool isValid = ValidationHelper.ValidateInput(value, "Name", _lastValidValues["Name"], out validatedInput);
-            if (!isValid) return;
-            _lastValidValues["Name"] = validatedInput;
-            Name = validatedInput;
+            ValidateAndSetValue("Name", value, "Name", x => Name = x);
         }
 
         partial void OnFirstNameChanged(string value)
         {
-            string validatedInput;
-            bool isValid = ValidationHelper.ValidateInput(value, "Name", _lastValidValues["FirstName"], out validatedInput);
-            if (!isValid) return;
-            _lastValidValues["FirstName"] = validatedInput;
-            FirstName = validatedInput;
+            ValidateAndSetValue("FirstName", value, "Name", x => FirstName = x);
         }
 
         partial void OnLastNameChanged(string value)
         {
-            string validatedInput;
-            bool isValid = ValidationHelper.ValidateInput(value, "Name", _lastValidValues["LastName"], out validatedInput);
-            if (!isValid) return;
-            _lastValidValues["LastName"] = validatedInput;
-            LastName = validatedInput;
+            ValidateAndSetValue("LastName", value, "Name", x => LastName = x);
+        }
+
+        private void ValidateAndSetValue(string key, string value, string validationType, Action<string> setterAction)
+        {
+            bool isValid =
+                ValidationHelper.ValidateInput(value, validationType, _lastValidValues[key], out var validatedInput);
+            if (isValid)
+            {
+                _lastValidValues[key] = validatedInput;
+                setterAction(validatedInput);
+            }
+            else
+            {
+                setterAction(_lastValidValues[key]);
+            }
         }
 
         partial void OnEmailChanged(string value)
         {
             Email = value;
-            string validatedInput;
-            bool isValid = ValidationHelper.ValidateInput(value, "Email", _lastValidValues["Email"], out validatedInput);
+            bool isValid = ValidationHelper.ValidateInput(value, "Email", _lastValidValues["Email"], out string validatedInput);
             UpdateEmail(isValid);
         }
 
