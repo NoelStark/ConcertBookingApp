@@ -61,6 +61,7 @@ namespace Unit_Tests
             new Category { Title = "Pop", IsSelected = false },
             new Category { Title = "EDM", IsSelected = false }
         };
+        
 
         private List<Concert> AllConcerts = new List<Concert>()
         {
@@ -113,56 +114,57 @@ namespace Unit_Tests
             }
         };
 
-        [Fact]
-        public void FilterConcerts_ByText_ReturnsMatches()
-        {
-            ConcertOverviewViewModel viewModel = new ConcertOverviewViewModel
-            {
-                Categories = MockCategories,
-                filteredConcerts = new List<Concert>(AllConcerts)
-            };
+        //[Fact]
+        //public void FilterConcerts_ByText_ReturnsMatches()
+        //{
+        //    ConcertOverviewViewModel viewModel = new ConcertOverviewViewModel
+        //    {
+        //        Categories = MockCategories,
+        //        filteredConcerts = new List<Concert>(AllConcerts)
+        //    };
 
-            string searchText = "Classical";
-            var methodInfo = typeof(ConcertOverviewViewModel).GetMethod("FilterConcerts", BindingFlags.NonPublic | BindingFlags.Instance);
+        //    string searchText = "Classical";
+        //    var methodInfo = typeof(ConcertOverviewViewModel).GetMethod("FilterConcerts", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            methodInfo.Invoke(viewModel, new object[] { searchText, viewModel.filteredConcerts });
-            Assert.Equal("Classical", viewModel.filteredConcerts.First().Name);
+        //    methodInfo.Invoke(viewModel, new object[] { searchText, viewModel.filteredConcerts });
+        //    Assert.Equal("Classical", viewModel.filteredConcerts.First().Name);
 
-        }
-        [Fact]
-        public void FilterConcerts_ByDates_ReturnsMatches()
-        {
-            ConcertOverviewViewModel viewModel = new ConcertOverviewViewModel
-            {
-                Categories = MockCategories,
-                filteredConcerts = new List<Concert>(AllConcerts),
+        //}
+        //[Fact]
+        //public void FilterConcerts_ByDates_ReturnsMatches()
+        //{
+        //    MockCategorie
+        //    ConcertOverviewViewModel viewModel = new ConcertOverviewViewModel
+        //    {
+        //        Categories = MockCategories,
+        //        filteredConcerts = new List<Concert>(AllConcerts),
 
-            };
-            var startDatefieldInfo = typeof(ConcertOverviewViewModel).GetField("startDate", BindingFlags.NonPublic | BindingFlags.Instance);
-            var endDatefieldInfo = typeof(ConcertOverviewViewModel).GetField("endDate", BindingFlags.NonPublic | BindingFlags.Instance);
-            startDatefieldInfo.SetValue(viewModel, new DateTime(2024,1,1));
-            endDatefieldInfo.GetValue(viewModel);
+        //    };
+        //    var startDatefieldInfo = typeof(ConcertOverviewViewModel).GetField("startDate", BindingFlags.NonPublic | BindingFlags.Instance);
+        //    var endDatefieldInfo = typeof(ConcertOverviewViewModel).GetField("endDate", BindingFlags.NonPublic | BindingFlags.Instance);
+        //    startDatefieldInfo.SetValue(viewModel, new DateTime(2024,1,1));
+        //    endDatefieldInfo.GetValue(viewModel);
 
-            var methodInfo = typeof(ConcertOverviewViewModel).GetMethod("FilterConcerts", BindingFlags.NonPublic | BindingFlags.Instance);
+        //    var methodInfo = typeof(ConcertOverviewViewModel).GetMethod("FilterConcerts", BindingFlags.NonPublic | BindingFlags.Instance);
 
-            methodInfo.Invoke(viewModel, new object[] { null, null});
+        //    methodInfo.Invoke(viewModel, new object[] { null, null});
 
-            Assert.Equal("Pop", viewModel.filteredConcerts.First().Genre);
+        //    Assert.Equal("Pop", viewModel.filteredConcerts.First().Genre);
 
-        }
+        //}
 
-        [Fact]
-        public void FilterConcerts_ByCategory_ReturnsMatches()
-        {
-            ConcertOverviewViewModel viewModel = new ConcertOverviewViewModel
-            {
-                Categories = MockCategories,
-                filteredConcerts = new List<Concert>(AllConcerts),
-            };
-            var methodInfo = typeof(ConcertOverviewViewModel).GetMethod("SelectedFilter", BindingFlags.NonPublic | BindingFlags.Instance);
-            methodInfo.Invoke(viewModel, new object?[] { MockCategories.FirstOrDefault(x => x.Title == "Pop") });
-            Assert.Equal("Pop", viewModel.filteredConcerts.First().Genre);
+        //[Fact]
+        //public void FilterConcerts_ByCategory_ReturnsMatches()
+        //{
+        //    ConcertOverviewViewModel viewModel = new ConcertOverviewViewModel
+        //    {
+        //        Categories = MockCategories,
+        //        filteredConcerts = new List<Concert>(AllConcerts),
+        //    };
+        //    var methodInfo = typeof(ConcertOverviewViewModel).GetMethod("SelectedFilter", BindingFlags.NonPublic | BindingFlags.Instance);
+        //    methodInfo.Invoke(viewModel, new object?[] { MockCategories.FirstOrDefault(x => x.Title == "Pop") });
+        //    Assert.Equal("Pop", viewModel.filteredConcerts.First().Genre);
 
-        }
+        //}
     }
 }

@@ -9,6 +9,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using AutoMapper;
+using ConcertBookingApp.DTOs;
 using ConcertBookingApp.Services;
 using ConcertBookingApp.Views;
 
@@ -18,11 +20,12 @@ namespace ConcertBookingApp.ViewModels
     public partial class ConcertDetailsViewModel : ObservableObject
     {
         private readonly BookingService bookingService;
+        private readonly ConcertService _concertService;
         [ObservableProperty]
         private Concert concert;
 
         [ObservableProperty]
-        private Performance performance;
+        private PerformanceDTO performance;
 
         [ObservableProperty]
         private Booking booking;
@@ -51,17 +54,23 @@ namespace ConcertBookingApp.ViewModels
                 {
                     ReferenceHandler = ReferenceHandler.Preserve
                 };
-                Concert = JsonSerializer.Deserialize<Concert>(decoded,options);
-                Performance = Concert.Performances.FirstOrDefault(a => a.ConcertId == Concert.ConcertId);
+                var concertDTO = JsonSerializer.Deserialize<ConcertDTO>(decoded,options);
+                Concert = _mapper.Map<Concert>(concertDTO);
+                var performanceDTOs = _concertService.GetPerformancesForConcert(Concert.ConcertId);
+                Performance = performanceDTOs.FirstOrDefault(x => x.ConcertId == Concert.ConcertId);
+                Concert.Performances = _mapper.Map<List<Performance>>(performanceDTOs);
                 AmountOfTickets = 0;
                 _ = LoadPerfomances();
                 UpdateButton();
             }
         }
 
-        public ConcertDetailsViewModel(BookingService bookingservice)
+        private readonly IMapper _mapper;
+        public ConcertDetailsViewModel(BookingService bookingservice, ConcertService concertService, IMapper mapper)
         {
             bookingService = bookingservice;
+            _concertService = concertService;
+            _mapper = mapper;
         }
         private async Task LoadPerfomances()
         {

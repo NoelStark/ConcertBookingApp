@@ -18,7 +18,7 @@
                         <Frame HeightRequest="170" Margin="20,10,20,0">
                             <HorizontalStackLayout Spacing="40">
                                 <VerticalStackLayout>
-                                    <Image Source="{Binding Performance.Concert.ImageUrl}" HeightRequest="80" WidthRequest="120" VerticalOptions="Start" HorizontalOptions="Start"/>
+                                    <Image Source="{Binding ImageURL}" HeightRequest="80" WidthRequest="120" VerticalOptions="Start" HorizontalOptions="Start"/>
 
                                     <Frame HeightRequest="35" WidthRequest="120" Padding="0" Margin="0,10,0,0" BorderColor="DimGray" VerticalOptions="Start" HorizontalOptions="Start">
                                         <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">

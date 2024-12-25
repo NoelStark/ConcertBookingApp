@@ -6,40 +6,36 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ConcertBookingApp.DTOs;
 using ConcertBookingApp.Models;
+using ConcertBookingApp.Services;
 
 namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 {
     public partial class ConcertOverviewViewModel : ObservableObject
     {
-        public ConcertOverviewViewModel()
+        private readonly IMapper _mapper;
+        private List<ConcertDTO> _concertDTOs;
+        private readonly ConcertService _concertService;
+        public List<Concert> filteredConcerts;
+
+        public ConcertOverviewViewModel(ConcertService concertService, IMapper mapper)
         {
-            AllConcerts[0].Performances = new List<Performance>()
-            {
-                new Performance{ TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 100, PerformanceId = 1, Concert = AllConcerts[0]},
-                new Performance{ TotalSeats = 150, AvailableSeats = 150, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 200, PerformanceId = 2, Concert = AllConcerts[0]},
-                new Performance{ TotalSeats = 200, AvailableSeats = 200, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 300, PerformanceId = 3, Concert = AllConcerts[0]}
-            };
+            _mapper = mapper;
+            _concertService = concertService;
+            _concertDTOs = _concertService.GetAllConcerts();
+            concerts = _mapper.Map<List<Concert>>(_concertDTOs).ToList();
 
-            AllConcerts[1].Performances = new List<Performance>()
-            {
-                new Performance{ TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 100, PerformanceId = 1, Concert = AllConcerts[0]},
-                new Performance{ TotalSeats = 150, AvailableSeats = 150, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 200, PerformanceId = 2, Concert = AllConcerts[0]},
-                new Performance{ TotalSeats = 200, AvailableSeats = 200, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 300, PerformanceId = 3, Concert = AllConcerts[0]}
-            };
 
-            AllConcerts[2].Performances = new List<Performance>()
-            {
-                new Performance{ TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 100, PerformanceId = 1, Concert = AllConcerts[0]},
-                new Performance{ TotalSeats = 150, AvailableSeats = 150, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 200, PerformanceId = 2, Concert = AllConcerts[0]},
-                new Performance{ TotalSeats = 200, AvailableSeats = 200, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen", Price = 300, PerformanceId = 3, Concert = AllConcerts[0]}
-            };
-            UpdateConcerts(AllConcerts);
+            Concerts = new ObservableCollection<ConcertDTO>(_concertDTOs);
+            filteredConcerts = new List<Concert>(concerts);
+            UpdateConcerts(_concertDTOs);
         }
 
-        private void UpdateConcerts(List<Concert> concerts)
+        private void UpdateConcerts(List<ConcertDTO> concerts)
         {
             Concerts.Clear();
             foreach (var concert in concerts)
@@ -52,10 +48,9 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             OnPropertyChanged(nameof(ConcertCount));
         }
 
-        public List<Concert> filteredConcerts = new List<Concert>(AllConcerts);
         private void FilterConcerts(string? searchText = null, List<Concert>? concerts = null)
         {
-            concerts ??= AllConcerts;
+            concerts ??= this.concerts;
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -76,9 +71,9 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                 concerts = concerts.Where(c =>
                     selectedCategories.Any(category => category.Title == c.Genre)).ToList();
             }
-
             filteredConcerts = concerts;
-            UpdateConcerts(filteredConcerts);
+            var DTOs = _mapper.Map<List<ConcertDTO>>(filteredConcerts);
+            UpdateConcerts(DTOs);
         }
 
 

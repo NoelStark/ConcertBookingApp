@@ -1,4 +1,5 @@
 using ConcertBookingApp.ViewModels;
+using ConcertBookingApp.ViewModels.PaymentViewModels;
 
 namespace Unit_Tests
 {
