@@ -48,8 +48,11 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
             }
             else
             {
-                setterAction(_lastValidValues[key]);
+                if(!string.IsNullOrEmpty(value))
+                    setterAction(_lastValidValues[key]);
             }
+            ValidateForm();
+
         }
 
         partial void OnEmailChanged(string value)
@@ -83,6 +86,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
                 border.BorderColor = _red;
                 SetFieldState(fieldType, false, true);
             }
+            ValidateForm();
         }
 
         private void SetFieldState(string fieldType, bool isValid, bool showError)
@@ -206,8 +210,16 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
 
         private void ValidateForm()
         {
-            var isValidForm = IsValidCard && IsValidDate && IsValidCVC && IsValidEmail && !string.IsNullOrEmpty(Name) && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName);
-            Console.WriteLine();
+            if (shouldSwitchSection)
+            {
+                IsValidForm = IsValidEmail && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName);
+            }
+            else
+            {
+                shouldSwitchSection = false;
+                IsValidForm = IsValidCard && IsValidDate && IsValidCVC && !string.IsNullOrEmpty(Name);
+            }
+            SavePersonCommand.NotifyCanExecuteChanged();
         }
 
      

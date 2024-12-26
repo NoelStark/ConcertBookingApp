@@ -14,6 +14,9 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         void Edit()
         {
             IsVisible = !IsVisible;
+            shouldSwitchSection = true;
+            ValidateForm();
+
         }
 
         [RelayCommand]
@@ -21,10 +24,14 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         {
 
         }
-        [RelayCommand]
-        void SavePerson()
+        [RelayCommand(CanExecute = nameof(IsValidForm))]
+        async void SavePerson()
         {
+            if (!shouldSwitchSection)
+                await Shell.Current.GoToAsync("///ConcertOverviewPage");
+            shouldSwitchSection = !shouldSwitchSection;
             IsVisible = !IsVisible;
+            ValidateForm();
         }
     }
 }

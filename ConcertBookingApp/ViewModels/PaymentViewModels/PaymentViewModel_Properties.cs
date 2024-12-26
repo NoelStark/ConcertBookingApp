@@ -46,6 +46,9 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         private readonly Color _red = Color.FromArgb("D22B2B");
         private readonly Color _grey = Color.FromArgb("C8C8C8");
         private bool _isCreditUpdating = false;
+        private bool shouldSwitchSection = true;
+        [ObservableProperty]
+        private bool isValidForm = false;
 
 
         private readonly Dictionary<string, string> _lastValidValues = new Dictionary<string, string>
