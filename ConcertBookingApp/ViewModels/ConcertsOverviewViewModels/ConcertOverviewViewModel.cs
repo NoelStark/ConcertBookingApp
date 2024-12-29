@@ -26,11 +26,16 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         {
             _mapper = mapper;
             _concertService = concertService;
-            _concertDTOs = _concertService.GetAllConcerts();
-            concerts = _mapper.Map<List<Concert>>(_concertDTOs).ToList();
+            Initialize();
 
 
+        }
+
+        private async Task Initialize()
+        {
+            _concertDTOs = await _concertService.GetAllConcerts();
             Concerts = new ObservableCollection<ConcertDTO>(_concertDTOs);
+            concerts = _mapper.Map<List<Concert>>(_concertDTOs).ToList();
             filteredConcerts = new List<Concert>(concerts);
             UpdateConcerts(_concertDTOs);
         }

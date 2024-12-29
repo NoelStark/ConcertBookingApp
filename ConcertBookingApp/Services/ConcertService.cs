@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -14,18 +15,32 @@ namespace ConcertBookingApp.Services
     {
         private readonly IMapper _mapper;
         private readonly ConcertRepository _concertRepository;
-
-        public ConcertService(ConcertRepository concertRepository,IMapper mapper)
+        private readonly HttpClient _httpClient;
+        public ConcertService(ConcertRepository concertRepository,IMapper mapper, HttpClient httpClient)
         {
             _concertRepository = concertRepository;
             _mapper = mapper;
+            _httpClient = httpClient;
         }
 
 
-        public List<ConcertDTO> GetAllConcerts()
+        public async Task<List<ConcertDTO>> GetAllConcerts()
         {
-            var concerts = _concertRepository.GetAllConcerts();
-            return _mapper.Map<List<ConcertDTO>>(concerts);
+            try
+            {
+                var response = await _httpClient.GetAsync("Concerts");
+                Console.WriteLine(response.Content);
+                var concerst = await response.Content.ReadFromJsonAsync<List<ConcertDTO>>();
+                return concerst;
+            }
+            catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Request error: {ex.Message}");
+            }
+
+            return new List<ConcertDTO>();
+            //var concerts = _concertRepository.GetAllConcerts();
+            //return _mapper.Map<List<ConcertDTO>>(concerts);
         }
         public ConcertDTO GetConcertById(int concertId)
         {

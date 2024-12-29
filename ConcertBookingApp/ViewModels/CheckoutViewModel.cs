@@ -61,7 +61,8 @@ namespace ConcertBookingApp.ViewModels
             _bookingService = bookingService;
             _concertService = concertService;
             _mapper = mapper;
-            allConcerts = _concertService.GetAllConcerts();
+            //allConcerts = _concertService.GetAllConcerts();
+            _concertService.GetAllConcerts();
             LoadBookings();
             UpdatePrice();
             //FlattenedBookingPerformances = new ObservableCollection<BookingPerformance>
