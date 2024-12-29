@@ -47,10 +47,10 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         private void MakeFavorite(ConcertDTO value)
         {
             //Changes the color of the heart
-            Concert? concert = concerts.FirstOrDefault(x => x.Name == value.Name);
-            if (concert == null) return;
-            concert.IsFavorite = !concert.IsFavorite;
-            OnPropertyChanged(nameof(concert.IsFavorite));
+            //Concert? concert = concerts.FirstOrDefault(x => x.Name == value.Name);
+            //if (concert == null) return;
+            //concert.IsFavorite = !concert.IsFavorite;
+            //OnPropertyChanged(nameof(concert.IsFavorite));
 
             //Not Implemented
         }

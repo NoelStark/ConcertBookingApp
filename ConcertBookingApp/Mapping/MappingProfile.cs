@@ -13,7 +13,11 @@ namespace ConcertBookingApp.Mapping
     {
         public MappingProfile()
         {
-            CreateMap<Concert, ConcertDTO>().ReverseMap();
+            CreateMap<Concert, ConcertDTO>()
+                .ForMember(
+                    dest => dest.Dates,
+                    opt => opt.MapFrom(src => src.Performances.Select(p => p.Date).ToList()))
+                .ReverseMap();
             CreateMap<Performance, PerformanceDTO>().ReverseMap();
         }
     }

@@ -22,7 +22,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         private List<Category> _selectedCategories = new List<Category>();
         private DateTime? startDate = null;
         private DateTime? endDate = null;
-        private List<Concert> concerts = new List<Concert>();
+        private List<ConcertDTO> concerts = new List<ConcertDTO>();
 
         partial void OnSearchInputChanged(string value)
         {

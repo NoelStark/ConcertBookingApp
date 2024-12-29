@@ -20,7 +20,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         private readonly IMapper _mapper;
         private List<ConcertDTO> _concertDTOs;
         private readonly ConcertService _concertService;
-        public List<Concert> filteredConcerts;
+        public List<ConcertDTO> filteredConcerts;
 
         public ConcertOverviewViewModel(ConcertService concertService, IMapper mapper)
         {
@@ -35,8 +35,8 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         {
             _concertDTOs = await _concertService.GetAllConcerts();
             Concerts = new ObservableCollection<ConcertDTO>(_concertDTOs);
-            concerts = _mapper.Map<List<Concert>>(_concertDTOs).ToList();
-            filteredConcerts = new List<Concert>(concerts);
+            //concerts = _mapper.Map<List<Concert>>(_concertDTOs).ToList();
+            filteredConcerts = new List<ConcertDTO>(concerts);
             UpdateConcerts(_concertDTOs);
         }
 
@@ -53,9 +53,9 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             OnPropertyChanged(nameof(ConcertCount));
         }
 
-        private void FilterConcerts(string? searchText = null, List<Concert>? concerts = null)
+        private void FilterConcerts(string? searchText = null, List<ConcertDTO>? concerts = null)
         {
-            concerts ??= this.concerts;
+            concerts ??= this._concertDTOs;
 
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -67,7 +67,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             if (startDate != null && endDate != null)
             {
                 concerts = concerts.Where(c =>
-                    c.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
+                    c.Dates.Any(p => p > startDate && p < endDate)).ToList();
             }
 
             if (_selectedCategories.Any())

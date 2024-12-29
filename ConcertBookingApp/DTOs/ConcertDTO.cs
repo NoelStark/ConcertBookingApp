@@ -13,8 +13,8 @@ namespace ConcertBookingApp.DTOs
         public string Genre { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
-        public DateTime Date { get; set; } = new DateTime();
-        //public List<DateTime> Date { get; set; } = new List<DateTime>();
+        //public DateTime Date { get; set; } = new DateTime();
+        public List<DateTime> Dates { get; set; } = new List<DateTime>();
         public string Location { get; set; } = string.Empty;
     }
 }

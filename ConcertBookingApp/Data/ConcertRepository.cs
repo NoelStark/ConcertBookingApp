@@ -50,7 +50,7 @@ namespace ConcertBookingApp.Data
             {
                 new Performance
                 {
-                    TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen",
+                    TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Parse("2024-12-14"), Location = "Aspvägen",
                     Price = 100, PerformanceId = 1, Concert = AllConcerts[0]
                 },
                 new Performance
@@ -69,17 +69,17 @@ namespace ConcertBookingApp.Data
             {
                 new Performance
                 {
-                    TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen",
+                    TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Parse("2024-10-12"), Location = "Aspvägen",
                     Price = 100, PerformanceId = 1, Concert = AllConcerts[0]
                 },
                 new Performance
                 {
-                    TotalSeats = 150, AvailableSeats = 150, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen",
+                    TotalSeats = 150, AvailableSeats = 150, ConcertId = 1, Date = DateTime.Parse("2024-07-04"), Location = "Aspvägen",
                     Price = 200, PerformanceId = 2, Concert = AllConcerts[0]
                 },
                 new Performance
                 {
-                    TotalSeats = 200, AvailableSeats = 200, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen",
+                    TotalSeats = 200, AvailableSeats = 200, ConcertId = 1, Date = DateTime.Parse("2024-10-13"), Location = "Aspvägen",
                     Price = 300, PerformanceId = 3, Concert = AllConcerts[0]
                 }
             };
