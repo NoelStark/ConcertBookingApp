@@ -30,8 +30,7 @@ namespace ConcertBookingApp.Services
             {
                 var response = await _httpClient.GetAsync("Concerts");
                 Console.WriteLine(response.Content);
-                var concerst = await response.Content.ReadFromJsonAsync<List<ConcertDTO>>();
-                return concerst;
+                return await response.Content.ReadFromJsonAsync<List<ConcertDTO>>();
             }
             catch (HttpRequestException ex)
             {
