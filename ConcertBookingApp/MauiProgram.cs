@@ -38,6 +38,7 @@ namespace ConcertBookingApp
             builder.Services.AddTransient<CheckoutViewModel>();
             builder.Services.AddSingleton<PaymentViewModel>();
             builder.Services.AddSingleton<PaymentPage>();
+            builder.Services.AddSingleton<BookingsPage>();
 
             builder.Services.AddSingleton(x =>
                 new HttpClient { BaseAddress = new Uri("http://10.0.2.2:7139") });
