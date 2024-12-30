@@ -104,7 +104,6 @@ namespace ConcertBookingApp.ViewModels
         private async Task BuyTickets()
         {
             List<BookingPerformance> hasse = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
-
             bookingService.Bookings.Add(new Booking
             {
                 BookingPerformances = new List<BookingPerformance>(hasse)
