@@ -1,6 +1,4 @@
 ﻿using CommunityToolkit.Maui;
-using ConcertBookingApp.Data;
-using ConcertBookingApp.Mapping;
 using ConcertBookingApp.Services;
 using ConcertBookingApp.ViewModels;
 using ConcertBookingApp.ViewModels.ConcertsOverviewViewModels;
@@ -8,7 +6,8 @@ using ConcertBookingApp.ViewModels.PaymentViewModels;
 using ConcertBookingApp.Views;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
-using Microsoft.Maui.Platform; // Provides the ToPlatform() extension method
+using Microsoft.Maui.Platform;
+using SharedResources.Mapping; // Provides the ToPlatform() extension method
 
 namespace ConcertBookingApp
 {
@@ -30,7 +29,7 @@ namespace ConcertBookingApp
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddSingleton<BookingService>();
             builder.Services.AddSingleton<ConcertService>();
-            builder.Services.AddSingleton<ConcertRepository>();
+            //builder.Services.AddSingleton<ConcertRepository>();
             builder.Services.AddSingleton<ConcertOverviewPage>();
             builder.Services.AddSingleton<ConcertOverviewViewModel>();
             builder.Services.AddSingleton<ConcertDetailsViewModel>();

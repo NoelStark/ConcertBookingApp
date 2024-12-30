@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ConcertBookingApp.DTOs;
-using ConcertBookingApp.Models;
 using ConcertBookingApp.Services;
+using SharedResources.DTOs;
 
 namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 {

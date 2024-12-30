@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ConcertBookingApp.Models;
 using System.Collections.ObjectModel;
-using ConcertBookingApp.DTOs;
+using SharedResources.DTOs;
+using SharedResources.Models;
 using Syncfusion.Maui.Calendar;
 
 namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels

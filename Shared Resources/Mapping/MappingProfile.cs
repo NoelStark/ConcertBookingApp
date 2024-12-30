@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using ConcertBookingApp.DTOs;
-using ConcertBookingApp.Models;
+using SharedResources.DTOs;
+using SharedResources.Models;
 
-namespace ConcertBookingApp.Mapping
+namespace SharedResources.Mapping
 {
     public class MappingProfile : Profile
     {

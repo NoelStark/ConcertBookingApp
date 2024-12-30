@@ -1,4 +1,4 @@
-namespace Web_Service
+namespace WebService
 {
     public class WeatherForecast
     {

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using ConcertBookingApp.Data;
-using ConcertBookingApp.DTOs;
-using ConcertBookingApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using SharedResources.Data;
+using SharedResources.DTOs;
+using SharedResources.Models;
 
-namespace Web_Service.Controllers
+namespace WebService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
@@ -33,10 +33,10 @@ namespace Web_Service.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetConcert(int id)
+        public async Task<IActionResult> GetPerformancesForConcert(int id)
         {
-            List<Concert> concerts = _concertRepository.GetAllConcerts();
-            return Ok("Funkar");
+            List<Performance> performances = _concertRepository.GetPerformances(id);
+            return Ok(_mapper.Map<List<PerformanceDTO>>(performances));
         }
 
     }

@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ConcertBookingApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,9 +9,10 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using AutoMapper;
-using ConcertBookingApp.DTOs;
 using ConcertBookingApp.Services;
 using ConcertBookingApp.Views;
+using SharedResources.DTOs;
+using SharedResources.Models;
 
 namespace ConcertBookingApp.ViewModels
 {
@@ -56,13 +56,19 @@ namespace ConcertBookingApp.ViewModels
                 };
                 var concertDTO = JsonSerializer.Deserialize<ConcertDTO>(decoded,options);
                 Concert = _mapper.Map<Concert>(concertDTO);
-                var performanceDTOs = _concertService.GetPerformancesForConcert(Concert.ConcertId);
-                Performance = performanceDTOs.FirstOrDefault(x => x.ConcertId == Concert.ConcertId);
-                Concert.Performances = _mapper.Map<List<Performance>>(performanceDTOs);
-                AmountOfTickets = 0;
-                _ = LoadPerfomances();
-                UpdateButton();
+                GetPerformances(Concert.ConcertId);
+               
             }
+        }
+
+        private async Task GetPerformances(int id)
+        {
+            var performanceDTOs = await _concertService.GetPerformancesForConcert(id);
+            Performance = performanceDTOs.FirstOrDefault(x => x.ConcertId == Concert.ConcertId);
+            Concert.Performances = _mapper.Map<List<Performance>>(performanceDTOs);
+            AmountOfTickets = 0;
+            LoadPerfomances();
+            UpdateButton();
         }
 
         private readonly IMapper _mapper;
@@ -72,7 +78,7 @@ namespace ConcertBookingApp.ViewModels
             _concertService = concertService;
             _mapper = mapper;
         }
-        private async Task LoadPerfomances()
+        private void LoadPerfomances()
         {
             AllPerformancesForConcert.Clear();
             List<Performance> result = Concert.Performances.Where(a => a.ConcertId.Equals(Performance.ConcertId)).ToList();
@@ -119,12 +125,29 @@ namespace ConcertBookingApp.ViewModels
         private async Task BuyTickets()
         {
             List<BookingPerformance> hasse = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
-          
-            bookingService.Bookings.Add(new Booking
+            if (bookingService.Bookings.Any())
             {
-                BookingPerformances = new List<BookingPerformance>(hasse)
+                Booking currentBooking = bookingService.Bookings[0];
+                foreach (var performance in hasse)
+                {
+                    currentBooking.BookingPerformances.Add(performance);
+                }
+            }
+            else
+            {
+                bookingService.Bookings.Add(new Booking
+                {
+                    BookingPerformances = new List<BookingPerformance>(hasse)
 
-            });
+                });
+            }
+
+            //currentBooking.BookingPerformances.Add(new List<BookingPerformance>(hasse));
+            //bookingService.Bookings.Add(new Booking
+            //{
+            //    BookingPerformances = new List<BookingPerformance>(hasse)
+
+            //});
             //bookingService.Bookings.Add(new Booking
             //{
             //    BookingPerformances = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList()

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ConcertBookingApp.Views.CheckoutPage"
              xmlns:viewmodels="clr-namespace:ConcertBookingApp.ViewModels"
-             xmlns:models="clr-namespace:ConcertBookingApp.Models"
+             xmlns:models="clr-namespace:SharedResources.Models;assembly=SharedResources"
              x:DataType="viewmodels:CheckoutViewModel"
              Title="CheckoutPage">
     <!--<ContentPage.ToolbarItems>
