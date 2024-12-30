@@ -66,9 +66,9 @@ namespace ConcertBookingApp.ViewModels
 
         private async Task Initialize()
         {
+            UpdatePrice();
             allConcerts = await _concertService.GetAllConcerts();
             LoadBookings();
-            UpdatePrice();
         }
 
         private void FillFlattenedPerformances()
@@ -151,48 +151,45 @@ namespace ConcertBookingApp.ViewModels
 
         private void UpdatePrice()
         {
-            TotalAmountOfItems = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked);
-            TotalPrice = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked * c.Performance.Price);
+            //TotalAmountOfItems = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked);
+            //TotalPrice = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked * c.Performance.Price);
+
+            TotalPrice = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked * b.Performance.Price);
+            TotalAmountOfItems = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked);
+            //TotalPrice = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked * Performance.Price);
         }
 
         [RelayCommand]
         void IncreaseQuantity(BookingPerformance performance)
         {
-            //BookingPerformance findPerformances = AllBookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performance.PerformanceId);
-                performance.SeatsBooked++;
-            performance.Performance.AvailableSeats--;
-            if (performance.Performance.AvailableSeats == 0)
+            BookingPerformance chosenPerformance = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performance.Performance.PerformanceId);
+
+            chosenPerformance.SeatsBooked++;
+            chosenPerformance.Performance.AvailableSeats--;
+            if (chosenPerformance.Performance.AvailableSeats == 0)
                 AddTicketsVisible = false;
+
+            FlattenedBookingPerformances.Clear();
+            FillFlattenedPerformances();
             UpdatePrice();
         }
 
         [RelayCommand]
         void DecreaseQuantity(BookingPerformance performanceDTO)
         {
-            //BookingPerformance findPerformances = AllBookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performance.PerformanceId);
-            //var performance = _bookingService.Bookings
-            //    .SelectMany(x => x.BookingPerformances)
-            //    .FirstOrDefault(x => x.Performance.PerformanceId == performanceDTO.Performance.PerformanceId);
-            performanceDTO.SeatsBooked--;
-            performanceDTO.Performance.AvailableSeats++;
-            if (performanceDTO.SeatsBooked == 0)
-            {
-                Booking findBooking = _bookingService.Bookings.FirstOrDefault(a => a.Performances.Any(b => b.PerformanceId == performanceDTO.PerformanceId));
-                var performanceToRemove = AllPerformances
-                    .FirstOrDefault(x => x.PerformanceId == performanceDTO.Performance.PerformanceId);
-                AllPerformances.Remove(performanceToRemove);
-                if (findBooking != null)
-                    if (!findBooking.BookingPerformances.Any())
-                    {
-                        _bookingService.Bookings.Remove(findBooking);
-                        AllBookings.Remove(findBooking);
-                    }
+            BookingPerformance chosenPerformance = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performanceDTO.Performance.PerformanceId);
 
-                //List<Booking> anyPerfromances = _bookingService.Bookings.Where(booking => !booking.BookingPerformances.Any(bp => bp.Performance != null)).ToList();
-                //if (anyPerfromances.Any())
-                //    foreach (var booking in anyPerfromances)
-                //        _bookingService.Bookings.Remove(booking);
+            chosenPerformance.SeatsBooked--;
+            chosenPerformance.Performance.AvailableSeats--;
+            if (chosenPerformance.SeatsBooked == 0)
+            {
+                Booking findBooking = _bookingService.Bookings.FirstOrDefault(a => a.BookingPerformances.Contains(chosenPerformance));
+                findBooking.BookingPerformances.Remove(chosenPerformance);
+                if (!findBooking.BookingPerformances.Any())
+                    _bookingService.Bookings.Remove(findBooking);
             }
+            FlattenedBookingPerformances.Clear();
+            FillFlattenedPerformances();
             UpdatePrice();
         }
 
