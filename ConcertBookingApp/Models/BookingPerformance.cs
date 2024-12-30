@@ -11,10 +11,15 @@ namespace ConcertBookingApp.Models
     {
         public int BookingId { get; set; }
         public int PerformanceId { get; set; }
+        
 
         [ObservableProperty]
         private int seatsBooked = 0;
         public Booking Booking { get; set; } = null!;
         public Performance Performance { get; set; } = null!;
+        [ObservableProperty]
+        public string imageURL = string.Empty;
+        [ObservableProperty]
+        public string title = string.Empty;
     }
 }

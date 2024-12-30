@@ -6,7 +6,9 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using ConcertBookingApp.DTOs;
 using ConcertBookingApp.Models;
 using Syncfusion.Maui.Calendar;
 
@@ -16,9 +18,15 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
     {
 
         [RelayCommand]
-        private async Task InspectConcert(Concert concert)
+        private async Task InspectConcert(ConcertDTO concert)
         {
-            string serializedConcert = JsonSerializer.Serialize(concert);
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                WriteIndented = true
+            };
+            var testconcert = _mapper.Map<Concert>(concert);
+            string serializedConcert = JsonSerializer.Serialize(concert, options);
             string encodedConcert = Uri.EscapeDataString(serializedConcert);
             await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={encodedConcert}");
         }
@@ -36,13 +44,13 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         }
 
         [RelayCommand]
-        private void MakeFavorite(Concert value)
+        private void MakeFavorite(ConcertDTO value)
         {
             //Changes the color of the heart
-            Concert? concert = Concerts.FirstOrDefault(x => x.Name == value.Name);
-            if (concert == null) return;
-            concert.IsFavorite = !concert.IsFavorite;
-            OnPropertyChanged(nameof(concert.IsFavorite));
+            //Concert? concert = concerts.FirstOrDefault(x => x.Name == value.Name);
+            //if (concert == null) return;
+            //concert.IsFavorite = !concert.IsFavorite;
+            //OnPropertyChanged(nameof(concert.IsFavorite));
 
             //Not Implemented
         }
@@ -74,8 +82,8 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             startDate = null;
             endDate = null;
             Categories.ForEach(c => c.IsSelected = false);
-            filteredConcerts = AllConcerts;
-            UpdateConcerts(AllConcerts);
+            filteredConcerts = concerts;
+            UpdateConcerts(_concertDTOs);
         }
     }
 }

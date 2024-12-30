@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels"
-             x:DataType="vm:PaymentViewModel"
+             xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels.PaymentViewModels"
+             x:DataType="paymentViewModels:PaymentViewModel"
              x:Class="ConcertBookingApp.Views.PaymentPage"
              xmlns:converters="clr-namespace:ConcertBookingApp.Converters"
+             xmlns:paymentViewModels="clr-namespace:ConcertBookingApp.ViewModels.PaymentViewModels"
              Title="PaymentPage">
     <ContentPage.Resources>
         <converters:BoolToOppositeConverter x:Key="BoolToOpposite"/>
@@ -47,12 +48,13 @@
                     <Label Text="Invalid email" TextColor="Red" IsVisible="{Binding ShowErrorEmail}" HorizontalOptions="End"/>
                     <Label Text="Email" FontSize="16" FontAttributes="Bold"></Label>
                 </Grid>
-                <Frame BorderColor="#C8C8C8" CornerRadius="5" Padding="0">
+                <Frame BorderColor="{Binding EmailValidation.BorderColor}" CornerRadius="5" Padding="0">
                     <Entry Placeholder="example@gmail.com" Text="{Binding Email}"/>
                 </Frame>
             </VerticalStackLayout>
         </VerticalStackLayout>
 
+        <!--Next Section "Card"-->
         <Grid BackgroundColor="#F1F1F1" HeightRequest="60" Grid.Row="2" ColumnDefinitions="Auto, *" Margin="20,40,20,0" IsVisible="{Binding IsVisible}">
             <Image Source="creditcard.png" Grid.Column="0" Margin="20,0,0,0" HeightRequest="32"/>
             <Label Text="Payment Information" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" 
@@ -110,7 +112,7 @@
                             <Label Text="Invalid Date" TextColor="Red" IsVisible="{Binding ShowDateError}" HorizontalOptions="End"/>
                         </Grid>
 
-                        <Frame HeightRequest="50" WidthRequest="160" BorderColor="#C8C8C8">
+                        <Frame HeightRequest="50" WidthRequest="160" BorderColor="{Binding DateValidation.BorderColor}">
                             <Entry x:Name="ExpireDateEntry" Keyboard="Numeric" Placeholder="MM/YY" VerticalOptions="Center" HeightRequest="50" Text="{Binding ExpireDate}"></Entry>
                         </Frame>
                     </VerticalStackLayout>
@@ -120,7 +122,7 @@
                             <Label Text="CVC"/>
                             <Label Text="Invalid CVC" IsVisible="{Binding ShowCVCError}" HorizontalOptions="End" TextColor="Red"/>
                         </Grid>
-                        <Frame HeightRequest="50" WidthRequest="160" BorderColor="#C8C8C8">
+                        <Frame HeightRequest="50" WidthRequest="160" BorderColor="{Binding SecurityValidation.BorderColor}">
                             <Entry Placeholder="xxx" Keyboard="Numeric" VerticalOptions="Center" HeightRequest="50" Text="{Binding CVC}"></Entry>
                         </Frame>
 
@@ -135,7 +137,6 @@
                    LineBreakMode="WordWrap" WidthRequest="300" VerticalOptions="Start"></Label>
             </HorizontalStackLayout>
 
-            <!--Buttons-->
             <VerticalStackLayout Grid.Row="3" Margin="20,0,20,0" HorizontalOptions="FillAndExpand">
                 <BoxView HeightRequest="1" Color="Black" HorizontalOptions="FillAndExpand" Margin="0,10,0,10" />
                 <Grid ColumnDefinitions="*,Auto" HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
@@ -150,10 +151,11 @@
 
 
 
+        <!--Buttons-->
         <Grid Grid.Row="4" HorizontalOptions="FillAndExpand" Padding="20,20,20,20">
             <Button WidthRequest="160" Text="Back" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" 
                     BorderColor="{StaticResource Primary}" BorderWidth="2" HorizontalOptions="Start" Command="{Binding GoBackCommand}"/>
-            <Button WidthRequest="160" Text="Next" FontSize="Medium" HorizontalOptions="End" Command="{Binding SavePersonCommand}"/>
+            <Button BackgroundColor="{StaticResource Accent}" WidthRequest="160" Text="Next" FontSize="Medium" HorizontalOptions="End" Command="{Binding SavePersonCommand}"/>
         </Grid>
 
     </Grid>
