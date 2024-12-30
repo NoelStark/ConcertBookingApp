@@ -1,8 +1,7 @@
+using SharedResources.Data;
+using SharedResources.Mapping;
 
-using ConcertBookingApp.Data;
-using ConcertBookingApp.Mapping;
-
-namespace Web_Service
+namespace WebService
 {
     public class Program
     {
@@ -10,13 +9,11 @@ namespace Web_Service
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
+            // Add services to the container
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddSingleton<ConcertRepository>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-            
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddCors(options =>
@@ -28,11 +25,11 @@ namespace Web_Service
                         .AllowAnyOrigin();
                 });
             });
-            
 
             var app = builder.Build();
+
+            // Middleware configuration
             app.UseCors("AllowAll");
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -40,13 +37,48 @@ namespace Web_Service
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
-
             app.MapControllers();
-
             app.Run();
         }
+
+        public static WebApplication CreateWebHost(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+
+            // Add services to the container
+            builder.Services.AddControllers();
+            builder.Services.AddSingleton<ConcertRepository>();
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", x =>
+                {
+                    x.AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowAnyOrigin();
+                });
+            });
+
+            var app = builder.Build();
+
+            // Middleware configuration
+            app.UseCors("AllowAll");
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseAuthorization();
+            app.MapControllers();
+
+            return app;
+        }
+
     }
 }

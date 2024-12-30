@@ -4,8 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using ConcertBookingApp.Models;
 using ConcertBookingApp.ViewModels.ConcertsOverviewViewModels;
+using SharedResources.Models;
 using Xunit.Abstractions;
 
 namespace Unit_Tests

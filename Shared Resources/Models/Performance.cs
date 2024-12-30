@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConcertBookingApp.Models
+namespace SharedResources.Models
 {
     public partial class Performance : ObservableObject
     {

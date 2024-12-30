@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using ConcertBookingApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,9 +9,10 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
-using ConcertBookingApp.DTOs;
 using ConcertBookingApp.Services;
 using ConcertBookingApp.ViewModels.ConcertsOverviewViewModels;
+using SharedResources.DTOs;
+using SharedResources.Models;
 
 namespace ConcertBookingApp.ViewModels
 {
@@ -69,7 +69,6 @@ namespace ConcertBookingApp.ViewModels
             allConcerts = await _concertService.GetAllConcerts();
             LoadBookings();
             UpdatePrice();
-            FillFlattenedPerformances();
         }
 
         private void FillFlattenedPerformances()
@@ -115,11 +114,8 @@ namespace ConcertBookingApp.ViewModels
             foreach (ConcertDTO concertDTO in matchingConcerts)
             {
                 var concert = _mapper.Map<Concert>(concertDTO);
-                var performanceDTOs = _concertService.GetPerformancesForConcert(concert.ConcertId);
-                var concertPerformances = _mapper.Map<List<Performance>>(performanceDTOs);
-                concert.Performances = concertPerformances;
                 SelectedConcerts.Add(concert);
-                foreach(var performance in concertPerformances)
+                foreach(var performance in findPerformances)
                     AllPerformances.Add(_mapper.Map<PerformanceDTO>(performance));
 
             }
@@ -129,6 +125,7 @@ namespace ConcertBookingApp.ViewModels
             //    //Performance performanceFound = SelectedConcerts.SelectMany(c => c.Performances).FirstOrDefault(p => p.PerformanceId == performance.PerformanceId);
             //    //if (performanceFound != null)
             //}
+            FillFlattenedPerformances();
 
             var concertModels = _mapper.Map<List<Concert>>(SelectedConcerts);
             var performanceModels = _mapper.Map<List<Performance>>(AllPerformances);
@@ -149,9 +146,10 @@ namespace ConcertBookingApp.ViewModels
                             Performance foundPerfromance = concert.Performances.FirstOrDefault(a => a.PerformanceId == bookingPerformance.Performance.PerformanceId);
                             foundPerfromance.BookingPerformance = bookingPerformance;
                         }
+
         }
 
-        private async Task UpdatePrice()
+        private void UpdatePrice()
         {
             TotalAmountOfItems = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked);
             TotalPrice = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked * c.Performance.Price);
@@ -165,7 +163,7 @@ namespace ConcertBookingApp.ViewModels
             performance.Performance.AvailableSeats--;
             if (performance.Performance.AvailableSeats == 0)
                 AddTicketsVisible = false;
-            _ = UpdatePrice();
+            UpdatePrice();
         }
 
         [RelayCommand]
@@ -195,7 +193,7 @@ namespace ConcertBookingApp.ViewModels
                 //    foreach (var booking in anyPerfromances)
                 //        _bookingService.Bookings.Remove(booking);
             }
-            _ = UpdatePrice();
+            UpdatePrice();
         }
 
 

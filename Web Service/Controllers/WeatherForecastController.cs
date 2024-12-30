@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Web_Service.Controllers
+namespace WebService.Controllers
 {
     
     public class WeatherForecastController : ControllerBase

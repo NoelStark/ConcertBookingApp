@@ -8,8 +8,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using ConcertBookingApp.DTOs;
-using ConcertBookingApp.Models;
+using SharedResources.DTOs;
+using SharedResources.Models;
 using Syncfusion.Maui.Calendar;
 
 namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels

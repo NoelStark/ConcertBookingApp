@@ -3,21 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace ConcertBookingApp.Models
+namespace SharedResources.DTOs
 {
-    public partial class Concert : ObservableObject
+    public class ConcertDTO
     {
         public int ConcertId { get; set; } = 0;
         public string Name { get; set; } = string.Empty;
+        public string Genre { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
-        public string Genre { get; set; } = string.Empty;
-
-        [ObservableProperty] private bool isFavorite = false;
-        public List<Performance> Performances { get; set; } = new List<Performance>();
-        
-
+        //public DateTime Date { get; set; } = new DateTime();
+        public List<DateTime> Dates { get; set; } = new List<DateTime>();
+        public string Location { get; set; } = string.Empty;
     }
 }
