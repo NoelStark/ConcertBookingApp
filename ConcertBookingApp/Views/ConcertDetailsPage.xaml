@@ -84,7 +84,7 @@
                                                 <Image Grid.Column="0" Source="ticket.png" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" Margin="10,0,10,0" />
 
                                                 <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="Gray" VerticalOptions="Fill" HorizontalOptions="Center" />
-                                                <!--{Binding Performance.Date}-->
+                                                <!--{Binding Performance.Date-->
                                                 <VerticalStackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Grid.Column="2" Margin="10,0,0,0">
                                                     <Label Text="{Binding Performance.Date, StringFormat= '{0:yyyy-MM-dd}'}" FontSize="Small" />
                                                     <Label Text="{Binding Performance.AvailableSeats, StringFormat='{0} Seats Left'}" FontSize="Small"/>

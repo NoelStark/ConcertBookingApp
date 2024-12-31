@@ -35,7 +35,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             _concertDTOs = await _concertService.GetAllConcerts();
             Concerts = new ObservableCollection<ConcertDTO>(_concertDTOs);
             //concerts = _mapper.Map<List<Concert>>(_concertDTOs).ToList();
-            filteredConcerts = new List<ConcertDTO>(concerts);
+            filteredConcerts = new List<ConcertDTO>(_concertDTOs);
             UpdateConcerts(_concertDTOs);
         }
 
@@ -76,8 +76,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                     selectedCategories.Any(category => category.Title == c.Genre)).ToList();
             }
             filteredConcerts = concerts;
-            var DTOs = _mapper.Map<List<ConcertDTO>>(filteredConcerts);
-            UpdateConcerts(DTOs);
+            UpdateConcerts(filteredConcerts);
         }
 
 

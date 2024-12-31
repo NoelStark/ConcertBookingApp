@@ -21,5 +21,7 @@ namespace SharedResources.Models
         public string imageURL = string.Empty;
         [ObservableProperty]
         public string title = string.Empty;
+        [ObservableProperty]
+        public string genre = string.Empty;
     }
 }

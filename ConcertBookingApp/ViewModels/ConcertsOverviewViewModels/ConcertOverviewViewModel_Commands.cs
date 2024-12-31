@@ -25,7 +25,6 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                 ReferenceHandler = ReferenceHandler.Preserve,
                 WriteIndented = true
             };
-            var testconcert = _mapper.Map<Concert>(concert);
             string serializedConcert = JsonSerializer.Serialize(concert, options);
             string encodedConcert = Uri.EscapeDataString(serializedConcert);
             await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={encodedConcert}");
@@ -82,7 +81,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             startDate = null;
             endDate = null;
             Categories.ForEach(c => c.IsSelected = false);
-            filteredConcerts = concerts;
+            filteredConcerts = _concertDTOs;
             UpdateConcerts(_concertDTOs);
         }
     }

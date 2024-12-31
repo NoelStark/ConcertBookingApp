@@ -73,21 +73,25 @@ namespace ConcertBookingApp.ViewModels
 
         private void FillFlattenedPerformances()
         {
+            Concert concert = new Concert();
             foreach (Booking booking in AllBookings)
             {
                 foreach (BookingPerformance bookingPerformance in booking.BookingPerformances)
                 {
-                    var concert = SelectedConcerts
+                    concert = SelectedConcerts
                         .FirstOrDefault(x => x.ConcertId == bookingPerformance.Performance.ConcertId);
-                    bookingPerformance.Performance.Concert = concert;
+                    //bookingPerformance.Performance.Concert = concert;
                     FlattenedBookingPerformances.Add(new BookingPerformance
                     {
                         Performance = bookingPerformance.Performance,
                         SeatsBooked = bookingPerformance.SeatsBooked,
                         ImageURL = concert.ImageUrl,
+                        Genre = concert.Genre,
+                        Title = concert.Name
                     });
                 }
             }
+
         }
         private void LoadBookings()
         {
@@ -129,8 +133,8 @@ namespace ConcertBookingApp.ViewModels
 
             var concertModels = _mapper.Map<List<Concert>>(SelectedConcerts);
             var performanceModels = _mapper.Map<List<Performance>>(AllPerformances);
-            foreach (var performance in performanceModels)
-                performance.Concert = concert;
+            //foreach (var performance in performanceModels)
+            //    performance.Concert = concert;
             //foreach (var concert in SelectedConcerts)
             //{
             //    var concertPerformances = AllPerformances.Where(x => x.ConcertId == concert.ConcertId).ToList();

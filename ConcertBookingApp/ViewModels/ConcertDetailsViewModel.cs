@@ -22,7 +22,7 @@ namespace ConcertBookingApp.ViewModels
         private readonly BookingService bookingService;
         private readonly ConcertService _concertService;
         [ObservableProperty]
-        private Concert concert;
+        private ConcertDTO concert;
 
         [ObservableProperty]
         private PerformanceDTO performance;
@@ -55,20 +55,10 @@ namespace ConcertBookingApp.ViewModels
                     ReferenceHandler = ReferenceHandler.Preserve
                 };
                 var concertDTO = JsonSerializer.Deserialize<ConcertDTO>(decoded,options);
-                Concert = _mapper.Map<Concert>(concertDTO);
-                GetPerformances(Concert.ConcertId);
-               
-            }
-        }
+                Concert = concertDTO;
+                LoadPerfomances();
 
-        private async Task GetPerformances(int id)
-        {
-            var performanceDTOs = await _concertService.GetPerformancesForConcert(id);
-            Performance = performanceDTOs.FirstOrDefault(x => x.ConcertId == Concert.ConcertId);
-            Concert.Performances = _mapper.Map<List<Performance>>(performanceDTOs);
-            AmountOfTickets = 0;
-            LoadPerfomances();
-            UpdateButton();
+            }
         }
 
         private readonly IMapper _mapper;
@@ -78,23 +68,26 @@ namespace ConcertBookingApp.ViewModels
             _concertService = concertService;
             _mapper = mapper;
         }
-        private void LoadPerfomances()
+        private async void LoadPerfomances()
         {
             AllPerformancesForConcert.Clear();
-            List<Performance> result = Concert.Performances.Where(a => a.ConcertId.Equals(Performance.ConcertId)).ToList();
-            foreach (Performance item in result)
+            var performancesDTO = await _concertService.GetPerformancesForConcert(Concert.ConcertId);
+
+            foreach (var performanceDTO in performancesDTO)
             {
-                AllPerformancesForConcert.Add(new BookingPerformance{Performance = item});
+                AllPerformancesForConcert.Add(new BookingPerformance{Performance = _mapper.Map<Performance>(performanceDTO) });
             }
+
+            Performance = _mapper.Map<PerformanceDTO>(AllPerformancesForConcert[0].Performance);
+            Performance.Date = AllPerformancesForConcert[0].Performance.Date;
+            Performance.Location = AllPerformancesForConcert[0].Performance.Location;
+            UpdateButton();
         }
 
         private void UpdateButton()
         {
             List<BookingPerformance> result = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
-            if(result.Any())
-                CanBeClicked = true;
-            else 
-                CanBeClicked = false;
+            CanBeClicked = result.Any();
         }
        
 
@@ -142,16 +135,6 @@ namespace ConcertBookingApp.ViewModels
                 });
             }
 
-            //currentBooking.BookingPerformances.Add(new List<BookingPerformance>(hasse));
-            //bookingService.Bookings.Add(new Booking
-            //{
-            //    BookingPerformances = new List<BookingPerformance>(hasse)
-
-            //});
-            //bookingService.Bookings.Add(new Booking
-            //{
-            //    BookingPerformances = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList()
-            //});
             await Shell.Current.GoToAsync(nameof(CheckoutPage));
         }
     }

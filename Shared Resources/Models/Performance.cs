@@ -18,7 +18,7 @@ namespace SharedResources.Models
         [ObservableProperty]
         private int availableSeats = 0;
         public double Price { get; set; } = 0;
-        public Concert Concert { get; set; } = null;
+        //public Concert Concert { get; set; } = null;
 
         public BookingPerformance BookingPerformance { get; set; }
     }

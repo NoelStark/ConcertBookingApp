@@ -12,6 +12,7 @@
         <SearchBar Grid.Row="1"/>
 
         <Label Text="Events (4)" Grid.Row="2"/>
+        <!--Card-->
         <Grid Grid.Row="3" ColumnDefinitions="*, Auto, Auto" HeightRequest="200">
             <Image Source="testconcert.jpg"
                    Aspect="AspectFill"

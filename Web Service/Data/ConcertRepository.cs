@@ -37,17 +37,17 @@ namespace SharedResources.Data
                 new Performance
                 {
                     TotalSeats = 5, AvailableSeats = 5, ConcertId = 1, Date = DateTime.Parse("2024-12-14"), Location = "Aspvägen",
-                    Price = 100, PerformanceId = 1, Concert = AllConcerts[0]
+                    Price = 100, PerformanceId = 1
                 },
                 new Performance
                 {
                     TotalSeats = 150, AvailableSeats = 150, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen",
-                    Price = 200, PerformanceId = 2, Concert = AllConcerts[0]
+                    Price = 200, PerformanceId = 2
                 },
                 new Performance
                 {
                     TotalSeats = 200, AvailableSeats = 200, ConcertId = 1, Date = DateTime.Now, Location = "Aspvägen",
-                    Price = 300, PerformanceId = 3, Concert = AllConcerts[0]
+                    Price = 300, PerformanceId = 3
                 }
             };
 
@@ -56,17 +56,17 @@ namespace SharedResources.Data
                 new Performance
                 {
                     TotalSeats = 5, AvailableSeats = 5, ConcertId = 2, Date = DateTime.Parse("2024-10-12"), Location = "Aspvägen",
-                    Price = 100, PerformanceId = 1, Concert = AllConcerts[1]
+                    Price = 100, PerformanceId = 1
                 },
                 new Performance
                 {
                     TotalSeats = 150, AvailableSeats = 150, ConcertId = 2, Date = DateTime.Parse("2024-07-04"), Location = "Aspvägen",
-                    Price = 200, PerformanceId = 2, Concert = AllConcerts[1]
+                    Price = 200, PerformanceId = 2
                 },
                 new Performance
                 {
                     TotalSeats = 200, AvailableSeats = 200, ConcertId = 2, Date = DateTime.Parse("2024-10-13"), Location = "Aspvägen",
-                    Price = 300, PerformanceId = 3, Concert = AllConcerts[1]
+                    Price = 300, PerformanceId = 3
                 }
             };
 
@@ -75,17 +75,17 @@ namespace SharedResources.Data
                 new Performance
                 {
                     TotalSeats = 5, AvailableSeats = 5, ConcertId = 3, Date = DateTime.Parse("2024-01-02"), Location = "Aspvägen",
-                    Price = 100, PerformanceId = 1, Concert = AllConcerts[2]
+                    Price = 100, PerformanceId = 1
                 },
                 new Performance
                 {
                     TotalSeats = 150, AvailableSeats = 150, ConcertId = 3, Date = DateTime.Now, Location = "Aspvägen",
-                    Price = 200, PerformanceId = 2, Concert = AllConcerts[2]
+                    Price = 200, PerformanceId = 2
                 },
                 new Performance
                 {
                     TotalSeats = 200, AvailableSeats = 200, ConcertId = 3, Date = DateTime.Now, Location = "Aspvägen",
-                    Price = 300, PerformanceId = 3, Concert = AllConcerts[2]
+                    Price = 300, PerformanceId = 3
                 }
             };
         }
