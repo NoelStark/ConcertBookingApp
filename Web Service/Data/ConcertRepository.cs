@@ -56,17 +56,17 @@ namespace SharedResources.Data
                 new Performance
                 {
                     TotalSeats = 5, AvailableSeats = 5, ConcertId = 2, Date = DateTime.Parse("2024-10-12"), Location = "Aspvägen",
-                    Price = 100, PerformanceId = 1
+                    Price = 100, PerformanceId = 4
                 },
                 new Performance
                 {
                     TotalSeats = 150, AvailableSeats = 150, ConcertId = 2, Date = DateTime.Parse("2024-07-04"), Location = "Aspvägen",
-                    Price = 200, PerformanceId = 2
+                    Price = 200, PerformanceId = 6
                 },
                 new Performance
                 {
                     TotalSeats = 200, AvailableSeats = 200, ConcertId = 2, Date = DateTime.Parse("2024-10-13"), Location = "Aspvägen",
-                    Price = 300, PerformanceId = 3
+                    Price = 300, PerformanceId = 7
                 }
             };
 
@@ -75,17 +75,17 @@ namespace SharedResources.Data
                 new Performance
                 {
                     TotalSeats = 5, AvailableSeats = 5, ConcertId = 3, Date = DateTime.Parse("2024-01-02"), Location = "Aspvägen",
-                    Price = 100, PerformanceId = 1
+                    Price = 100, PerformanceId = 8
                 },
                 new Performance
                 {
                     TotalSeats = 150, AvailableSeats = 150, ConcertId = 3, Date = DateTime.Now, Location = "Aspvägen",
-                    Price = 200, PerformanceId = 2
+                    Price = 200, PerformanceId = 9
                 },
                 new Performance
                 {
                     TotalSeats = 200, AvailableSeats = 200, ConcertId = 3, Date = DateTime.Now, Location = "Aspvägen",
-                    Price = 300, PerformanceId = 3
+                    Price = 300, PerformanceId = 10
                 }
             };
         }
@@ -95,6 +95,12 @@ namespace SharedResources.Data
             return AllConcerts;
         }
 
+        public Concert GetConcertForPerformance(int performanceId)
+        {
+            Concert? concert = AllConcerts.FirstOrDefault(x => x.Performances.Any(y => y.PerformanceId == performanceId));
+            if (concert == null) return new Concert();
+            return concert;
+        }
         public List<Performance> GetPerformances(int concertId)
         {
             List<Performance> performances = AllConcerts.FirstOrDefault(x => x.ConcertId == concertId ).Performances;

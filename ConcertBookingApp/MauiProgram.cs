@@ -11,6 +11,7 @@ using SharedResources.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+using ConcertBookingApp.ViewModels.BookingViewModels;
 using Microsoft.EntityFrameworkCore.Storage;
 
 
@@ -47,6 +48,7 @@ namespace ConcertBookingApp
             builder.Services.AddTransient<CheckoutViewModel>();
             builder.Services.AddSingleton<PaymentViewModel>();
             builder.Services.AddSingleton<PaymentPage>();
+            builder.Services.AddSingleton<BookingViewModel>();
             builder.Services.AddSingleton<BookingsPage>();
 
             builder.Services.AddSingleton(x =>

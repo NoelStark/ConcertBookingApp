@@ -39,5 +39,12 @@ namespace WebService.Controllers
             return Ok(_mapper.Map<List<PerformanceDTO>>(performances));
         }
 
+        [HttpGet("performance/{performanceId}")]
+        public async Task<IActionResult> GetConcertForPerformance(int performanceId)
+        {
+            var concert = _concertRepository.GetConcertForPerformance(performanceId);
+            return Ok(_mapper.Map<ConcertDTO>(concert));
+        }
+
     }
 }

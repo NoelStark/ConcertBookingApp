@@ -1,58 +1,72 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels.BookingViewModels"
+             xmlns:models="clr-namespace:SharedResources.Models;assembly=SharedResources"
+             x:DataType="vm:BookingViewModel"
              x:Class="ConcertBookingApp.Views.BookingsPage"
              Title="BookingsPage">
     <Grid RowDefinitions="Auto, Auto, Auto, Auto">
-        <Grid Grid.Row="0" RowDefinitions="*, *">
-            <Label Text="Bookings" Grid.Row="0"/>
-            <Label Text="See your booked events here" Grid.Row="1"/>
+        <Grid Grid.Row="0" RowDefinitions="*, *" Margin="20,20,20,0">
+            <Label Text="Bookings" Grid.Row="0" FontSize="24" FontAttributes="Bold"/>
+            <Label Text="See your booked events here" Grid.Row="1" FontSize="18" TextColor="#5E0ABF"/>
         </Grid>
 
-        <SearchBar Grid.Row="1"/>
+        <Frame BorderColor="Gray" CornerRadius="10" Padding="0" HasShadow="False" Grid.Row="1" Margin="20">
+            <SearchBar Placeholder="Search product" Margin="0" Text="{Binding SearchInput, Mode=TwoWay}"/>
+        </Frame>
 
-        <Label Text="Events (4)" Grid.Row="2"/>
+        <Label Text="Bookings (4)" Grid.Row="2" Margin="20,0,20,20" FontSize="16"/>
         <!--Card-->
-        <Grid Grid.Row="3" ColumnDefinitions="*, Auto, Auto" HeightRequest="200">
-            <Image Source="testconcert.jpg"
-                   Aspect="AspectFill"
-                   VerticalOptions="Fill"
-                   HorizontalOptions="Fill" />
+        <ScrollView  Grid.Row="3" HeightRequest="520" Margin="0,0,0,20">
 
-            <BoxView Color="Black"
-                     Opacity="0.6"
-                     VerticalOptions="Fill"
-                     HorizontalOptions="Fill" />
+        <CollectionView ItemsSource="{Binding Performances}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:BookingPerformance">
+                    <Grid ColumnDefinitions="*, Auto, Auto" HeightRequest="200" BackgroundColor="White">
+                        <Image Source="{Binding ImageURL}"
+                               Aspect="AspectFill"
+                               VerticalOptions="Fill"
+                               HorizontalOptions="Fill" />
+                        <Frame BackgroundColor="Black"
+                               Opacity="0.6"
+                               VerticalOptions="Fill"
+                               HorizontalOptions="Fill"/>
 
-            <Grid ColumnDefinitions="Auto, Auto, *" ColumnSpacing="20">
-                <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto" Padding="20,0,0,0" HeightRequest="80">
-                    <Label Text="May" Grid.Row="0" HorizontalOptions="Center" TextColor="#C0C0C0" FontSize="16"/>
-                    <Label Text="16" Grid.Row="1" HorizontalOptions="Center" TextColor="White"  FontAttributes="Bold" FontSize="20"/>
-                    <Label Text="2024" Grid.Row="2" HorizontalOptions="Center" TextColor="#C0C0C0" FontSize="16"/>
-                </Grid>
+                        <Grid ColumnDefinitions="Auto, Auto, *" ColumnSpacing="20">
+                            <Grid Grid.Column="0" RowDefinitions="Auto,Auto,Auto" Padding="20,0,0,0" HeightRequest="80">
+                                <Label Text="{Binding Performance.Date, StringFormat='{}{0:MMM}'}" Grid.Row="0" HorizontalOptions="Center" TextColor="#C0C0C0" FontSize="16"/>
+                                <Label Text="{Binding Performance.Date.Day}" Grid.Row="1" HorizontalOptions="Center" TextColor="White"  FontAttributes="Bold" FontSize="20"/>
+                                <Label Text="{Binding Performance.Date.Year}" Grid.Row="2" HorizontalOptions="Center" TextColor="#C0C0C0" FontSize="16"/>
+                            </Grid>
 
-                <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="Gray" VerticalOptions="Fill" HorizontalOptions="Center" Margin="0,20,0,20"/>
+                            <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="Gray" VerticalOptions="Fill" HorizontalOptions="Center" Margin="0,20,0,20"/>
 
-                <Grid Grid.Column="2" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,20,0,0" RowSpacing="16">
-                    <Label Grid.Row="0" Text="Pop Concert" TextColor="White" FontSize="20" FontAttributes="Bold">
-                        <Label.Shadow>
-                            <Shadow Brush="Black" Offset="0,2" Radius="8"/>
-                        </Label.Shadow>
-                    </Label>
-                    <HorizontalStackLayout Grid.Row="1" Spacing="10">
-                        <Image Source="locationwhite.jpg"/>
-                        <Label Text="Långvägen 71, 345 33 Borås" TextColor="White" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout Grid.Row="2" Spacing="10">
-                        <Image Source="ticketwhite.jpg"/>
-                        <Label Text="5 Tickets" TextColor="White" VerticalOptions="Center"/>
-                    </HorizontalStackLayout>
-                    <Button Text="Cancel" Padding="0" BackgroundColor="{StaticResource Accent}" 
-                            Grid.Row="3" WidthRequest="160" HorizontalOptions="Start" 
-                            HeightRequest="30"/>
-                </Grid>
-            </Grid>
-        </Grid>
+                            <Grid Grid.Column="2" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,20,0,0" RowSpacing="16">
+                                <Label Grid.Row="0" Text="{Binding Title}" TextColor="White" FontSize="20" FontAttributes="Bold">
+                                    <Label.Shadow>
+                                        <Shadow Brush="Black" Offset="0,2" Radius="8"/>
+                                    </Label.Shadow>
+                                </Label>
+                                <HorizontalStackLayout Grid.Row="1" Spacing="10">
+                                    <Image Source="locationwhite.jpg"/>
+                                    <Label Text="{Binding Performance.Location}" TextColor="White" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Grid.Row="2" Spacing="10">
+                                    <Image Source="ticketwhite.jpg"/>
+                                    <Label Text="{Binding SeatsBooked, StringFormat='{0} Ticket(s)'}" TextColor="White" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                                <Button Text="Cancel" Padding="0" BackgroundColor="{StaticResource Accent}" 
+                      Grid.Row="3" WidthRequest="160" HorizontalOptions="Start" 
+                      HeightRequest="30"/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+      
+        </ScrollView>
 
     </Grid>
 </ContentPage>

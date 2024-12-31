@@ -48,11 +48,13 @@ namespace ConcertBookingApp.Services
 
         public async Task<List<PerformanceDTO>> GetPerformancesForConcert(int concertId)
         {
-            //List<Performance> performances = _concertRepository.GetPerformances(concertId);
             var response = await _httpClient.GetAsync($"Concerts/{concertId}");
             return await response.Content.ReadFromJsonAsync<List<PerformanceDTO>>();
-
-            //return _mapper.Map<List<PerformanceDTO>>(performances);
+        }
+        public async Task<ConcertDTO> GetConcertForPerformance(int performanceId)
+        {
+            var response = await _httpClient.GetAsync($"Concerts/performance/{performanceId}");
+            return await response.Content.ReadFromJsonAsync<ConcertDTO>();
         }
     }
 }
