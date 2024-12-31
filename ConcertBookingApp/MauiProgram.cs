@@ -7,7 +7,12 @@ using ConcertBookingApp.Views;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Core.Hosting;
 using Microsoft.Maui.Platform;
-using SharedResources.Mapping; // Provides the ToPlatform() extension method
+using SharedResources.Mapping;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using Microsoft.EntityFrameworkCore.Storage;
+
 
 namespace ConcertBookingApp
 {
@@ -15,7 +20,10 @@ namespace ConcertBookingApp
     {
         public static MauiApp CreateMauiApp()
         {
+
             var builder = MauiApp.CreateBuilder();
+            
+
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
@@ -25,6 +33,7 @@ namespace ConcertBookingApp
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddSingleton<BookingService>();
