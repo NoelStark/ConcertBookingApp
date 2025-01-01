@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
@@ -56,7 +57,7 @@ namespace ConcertBookingApp.ViewModels
                 };
                 var concertDTO = JsonSerializer.Deserialize<ConcertDTO>(decoded,options);
                 Concert = concertDTO;
-                LoadPerfomances();
+                _= LoadPerfomances();
 
             }
         }
@@ -68,19 +69,28 @@ namespace ConcertBookingApp.ViewModels
             _concertService = concertService;
             _mapper = mapper;
         }
-        private async void LoadPerfomances()
+        private async Task LoadPerfomances()
         {
+           
             AllPerformancesForConcert.Clear();
+
             var performancesDTO = await _concertService.GetPerformancesForConcert(Concert.ConcertId);
 
-            foreach (var performanceDTO in performancesDTO)
+            var tempPerformances = performancesDTO.Select(performanceDTO => new BookingPerformance
             {
-                AllPerformancesForConcert.Add(new BookingPerformance{Performance = _mapper.Map<Performance>(performanceDTO) });
-            }
+                Performance = _mapper.Map<Performance>(performanceDTO)
+            }).ToList();
 
+            // Add all items at once
+            foreach (var performance in tempPerformances)
+            {
+                AllPerformancesForConcert.Add(performance);
+            }
+            OnPropertyChanged(nameof(AllPerformancesForConcert));
             Performance = _mapper.Map<PerformanceDTO>(AllPerformancesForConcert[0].Performance);
             Performance.Date = AllPerformancesForConcert[0].Performance.Date;
             Performance.Location = AllPerformancesForConcert[0].Performance.Location;
+           
             UpdateButton();
         }
 
@@ -89,7 +99,7 @@ namespace ConcertBookingApp.ViewModels
             List<BookingPerformance> result = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
             CanBeClicked = result.Any();
         }
-       
+
 
         [RelayCommand]
         void IncreaseQuantity(BookingPerformance bookingPerformance)

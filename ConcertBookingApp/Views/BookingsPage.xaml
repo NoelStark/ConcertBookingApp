@@ -57,7 +57,7 @@
                                     <Label Text="{Binding SeatsBooked, StringFormat='{0} Ticket(s)'}" TextColor="White" VerticalOptions="Center"/>
                                 </HorizontalStackLayout>
                                 <Button Text="Cancel" Padding="0" BackgroundColor="{StaticResource Accent}" 
-                      Grid.Row="3" WidthRequest="160" HorizontalOptions="Start" 
+                      Grid.Row="3" WidthRequest="160" HorizontalOptions="Start" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:BookingViewModel}}, Path=CancelBookingCommand}" CommandParameter="{Binding .}"
                       HeightRequest="30"/>
                             </Grid>
                         </Grid>

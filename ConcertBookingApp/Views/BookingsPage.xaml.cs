@@ -8,8 +8,6 @@ public partial class BookingsPage : ContentPage
 	public BookingsPage(BookingViewModel viewModel)
 	{
 		InitializeComponent();
-		BindingContext = viewModel;
-        
-
+        BindingContext = viewModel;
     }
 }

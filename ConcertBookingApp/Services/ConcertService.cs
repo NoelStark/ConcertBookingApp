@@ -37,8 +37,6 @@ namespace ConcertBookingApp.Services
             }
 
             return new List<ConcertDTO>();
-            //var concerts = _concertRepository.GetAllConcerts();
-            //return _mapper.Map<List<ConcertDTO>>(concerts);
         }
         //public ConcertDTO GetConcertById(int concertId)
         //{

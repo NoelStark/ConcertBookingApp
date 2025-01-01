@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ConcertBookingApp.Services;
 using SharedResources.DTOs;
 using SharedResources.Models;
@@ -23,13 +24,11 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
         {
             _bookingService = service;
             _concertService = concertService;
-            //Bookings.Booking.BookingPerformance
-            _= Test();
+            _= AddPerformances();
         }
 
-        private async Task Test()
+        private async Task AddPerformances()
         {
-            var list = new List<BookingPerformance>();
             foreach (var performance in _bookingService.Bookings.SelectMany(booking => booking.BookingPerformances))
             {
                 ConcertDTO concert = await _concertService.GetConcertForPerformance(performance.Performance.PerformanceId);
@@ -37,6 +36,13 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
                 performance.ImageURL = concert.ImageUrl;
                 Performances.Add(performance);
             }
+        }
+
+        [RelayCommand]
+        public void CancelBooking(BookingPerformance performance)
+        {
+            Performances.Remove(performance);
+            OnPropertyChanged(nameof(Performances));
         }
     }
 }
