@@ -9,6 +9,6 @@ namespace ConcertBookingApp.Services
 {
     public class BookingService
     {
-        public List<Booking> Bookings { get; set; } = new List<Booking>();
+        public Booking? CurrentBooking { get; set; } =  null;
     }
 }

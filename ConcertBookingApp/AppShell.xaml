@@ -6,27 +6,47 @@
     xmlns:local="clr-namespace:ConcertBookingApp.Views"
     Shell.FlyoutBehavior="Flyout"
     Title="ConcertBookingApp">
+    <TabBar>
+        <Tab Title="Home"
+             Icon="home.png">
+            <ShellContent
+                Title="ConcertOverviewPage"
+                ContentTemplate="{DataTemplate local:ConcertOverviewPage}"
+                Route="ConcertOverviewPage" />
+        </Tab>
 
-    <ShellContent
-        Title="ConcertOverviewPage"
-        ContentTemplate="{DataTemplate local:ConcertOverviewPage}"
-        Route="ConcertOverviewPage" />
+        <Tab Title="CurrentBooking"
+             Icon="ticketblack.png">
+            <ShellContent
+                Title="BookingsPage"
+                ContentTemplate="{DataTemplate local:BookingsPage}"
+                Route="BookingsPage" />
+        </Tab>
+
+        <Tab Title="Cart"
+             Icon="cart.png">
+            <ShellContent
+                Title="CheckoutPage"
+                ContentTemplate="{DataTemplate local:CheckoutPage}"
+                Route="CheckoutPage" />
+        </Tab>
+    </TabBar>
     <ShellContent
         Title="ConcertDetailsPage"
         ContentTemplate="{DataTemplate local:ConcertDetailsPage}"
         Route="ConcertDetailsPage" />
-    <ShellContent
+    <!--<ShellContent
         Title="CheckoutPage"
         ContentTemplate="{DataTemplate local:CheckoutPage}"
-        Route="CheckoutPage" />
+        Route="CheckoutPage" />-->
     <ShellContent
         Title="PaymentPage"
         ContentTemplate="{DataTemplate local:PaymentPage}"
         Route="PaymentPage" />
-    <ShellContent
+    <!--<ShellContent
         Title="BookingsPage"
         ContentTemplate="{DataTemplate local:BookingsPage}"
-        Route="BookingsPage" />
+        Route="BookingsPage" />-->
 
 
 

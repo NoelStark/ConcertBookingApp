@@ -147,11 +147,14 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
             if (_isCreditUpdating) return;
             _isCreditUpdating = true;
             string formatValue = value.Replace(" ", "");
-            if (formatValue.Length >= 20)
+            if (!(value.Length < _lastValidValues["CreditCard"].Length))
             {
-                CreditCardNumber = _lastValidValues["CreditCard"];
-                _isCreditUpdating = false;
-                return;
+                if (formatValue.Length >= 20 || IsValidCard && CardImage != "visa.png")
+                {
+                    CreditCardNumber = _lastValidValues["CreditCard"];
+                    _isCreditUpdating = false;
+                    return;
+                }
             }
 
             string result = PaymentUtils.FormatCreditCardNumber(formatValue);
@@ -217,7 +220,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
             else
             {
                 shouldSwitchSection = false;
-                IsValidForm = IsValidCard && IsValidDate && IsValidCVC && !string.IsNullOrEmpty(Name);
+                IsValidForm = IsValidCard && IsValidDate && IsValidCVC && !string.IsNullOrEmpty(Name) && AgreeToTerms;
             }
             SavePersonCommand.NotifyCanExecuteChanged();
         }

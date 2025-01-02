@@ -29,7 +29,7 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
 
         private async Task AddPerformances()
         {
-            foreach (var performance in _bookingService.Bookings.SelectMany(booking => booking.BookingPerformances))
+            foreach (var performance in _bookingService.CurrentBooking.BookingPerformances)
             {
                 ConcertDTO concert = await _concertService.GetConcertForPerformance(performance.Performance.PerformanceId);
                 performance.Title = concert.Name;
@@ -43,6 +43,7 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
         {
             Performances.Remove(performance);
             OnPropertyChanged(nameof(Performances));
+            //if(Performances.Count == 0) _bookingService.CurrentBooking.Remove()
         }
     }
 }

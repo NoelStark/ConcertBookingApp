@@ -75,7 +75,7 @@
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </HorizontalStackLayout>
-        <Grid HeightRequest="30" Grid.Row="4" Margin="0,0,0,10">
+        <Grid HeightRequest="30" Grid.Row="4" Margin="0,0,0,40">
             <Label Text="{Binding ConcertCount, StringFormat='Upcoming Events {0}'}"  FontSize="20" FontAttributes="Bold"/>
             <Button Text="Clear Filters" BackgroundColor="Transparent" TextColor="Blue" 
                     HorizontalOptions="End" HeightRequest="40" Command="{Binding ClearFiltersCommand}"/>
