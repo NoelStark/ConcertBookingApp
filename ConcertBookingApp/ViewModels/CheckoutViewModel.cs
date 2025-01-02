@@ -46,10 +46,8 @@ namespace ConcertBookingApp.ViewModels
         private readonly ConcertService _concertService;
 
         private readonly IMapper _mapper;
-        //private static ConcertOverviewViewModel _concertViewModel;
-
-        public ObservableCollection<List<Booking>> BookingsCart { get; set; } = new ObservableCollection<List<Booking>>();
-        public static ObservableCollection<Booking> AllBookings { get; set; } = new ObservableCollection<Booking>();
+        public ObservableCollection<List<Booking>> BookingsCart { get; set; } = new ObservableCollection<List<Booking>>(); //toabort
+        public static ObservableCollection<Booking> AllBookings { get; set; } = new ObservableCollection<Booking>(); //Ta bort
         public List<ConcertDTO> allConcerts;
 
         public ObservableCollection<BookingPerformance> FlattenedBookingPerformances { get; set; } =
@@ -69,6 +67,7 @@ namespace ConcertBookingApp.ViewModels
             UpdatePrice();
             allConcerts = await _concertService.GetAllConcerts();
             LoadBookings();
+            CanBeClicked = false;
         }
 
         private void FillFlattenedPerformances()
@@ -123,24 +122,11 @@ namespace ConcertBookingApp.ViewModels
                     AllPerformances.Add(_mapper.Map<PerformanceDTO>(performance));
 
             }
-            //List<PerformanceDTO> performances = _concertService.GetPerformancesForConcert(Concert.ConcertId);
-            //foreach (PerformanceDTO performance in performances)
-            //{
-            //    //Performance performanceFound = SelectedConcerts.SelectMany(c => c.Performances).FirstOrDefault(p => p.PerformanceId == performance.PerformanceId);
-            //    //if (performanceFound != null)
-            //}
+
             FillFlattenedPerformances();
 
             var concertModels = _mapper.Map<List<Concert>>(SelectedConcerts);
             var performanceModels = _mapper.Map<List<Performance>>(AllPerformances);
-            //foreach (var performance in performanceModels)
-            //    performance.Concert = concert;
-            //foreach (var concert in SelectedConcerts)
-            //{
-            //    var concertPerformances = AllPerformances.Where(x => x.ConcertId == concert.ConcertId).ToList();
-            //    foreach (var performance in concer)
-            //        performance.Concert = concert;
-            //}
 
             foreach (var bookingList in BookingsCart)
                 foreach (var booking in bookingList)
@@ -155,12 +141,8 @@ namespace ConcertBookingApp.ViewModels
 
         private void UpdatePrice()
         {
-            //TotalAmountOfItems = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked);
-            //TotalPrice = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked * c.Performance.Price);
-
             TotalPrice = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked * b.Performance.Price);
             TotalAmountOfItems = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked);
-            //TotalPrice = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked * Performance.Price);
         }
 
         [RelayCommand]
