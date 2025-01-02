@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ConcertBookingApp.Services;
 using ConcertBookingApp.ViewModels.ConcertsOverviewViewModels;
+using ConcertBookingApp.Views;
 using SharedResources.DTOs;
 using SharedResources.Models;
 
@@ -99,12 +100,11 @@ namespace ConcertBookingApp.ViewModels
             AllPerformances.Clear();
             SelectedConcerts.Clear();
 
-            BookingsCart.Add(_bookingService.Bookings);
+            BookingsCart.Add(_bookingService.CurrentBooking);
             if (BookingsCart.Any())
                 CanBeClicked = true;
 
-            foreach (var item in _bookingService.Bookings)
-                AllBookings.Add(item);
+            AllBookings.Add(_bookingService.CurrentBooking);
 
             List<Performance> findPerformances = AllBookings
                 .SelectMany(a => a.BookingPerformances)
@@ -129,8 +129,7 @@ namespace ConcertBookingApp.ViewModels
             var performanceModels = _mapper.Map<List<Performance>>(AllPerformances);
 
             foreach (var bookingList in BookingsCart)
-                foreach (var booking in bookingList)
-                    foreach (var bookingPerformance in booking.BookingPerformances)
+                    foreach (var bookingPerformance in bookingList.BookingPerformances)
                         foreach (var concert in concertModels)
                         {
                             Performance foundPerfromance = concert.Performances.FirstOrDefault(a => a.PerformanceId == bookingPerformance.Performance.PerformanceId);
@@ -141,14 +140,20 @@ namespace ConcertBookingApp.ViewModels
 
         private void UpdatePrice()
         {
-            TotalPrice = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked * b.Performance.Price);
-            TotalAmountOfItems = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked);
+            //TotalAmountOfItems = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked);
+            //TotalPrice = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked * c.Performance.Price);
+
+            //TotalPrice = _bookingService.CurrentBooking.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked * b.Performance.Price);
+            TotalPrice =
+                _bookingService.CurrentBooking.BookingPerformances.Sum(x => x.SeatsBooked * x.Performance.Price);
+            //TotalAmountOfItems = _bookingService.CurrentBooking.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked);
+            TotalAmountOfItems = _bookingService.CurrentBooking.BookingPerformances.Sum(b => b.SeatsBooked);
         }
 
         [RelayCommand]
         void IncreaseQuantity(BookingPerformance performance)
         {
-            BookingPerformance chosenPerformance = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performance.Performance.PerformanceId);
+            BookingPerformance chosenPerformance = _bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(b => b.Performance.PerformanceId == performance.Performance.PerformanceId);
 
             chosenPerformance.SeatsBooked++;
             chosenPerformance.Performance.AvailableSeats--;
@@ -163,16 +168,17 @@ namespace ConcertBookingApp.ViewModels
         [RelayCommand]
         void DecreaseQuantity(BookingPerformance performanceDTO)
         {
-            BookingPerformance chosenPerformance = _bookingService.Bookings.SelectMany(a => a.BookingPerformances).FirstOrDefault(b => b.Performance.PerformanceId == performanceDTO.Performance.PerformanceId);
+            BookingPerformance chosenPerformance = _bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(b => b.Performance.PerformanceId == performanceDTO.Performance.PerformanceId);
 
             chosenPerformance.SeatsBooked--;
             chosenPerformance.Performance.AvailableSeats--;
             if (chosenPerformance.SeatsBooked == 0)
             {
-                Booking findBooking = _bookingService.Bookings.FirstOrDefault(a => a.BookingPerformances.Contains(chosenPerformance));
+                //Booking findBooking = _bookingService.CurrentBooking.FirstOrDefault(a => a.BookingPerformances.Contains(chosenPerformance));
+                Booking findBooking = _bookingService.CurrentBooking;
                 findBooking.BookingPerformances.Remove(chosenPerformance);
                 if (!findBooking.BookingPerformances.Any())
-                    _bookingService.Bookings.Remove(findBooking);
+                    _bookingService.CurrentBooking = null;
             }
             FlattenedBookingPerformances.Clear();
             FillFlattenedPerformances();
@@ -183,13 +189,13 @@ namespace ConcertBookingApp.ViewModels
         [RelayCommand]
         private async Task GoBack()
         {
-            //await Shell.Current.GoToAsync(nameof(CheckoutPage));
+            await Shell.Current.GoToAsync("///ConcertOverviewPage");
         }
 
         [RelayCommand]
         private async Task Continue()
         {
-            //await Shell.Current.GoToAsync(nameof(CheckoutPage));
+            await Shell.Current.GoToAsync(nameof(PaymentPage));
         }
 
        

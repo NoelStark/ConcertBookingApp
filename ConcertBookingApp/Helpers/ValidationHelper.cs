@@ -15,7 +15,7 @@ namespace ConcertBookingApp.Helpers
             { "Name", new Regex(@"^[a-z\s]+$", RegexOptions.IgnoreCase) },
             { "Maestro", new Regex(@"^(50|5[6-9]|6[0-9])\d{10,17}$") },
             { "Mastercard", new Regex(@"^(5[1-5])\d{14}$") },
-            { "Visa", new Regex(@"^(4)\d{11,17}$") },
+            { "Visa", new Regex(@"^(4)\d{11,18}$") },
             { "Expire", new Regex(@"^[0-9]\d{0,3}$")}
         };
 

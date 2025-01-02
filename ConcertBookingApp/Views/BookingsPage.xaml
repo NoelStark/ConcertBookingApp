@@ -8,7 +8,7 @@
              Title="BookingsPage">
     <Grid RowDefinitions="Auto, Auto, Auto, Auto">
         <Grid Grid.Row="0" RowDefinitions="*, *" Margin="20,20,20,0">
-            <Label Text="Bookings" Grid.Row="0" FontSize="24" FontAttributes="Bold"/>
+            <Label Text="CurrentBooking" Grid.Row="0" FontSize="24" FontAttributes="Bold"/>
             <Label Text="See your booked events here" Grid.Row="1" FontSize="18" TextColor="#5E0ABF"/>
         </Grid>
 
@@ -16,7 +16,7 @@
             <SearchBar Placeholder="Search product" Margin="0" Text="{Binding SearchInput, Mode=TwoWay}"/>
         </Frame>
 
-        <Label Text="Bookings (4)" Grid.Row="2" Margin="20,0,20,20" FontSize="16"/>
+        <Label Text="CurrentBooking (4)" Grid.Row="2" Margin="20,0,20,20" FontSize="16"/>
         <!--Card-->
         <ScrollView  Grid.Row="3" HeightRequest="520" Margin="0,0,0,20">
 

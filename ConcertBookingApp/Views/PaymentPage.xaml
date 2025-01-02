@@ -13,7 +13,7 @@
 
     <Grid RowDefinitions="Auto,Auto, Auto, Auto, Auto">
 
-        <Grid BackgroundColor="#F1F1F1" HeightRequest="60" Grid.Row="0" ColumnDefinitions="*, Auto, *" Margin="20,40,20,0" IsVisible="{Binding IsVisible, Converter={StaticResource BoolToOpposite}}">
+        <Grid BackgroundColor="#F1F1F1" HeightRequest="60" Grid.Row="0" ColumnDefinitions="*, Auto, *" Margin="20,20,20,0" IsVisible="{Binding IsVisible, Converter={StaticResource BoolToOpposite}}">
             <Image Source="person.png" Grid.Column="0" HeightRequest="32"/>
             <Label Text="Personal Information" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center" 
                    TextColor="#727272" FontAttributes="Bold" FontSize="20"/>
@@ -65,7 +65,7 @@
         <Grid RowDefinitions="Auto,250,*,Auto, Auto" Grid.Row="3" IsVisible="{Binding IsVisible, Converter={StaticResource BoolToOpposite}}">
 
             <!--Cards-->
-            <Grid HorizontalOptions="FillAndExpand" Grid.Row="0" Margin="20,20,20,40">
+            <Grid HorizontalOptions="FillAndExpand" Grid.Row="0" Margin="20,20,20,10">
                 <Frame HorizontalOptions="Start" HeightRequest="64" WidthRequest="100">
                     <Image Source="mastercard.png" HeightRequest="49" WidthRequest="62"/>
                 </Frame>

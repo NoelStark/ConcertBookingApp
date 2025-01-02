@@ -81,7 +81,6 @@ namespace ConcertBookingApp.ViewModels
                 Performance = _mapper.Map<Performance>(performanceDTO)
             }).ToList();
 
-            // Add all items at once
             foreach (var performance in tempPerformances)
             {
                 AllPerformancesForConcert.Add(performance);
@@ -128,9 +127,9 @@ namespace ConcertBookingApp.ViewModels
         private async Task BuyTickets()
         {
             List<BookingPerformance> hasse = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
-            if (bookingService.Bookings.Any())
+            if (bookingService.CurrentBooking != null)
             {
-                Booking currentBooking = bookingService.Bookings[0];
+                Booking currentBooking = bookingService.CurrentBooking;
                 foreach (var performance in hasse)
                 {
                     currentBooking.BookingPerformances.Add(performance);
@@ -138,11 +137,11 @@ namespace ConcertBookingApp.ViewModels
             }
             else
             {
-                bookingService.Bookings.Add(new Booking
+                bookingService.CurrentBooking = new Booking
                 {
                     BookingPerformances = new List<BookingPerformance>(hasse)
 
-                });
+                };
             }
 
             await Shell.Current.GoToAsync(nameof(CheckoutPage));

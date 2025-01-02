@@ -28,7 +28,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         async void SavePerson()
         {
             if (!shouldSwitchSection)
-                await Shell.Current.GoToAsync("///ConcertOverviewPage");
+                await Shell.Current.GoToAsync("ConcertOverviewPage");
             shouldSwitchSection = !shouldSwitchSection;
             IsVisible = !IsVisible;
             ValidateForm();
