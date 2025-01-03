@@ -24,7 +24,7 @@
                                         <HorizontalStackLayout VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Padding="0" Spacing="15">
                                             <ImageButton Source="minus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CheckoutViewModel}}, Path=DecreaseQuantityCommand}" CommandParameter="{Binding .}" HeightRequest="24" WidthRequest="24" HorizontalOptions="Center" VerticalOptions="Center"/>
                                             <Label Text="{Binding SeatsBooked}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"></Label>
-                                            <ImageButton Source="plus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CheckoutViewModel}}, Path=IncreaseQuantityCommand}" CommandParameter="{Binding .}" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <ImageButton Source="plus.png" Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CheckoutViewModel}}, Path=IncreaseQuantityCommand}" CommandParameter="{Binding .}" HeightRequest="24" WidthRequest="24" BackgroundColor="Transparent" HorizontalOptions="Center" VerticalOptions="Center"/> <!--IsEnabled="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CheckoutViewModel}}, Path=AddTicketsVisible}"-->
                                         </HorizontalStackLayout>
                                     </Frame>
                                 </VerticalStackLayout>

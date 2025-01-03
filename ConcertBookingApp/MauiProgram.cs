@@ -66,6 +66,7 @@ namespace ConcertBookingApp
             builder.Logging.AddDebug();
 #endif
 
+           
             return builder.Build();
         }
     }

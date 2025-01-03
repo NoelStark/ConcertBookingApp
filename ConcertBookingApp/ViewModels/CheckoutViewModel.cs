@@ -68,7 +68,6 @@ namespace ConcertBookingApp.ViewModels
             UpdatePrice();
             allConcerts = await _concertService.GetAllConcerts();
             LoadBookings();
-            CanBeClicked = false;
         }
 
         private void FillFlattenedPerformances()
@@ -93,55 +92,25 @@ namespace ConcertBookingApp.ViewModels
             }
 
         }
-        private void LoadBookings()
+        public void LoadBookings()
         {
-            //BookingsCart.Clear();
-            //AllBookings.Clear();
-            //AllPerformances.Clear();
-            //SelectedConcerts.Clear();
-
-            //BookingsCart.Add(_bookingService.CurrentBooking);
-            //if (BookingsCart.Any())
-            //    CanBeClicked = true;
-
+            AllBookings.Clear();
             AllBookings.Add(_bookingService.CurrentBooking);
+            if(AllBookings.Any())
+                CanBeClicked = true;
 
-            List<Performance> findPerformances = AllBookings
-                .SelectMany(a => a.BookingPerformances)
-                .Select(a => a.Performance)
-                .ToList();
+            List<Performance> findPerformances = _bookingService.CurrentBooking.BookingPerformances.Select(a => a.Performance).ToList();
             List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
-            List<Concert> matchingConcerts = allConcerts
-                .Where(a => findPerformances.Any(b => b.ConcertId == a.ConcertId))
-                .ToList();
+            List<Concert> matchingConcerts = allConcerts.Where(a => findPerformances.Any(b => b.ConcertId == a.ConcertId)).ToList();
+
             foreach (Concert concertDTO in matchingConcerts)
             {
                 var concert = _mapper.Map<Concert>(concertDTO);
                 SelectedConcerts.Add(concert);
-                foreach(var performance in findPerformances)
+                foreach (var performance in findPerformances)
                     AllPerformances.Add(performance);
-
             }
-
             FillFlattenedPerformances();
-
-            //var concertModels = _mapper.Map<List<Concert>>(SelectedConcerts);
-            //var performanceModels = _mapper.Map<List<Performance>>(AllPerformances);
-
-            //foreach (var bookingList in BookingsCart)
-            //        foreach (var bookingPerformance in bookingList.BookingPerformances)
-            //            foreach (var concert in concertModels)
-            //            {
-            //                Performance foundPerfromance = concert.Performances.FirstOrDefault(a => a.PerformanceId == bookingPerformance.Performance.PerformanceId);
-            //                foundPerfromance.BookingPerformance = bookingPerformance;
-            //            }
-
-        }
-
-        public void LoadBookings2()
-        {
-            List<Performance> findPerformances = _bookingService.CurrentBooking.BookingPerformances.Select(a => a.Performance).ToList();
-            List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
         }
 
         private void UpdatePrice()
@@ -156,6 +125,11 @@ namespace ConcertBookingApp.ViewModels
                 TotalPrice = 0;
                 TotalAmountOfItems = 0;
             }
+        }
+
+        private void TicketsLeft(Performance performance)
+        {
+            var hasse = _bookingService.CurrentBooking.Performances.IndexOf(performance);
         }
 
         [RelayCommand]
@@ -180,9 +154,9 @@ namespace ConcertBookingApp.ViewModels
 
             chosenPerformance.SeatsBooked--;
             chosenPerformance.Performance.AvailableSeats--;
+            AddTicketsVisible = true;
             if (chosenPerformance.SeatsBooked == 0)
             {
-                //Booking findBooking = _bookingService.CurrentBooking.FirstOrDefault(a => a.BookingPerformances.Contains(chosenPerformance));
                 Booking findBooking = _bookingService.CurrentBooking;
                 findBooking.BookingPerformances.Remove(chosenPerformance);
                 if (!findBooking.BookingPerformances.Any())
@@ -207,3 +181,49 @@ namespace ConcertBookingApp.ViewModels
         }
     }
 }
+
+
+//private void LoadBookings()
+//{
+//BookingsCart.Clear();
+
+//AllPerformances.Clear();
+//SelectedConcerts.Clear();
+
+//BookingsCart.Add(_bookingService.CurrentBooking);
+//if (BookingsCart.Any())
+//    CanBeClicked = true;
+//AllBookings.Clear();
+//AllBookings.Add(_bookingService.CurrentBooking);
+
+//List<Performance> findPerformances = AllBookings
+//    .SelectMany(a => a.BookingPerformances)
+//    .Select(a => a.Performance)
+//    .ToList();
+//List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
+//List<Concert> matchingConcerts = allConcerts
+//    .Where(a => findPerformances.Any(b => b.ConcertId == a.ConcertId))
+//    .ToList();
+//foreach (Concert concertDTO in matchingConcerts)
+//{
+//    var concert = _mapper.Map<Concert>(concertDTO);
+//    SelectedConcerts.Add(concert);
+//    foreach(var performance in findPerformances)
+//        AllPerformances.Add(performance);
+
+//}
+
+//FillFlattenedPerformances();
+
+//var concertModels = _mapper.Map<List<Concert>>(SelectedConcerts);
+//var performanceModels = _mapper.Map<List<Performance>>(AllPerformances);
+
+//foreach (var bookingList in BookingsCart)
+//        foreach (var bookingPerformance in bookingList.BookingPerformances)
+//            foreach (var concert in concertModels)
+//            {
+//                Performance foundPerfromance = concert.Performances.FirstOrDefault(a => a.PerformanceId == bookingPerformance.Performance.PerformanceId);
+//                foundPerfromance.BookingPerformance = bookingPerformance;
+//            }
+
+//}
