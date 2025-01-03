@@ -11,10 +11,10 @@ namespace ConcertBookingApp.Data.Models
     {
         [Key]
         public int BookingId { get; set; } = 0;
-        public List<Performance> Performances { get; set; } = new();
+        public List<BookingPerformance> BookingPerformances { get; set; } = new();
         public int UserId { get; set; } = new User().UserId;
         public DateTime BookingDate { get; set; } = new DateTime();
-        public ICollection<BookingPerformance> BookingPerformances { get; set; }= new List<BookingPerformance>();
+        //public ICollection<BookingPerformance> BookingPerformances { get; set; }= new List<BookingPerformance>();
     
     }
 }

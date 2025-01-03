@@ -12,7 +12,7 @@ namespace SharedResources.Models
         public List<Performance> Performances { get; set; } = new();
         public int UserId { get; set; } = new User().UserId;
         public DateTime BookingDate { get; set; } = new DateTime();
-        public ICollection<BookingPerformance> BookingPerformances { get; set; }= new List<BookingPerformance>();
-    
+        public ICollection<BookingPerformance> BookingPerformances { get; set; } = new List<BookingPerformance>();
+
     }
 }

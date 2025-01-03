@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ConcertBookingApp.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initializedb : Migration
+    public partial class Initialzing : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -56,6 +56,29 @@ namespace ConcertBookingApp.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Performances",
+                columns: table => new
+                {
+                    PerformanceId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConcertId = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TotalSeats = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Performances", x => x.PerformanceId);
+                    table.ForeignKey(
+                        name: "FK_Performances_Concerts_ConcertId",
+                        column: x => x.ConcertId,
+                        principalTable: "Concerts",
+                        principalColumn: "ConcertId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Bookings",
                 columns: table => new
                 {
@@ -76,35 +99,6 @@ namespace ConcertBookingApp.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Performances",
-                columns: table => new
-                {
-                    PerformanceId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ConcertId = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TotalSeats = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    BookingId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Performances", x => x.PerformanceId);
-                    table.ForeignKey(
-                        name: "FK_Performances_Bookings_BookingId",
-                        column: x => x.BookingId,
-                        principalTable: "Bookings",
-                        principalColumn: "BookingId");
-                    table.ForeignKey(
-                        name: "FK_Performances_Concerts_ConcertId",
-                        column: x => x.ConcertId,
-                        principalTable: "Concerts",
-                        principalColumn: "ConcertId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "BookingPerformances",
                 columns: table => new
                 {
@@ -113,7 +107,7 @@ namespace ConcertBookingApp.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookingPerformances", x => x.BookingId);
+                    table.PrimaryKey("PK_BookingPerformances", x => new { x.BookingId, x.PerformanceId });
                     table.ForeignKey(
                         name: "FK_BookingPerformances_Bookings_BookingId",
                         column: x => x.BookingId,
@@ -131,18 +125,12 @@ namespace ConcertBookingApp.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_BookingPerformances_PerformanceId",
                 table: "BookingPerformances",
-                column: "PerformanceId",
-                unique: true);
+                column: "PerformanceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_UserId",
                 table: "Bookings",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Performances_BookingId",
-                table: "Performances",
-                column: "BookingId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Performances_ConcertId",
@@ -166,16 +154,16 @@ namespace ConcertBookingApp.Data.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Performances");
-
-            migrationBuilder.DropTable(
                 name: "Bookings");
 
             migrationBuilder.DropTable(
-                name: "Concerts");
+                name: "Performances");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Concerts");
         }
     }
 }
