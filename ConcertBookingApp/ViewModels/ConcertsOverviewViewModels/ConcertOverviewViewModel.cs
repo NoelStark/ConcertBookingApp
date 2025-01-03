@@ -11,15 +11,16 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ConcertBookingApp.Services;
 using SharedResources.DTOs;
+using SharedResources.Models;
 
 namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 {
     public partial class ConcertOverviewViewModel : ObservableObject
     {
         private readonly IMapper _mapper;
-        private List<ConcertDTO> _concertDTOs;
+        private List<Concert> _concertDTOs;
         private readonly ConcertService _concertService;
-        public List<ConcertDTO> filteredConcerts;
+        public List<Concert> filteredConcerts;
 
         public ConcertOverviewViewModel(ConcertService concertService, IMapper mapper)
         {
@@ -33,13 +34,12 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         private async Task Initialize()
         {
             _concertDTOs = await _concertService.GetAllConcerts();
-            Concerts = new ObservableCollection<ConcertDTO>(_concertDTOs);
-            //concerts = _mapper.Map<List<Concert>>(_concertDTOs).ToList();
-            filteredConcerts = new List<ConcertDTO>(_concertDTOs);
+            Concerts = new ObservableCollection<Concert>(_concertDTOs);
+            filteredConcerts = new List<Concert>(_concertDTOs);
             UpdateConcerts(_concertDTOs);
         }
 
-        private void UpdateConcerts(List<ConcertDTO> concerts)
+        private void UpdateConcerts(List<Concert> concerts)
         {
             Concerts.Clear();
             foreach (var concert in concerts)
@@ -52,7 +52,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             OnPropertyChanged(nameof(ConcertCount));
         }
 
-        private void FilterConcerts(string? searchText = null, List<ConcertDTO>? concerts = null)
+        private void FilterConcerts(string? searchText = null, List<Concert>? concerts = null)
         {
             concerts ??= this._concertDTOs;
 
@@ -66,7 +66,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             if (startDate != null && endDate != null)
             {
                 concerts = concerts.Where(c =>
-                    c.Dates.Any(p => p > startDate && p < endDate)).ToList();
+                    c.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
             }
 
             if (_selectedCategories.Any())

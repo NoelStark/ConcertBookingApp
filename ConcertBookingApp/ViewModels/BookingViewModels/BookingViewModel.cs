@@ -31,7 +31,7 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
         {
             foreach (var performance in _bookingService.CurrentBooking.BookingPerformances)
             {
-                ConcertDTO concert = await _concertService.GetConcertForPerformance(performance.Performance.PerformanceId);
+                Concert concert = await _concertService.GetConcertForPerformance(performance.Performance.PerformanceId);
                 performance.Title = concert.Name;
                 performance.ImageURL = concert.ImageUrl;
                 Performances.Add(performance);

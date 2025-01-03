@@ -18,7 +18,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
     {
 
         [RelayCommand]
-        private async Task InspectConcert(ConcertDTO concert)
+        private async Task InspectConcert(Concert concert)
         {
             var options = new JsonSerializerOptions
             {
@@ -43,7 +43,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         }
 
         [RelayCommand]
-        private void MakeFavorite(ConcertDTO value)
+        private void MakeFavorite(Concert value)
         {
             //Changes the color of the heart
             //Concert? concert = concerts.FirstOrDefault(x => x.Name == value.Name);

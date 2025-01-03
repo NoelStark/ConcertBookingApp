@@ -49,12 +49,12 @@ namespace ConcertBookingApp.ViewModels
         private readonly IMapper _mapper;
         public ObservableCollection<Booking> BookingsCart { get; set; } = new ObservableCollection<Booking>(); //toabort
         public static ObservableCollection<Booking> AllBookings { get; set; } = new ObservableCollection<Booking>(); //Ta bort
-        public List<ConcertDTO> allConcerts;
+        public List<Concert> allConcerts;
 
         public ObservableCollection<BookingPerformance> FlattenedBookingPerformances { get; set; } =
             new ObservableCollection<BookingPerformance>();
         public ObservableCollection<Concert> SelectedConcerts { get; set; } = new ObservableCollection<Concert>();
-        public ObservableCollection<PerformanceDTO> AllPerformances { get; set; } = new ObservableCollection<PerformanceDTO>();
+        public ObservableCollection<Performance> AllPerformances { get; set; } = new ObservableCollection<Performance>();
         public CheckoutViewModel(ConcertService concertService,BookingService bookingService, IMapper mapper)
         {
             _bookingService = bookingService;
@@ -111,15 +111,15 @@ namespace ConcertBookingApp.ViewModels
                 .Select(a => a.Performance)
                 .ToList();
             List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
-            List<ConcertDTO> matchingConcerts = allConcerts
+            List<Concert> matchingConcerts = allConcerts
                 .Where(a => findPerformances.Any(b => b.ConcertId == a.ConcertId))
                 .ToList();
-            foreach (ConcertDTO concertDTO in matchingConcerts)
+            foreach (Concert concertDTO in matchingConcerts)
             {
                 var concert = _mapper.Map<Concert>(concertDTO);
                 SelectedConcerts.Add(concert);
                 foreach(var performance in findPerformances)
-                    AllPerformances.Add(_mapper.Map<PerformanceDTO>(performance));
+                    AllPerformances.Add(performance);
 
             }
 

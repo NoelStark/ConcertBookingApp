@@ -22,13 +22,13 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         private List<Category> _selectedCategories = new List<Category>();
         private DateTime? startDate = null;
         private DateTime? endDate = null;
-        private List<ConcertDTO> concerts = new List<ConcertDTO>();
+        private List<Concert> concerts = new List<Concert>();
 
         partial void OnSearchInputChanged(string value)
         {
             FilterConcerts(searchText:value.ToLower());
         }
-        public ObservableCollection<ConcertDTO> Concerts { get; set; }
+        public ObservableCollection<Concert> Concerts { get; set; }
 
 
         public List<Category> Categories { get; set; } = new List<Category>()

@@ -23,10 +23,10 @@ namespace ConcertBookingApp.ViewModels
         private readonly BookingService bookingService;
         private readonly ConcertService _concertService;
         [ObservableProperty]
-        private ConcertDTO concert;
+        private Concert concert;
 
         [ObservableProperty]
-        private PerformanceDTO performance;
+        private Performance performance;
 
         [ObservableProperty]
         private Booking booking;
@@ -55,7 +55,7 @@ namespace ConcertBookingApp.ViewModels
                 {
                     ReferenceHandler = ReferenceHandler.Preserve
                 };
-                var concertDTO = JsonSerializer.Deserialize<ConcertDTO>(decoded,options);
+                var concertDTO = JsonSerializer.Deserialize<Concert>(decoded,options);
                 Concert = concertDTO;
                 _= LoadPerfomances();
 
@@ -86,7 +86,7 @@ namespace ConcertBookingApp.ViewModels
                 AllPerformancesForConcert.Add(performance);
             }
             OnPropertyChanged(nameof(AllPerformancesForConcert));
-            Performance = _mapper.Map<PerformanceDTO>(AllPerformancesForConcert[0].Performance);
+            Performance =AllPerformancesForConcert[0].Performance;
             Performance.Date = AllPerformancesForConcert[0].Performance.Date;
             Performance.Location = AllPerformancesForConcert[0].Performance.Location;
            

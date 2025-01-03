@@ -23,20 +23,21 @@ namespace ConcertBookingApp.Services
         }
 
 
-        public async Task<List<ConcertDTO>> GetAllConcerts()
+        public async Task<List<Concert>> GetAllConcerts()
         {
             try
             {
-                var response = await _httpClient.GetAsync("Concerts");
-                Console.WriteLine(response.Content);
-                return await response.Content.ReadFromJsonAsync<List<ConcertDTO>>();
+                var response = await _httpClient.GetAsync("Concerts"); 
+                var concertDTOs = await response.Content.ReadFromJsonAsync<List<ConcertDTO>>();
+                List<Concert> concerts = _mapper.Map<List<Concert>>(concertDTOs);
+                return concerts;
             }
             catch (HttpRequestException ex)
             {
                 Console.WriteLine($"Request error: {ex.Message}");
             }
 
-            return new List<ConcertDTO>();
+            return new List<Concert>();
         }
         //public ConcertDTO GetConcertById(int concertId)
         //{
@@ -44,15 +45,18 @@ namespace ConcertBookingApp.Services
         //    return _mapper.Map<ConcertDTO>(concert);
         //}
 
-        public async Task<List<PerformanceDTO>> GetPerformancesForConcert(int concertId)
+        public async Task<List<Performance>> GetPerformancesForConcert(int concertId)
         {
             var response = await _httpClient.GetAsync($"Concerts/{concertId}");
-            return await response.Content.ReadFromJsonAsync<List<PerformanceDTO>>();
+            List<Performance> performances= _mapper.Map<List<Performance>>(await response.Content.ReadFromJsonAsync<List<PerformanceDTO>>());
+            return performances;
         }
-        public async Task<ConcertDTO> GetConcertForPerformance(int performanceId)
+        public async Task<Concert> GetConcertForPerformance(int performanceId)
         {
             var response = await _httpClient.GetAsync($"Concerts/performance/{performanceId}");
-            return await response.Content.ReadFromJsonAsync<ConcertDTO>();
+            Concert concert = _mapper.Map<Concert>(await response.Content.ReadFromJsonAsync<ConcertDTO>());
+
+            return concert;
         }
     }
 }
