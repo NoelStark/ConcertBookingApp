@@ -47,7 +47,7 @@ namespace ConcertBookingApp.ViewModels
         private readonly ConcertService _concertService;
 
         private readonly IMapper _mapper;
-        public ObservableCollection<List<Booking>> BookingsCart { get; set; } = new ObservableCollection<List<Booking>>(); //toabort
+        public ObservableCollection<Booking> BookingsCart { get; set; } = new ObservableCollection<Booking>(); //toabort
         public static ObservableCollection<Booking> AllBookings { get; set; } = new ObservableCollection<Booking>(); //Ta bort
         public List<ConcertDTO> allConcerts;
 

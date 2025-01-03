@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ConcertBookingApp.Services;
 
 namespace ConcertBookingApp.ViewModels.PaymentViewModels
 {
@@ -61,5 +62,11 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
             { "CVC", string.Empty},
             { "Date", string.Empty},
         };
+
+        private readonly UserService _userService;
+        public PaymentViewModel(UserService userService)
+        {
+            _userService = userService;
+        }
     }
 }

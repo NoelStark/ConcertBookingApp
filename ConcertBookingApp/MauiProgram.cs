@@ -39,6 +39,7 @@ namespace ConcertBookingApp
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddSingleton<BookingService>();
             builder.Services.AddSingleton<ConcertService>();
+            builder.Services.AddSingleton<UserService>();
             //builder.Services.AddSingleton<ConcertRepository>();
             builder.Services.AddTransient<ConcertOverviewPage>();
             builder.Services.AddSingleton<ConcertOverviewViewModel>();
