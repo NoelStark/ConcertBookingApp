@@ -47,7 +47,7 @@ namespace ConcertBookingApp.ViewModels
         private readonly ConcertService _concertService;
 
         private readonly IMapper _mapper;
-        public ObservableCollection<List<Booking>> BookingsCart { get; set; } = new ObservableCollection<List<Booking>>(); //toabort
+        public ObservableCollection<Booking> BookingsCart { get; set; } = new ObservableCollection<Booking>(); //toabort
         public static ObservableCollection<Booking> AllBookings { get; set; } = new ObservableCollection<Booking>(); //Ta bort
         public List<ConcertDTO> allConcerts;
 
@@ -95,14 +95,14 @@ namespace ConcertBookingApp.ViewModels
         }
         private void LoadBookings()
         {
-            BookingsCart.Clear();
-            AllBookings.Clear();
-            AllPerformances.Clear();
-            SelectedConcerts.Clear();
+            //BookingsCart.Clear();
+            //AllBookings.Clear();
+            //AllPerformances.Clear();
+            //SelectedConcerts.Clear();
 
-            BookingsCart.Add(_bookingService.CurrentBooking);
-            if (BookingsCart.Any())
-                CanBeClicked = true;
+            //BookingsCart.Add(_bookingService.CurrentBooking);
+            //if (BookingsCart.Any())
+            //    CanBeClicked = true;
 
             AllBookings.Add(_bookingService.CurrentBooking);
 
@@ -125,29 +125,37 @@ namespace ConcertBookingApp.ViewModels
 
             FillFlattenedPerformances();
 
-            var concertModels = _mapper.Map<List<Concert>>(SelectedConcerts);
-            var performanceModels = _mapper.Map<List<Performance>>(AllPerformances);
+            //var concertModels = _mapper.Map<List<Concert>>(SelectedConcerts);
+            //var performanceModels = _mapper.Map<List<Performance>>(AllPerformances);
 
-            foreach (var bookingList in BookingsCart)
-                    foreach (var bookingPerformance in bookingList.BookingPerformances)
-                        foreach (var concert in concertModels)
-                        {
-                            Performance foundPerfromance = concert.Performances.FirstOrDefault(a => a.PerformanceId == bookingPerformance.Performance.PerformanceId);
-                            foundPerfromance.BookingPerformance = bookingPerformance;
-                        }
+            //foreach (var bookingList in BookingsCart)
+            //        foreach (var bookingPerformance in bookingList.BookingPerformances)
+            //            foreach (var concert in concertModels)
+            //            {
+            //                Performance foundPerfromance = concert.Performances.FirstOrDefault(a => a.PerformanceId == bookingPerformance.Performance.PerformanceId);
+            //                foundPerfromance.BookingPerformance = bookingPerformance;
+            //            }
 
+        }
+
+        public void LoadBookings2()
+        {
+            List<Performance> findPerformances = _bookingService.CurrentBooking.BookingPerformances.Select(a => a.Performance).ToList();
+            List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
         }
 
         private void UpdatePrice()
         {
-            //TotalAmountOfItems = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked);
-            //TotalPrice = BookingsCart.SelectMany(a => a).SelectMany(b => b.BookingPerformances).Sum(c => c.SeatsBooked * c.Performance.Price);
-
-            //TotalPrice = _bookingService.CurrentBooking.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked * b.Performance.Price);
-            TotalPrice =
-                _bookingService.CurrentBooking.BookingPerformances.Sum(x => x.SeatsBooked * x.Performance.Price);
-            //TotalAmountOfItems = _bookingService.CurrentBooking.SelectMany(a => a.BookingPerformances).Sum(b => b.SeatsBooked);
-            TotalAmountOfItems = _bookingService.CurrentBooking.BookingPerformances.Sum(b => b.SeatsBooked);
+            if (_bookingService.CurrentBooking != null)
+            {
+                TotalPrice = _bookingService.CurrentBooking.BookingPerformances.Sum(x => x.SeatsBooked * x.Performance.Price);
+                TotalAmountOfItems = _bookingService.CurrentBooking.BookingPerformances.Sum(b => b.SeatsBooked);
+            }
+            else
+            {
+                TotalPrice = 0;
+                TotalAmountOfItems = 0;
+            }
         }
 
         [RelayCommand]
@@ -197,13 +205,5 @@ namespace ConcertBookingApp.ViewModels
         {
             await Shell.Current.GoToAsync(nameof(PaymentPage));
         }
-
-       
-        //[RelayCommand]
-        //public void ShowPopup()
-        //{
-        //    PopupView? popup = new PopupView(this);
-        //    Application.Current?.MainPage?.ShowPopup(popup);
-        //}
     }
 }

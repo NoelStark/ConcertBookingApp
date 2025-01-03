@@ -24,16 +24,38 @@ namespace ConcertBookingApp.Data.Database
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Concert>().HasMany(a => a.Performances).WithOne(b => b.Concert).HasForeignKey(b => b.ConcertId);
+            modelBuilder.Entity<Concert>()
+         .HasMany(c => c.Performances)
+         .WithOne()
+         .HasForeignKey(p => p.ConcertId);
 
-            modelBuilder.Entity<Booking>().HasMany(a => a.BookingPerformances).WithOne(b => b.Booking).HasForeignKey(b => b.BookingId);
-            modelBuilder.Entity<Performance>().HasOne(a => a.Concert).WithMany(b => b.Performances).HasForeignKey(a => a.ConcertId);
+            // Configure composite key for BookingPerformance
+            modelBuilder.Entity<BookingPerformance>()
+                .HasKey(bp => new { bp.BookingId, bp.PerformanceId });
 
-            modelBuilder.Entity<Performance>().HasOne(a => a.BookingPerformance).WithOne(b => b.Performance).HasForeignKey<BookingPerformance>(b => b.PerformanceId);
+            // Configure Booking -> BookingPerformance (One-to-Many)
+            //modelBuilder.Entity<BookingPerformance>()
+            //    .HasOne(bp => bp.Booking)
+            //    .WithMany()
+            //    .HasForeignKey(bp => bp.BookingId);
 
-            modelBuilder.Entity<User>().HasIndex(v => v.UserId).IsUnique();
+            //// Configure Performance -> BookingPerformance (One-to-Many)
+            //modelBuilder.Entity<BookingPerformance>()
+            //    .HasOne(bp => bp.Performance)
+            //    .WithMany()
+            //    .HasForeignKey(bp => bp.PerformanceId);
 
-            modelBuilder.Entity<Booking>().HasOne<User>().WithMany().HasForeignKey(b => b.UserId);
+
+            // Unique index for UserId in User table
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.UserId)
+                .IsUnique();
+
+            // Configure User -> Booking (One-to-Many)
+            modelBuilder.Entity<Booking>()
+                .HasOne<User>()
+                .WithMany()
+                .HasForeignKey(b => b.UserId);
         }
     }
 }

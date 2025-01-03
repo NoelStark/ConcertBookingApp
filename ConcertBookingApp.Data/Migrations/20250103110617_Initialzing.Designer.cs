@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241231113434_initializedb")]
-    partial class initializedb
+    [Migration("20250103110617_Initialzing")]
+    partial class Initialzing
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,10 +54,9 @@ namespace ConcertBookingApp.Data.Migrations
                     b.Property<int>("PerformanceId")
                         .HasColumnType("int");
 
-                    b.HasKey("BookingId");
+                    b.HasKey("BookingId", "PerformanceId");
 
-                    b.HasIndex("PerformanceId")
-                        .IsUnique();
+                    b.HasIndex("PerformanceId");
 
                     b.ToTable("BookingPerformances");
                 });
@@ -120,9 +119,6 @@ namespace ConcertBookingApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PerformanceId"));
 
-                    b.Property<int?>("BookingId")
-                        .HasColumnType("int");
-
                     b.Property<int>("ConcertId")
                         .HasColumnType("int");
 
@@ -140,8 +136,6 @@ namespace ConcertBookingApp.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("PerformanceId");
-
-                    b.HasIndex("BookingId");
 
                     b.HasIndex("ConcertId");
 
@@ -190,8 +184,8 @@ namespace ConcertBookingApp.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("ConcertBookingApp.Data.Models.Performance", "Performance")
-                        .WithOne("BookingPerformance")
-                        .HasForeignKey("ConcertBookingApp.Data.Models.BookingPerformance", "PerformanceId")
+                        .WithMany("BookingPerformances")
+                        .HasForeignKey("PerformanceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -202,24 +196,16 @@ namespace ConcertBookingApp.Data.Migrations
 
             modelBuilder.Entity("ConcertBookingApp.Data.Models.Performance", b =>
                 {
-                    b.HasOne("ConcertBookingApp.Data.Models.Booking", null)
-                        .WithMany("Performances")
-                        .HasForeignKey("BookingId");
-
-                    b.HasOne("ConcertBookingApp.Data.Models.Concert", "Concert")
+                    b.HasOne("ConcertBookingApp.Data.Models.Concert", null)
                         .WithMany("Performances")
                         .HasForeignKey("ConcertId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Concert");
                 });
 
             modelBuilder.Entity("ConcertBookingApp.Data.Models.Booking", b =>
                 {
                     b.Navigation("BookingPerformances");
-
-                    b.Navigation("Performances");
                 });
 
             modelBuilder.Entity("ConcertBookingApp.Data.Models.Concert", b =>
@@ -229,8 +215,7 @@ namespace ConcertBookingApp.Data.Migrations
 
             modelBuilder.Entity("ConcertBookingApp.Data.Models.Performance", b =>
                 {
-                    b.Navigation("BookingPerformance")
-                        .IsRequired();
+                    b.Navigation("BookingPerformances");
                 });
 #pragma warning restore 612, 618
         }

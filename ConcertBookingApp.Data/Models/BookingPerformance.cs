@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,10 +11,8 @@ namespace ConcertBookingApp.Data.Models
 {
     public partial class BookingPerformance
     {
-        [Key]
         public int BookingId { get; set; }
         public int PerformanceId { get; set; }
-        
 
         //[ObservableProperty]
         private int seatsBooked = 0;
