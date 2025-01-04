@@ -17,7 +17,10 @@ namespace SharedResources.Mapping
                 .ForMember(
                     dest => dest.Dates,
                     opt => opt.MapFrom(src => src.Performances.Select(p => p.Date).ToList()))
-                .ReverseMap();
+                .ReverseMap()
+                .ForMember(
+                    dest => dest.Performances,
+                    opt => opt.MapFrom(src => src.Dates.Select(date => new Performance{Date = date})));
             CreateMap<Performance, PerformanceDTO>().ReverseMap();
         }
     }

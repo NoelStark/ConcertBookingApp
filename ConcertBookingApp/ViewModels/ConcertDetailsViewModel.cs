@@ -43,6 +43,9 @@ namespace ConcertBookingApp.ViewModels
         [ObservableProperty]
         private bool canBeClicked = false;
 
+        [ObservableProperty] private string date;
+        [ObservableProperty] private bool addedToCart;
+
         public ObservableCollection<BookingPerformance> AllPerformancesForConcert { get; set; } =
             new ObservableCollection<BookingPerformance>();
 
@@ -89,7 +92,8 @@ namespace ConcertBookingApp.ViewModels
             Performance =AllPerformancesForConcert[0].Performance;
             Performance.Date = AllPerformancesForConcert[0].Performance.Date;
             Performance.Location = AllPerformancesForConcert[0].Performance.Location;
-           
+            Date =
+                $"{AllPerformancesForConcert[0].Performance.Date.ToString("dd MMM yyyy")} - {AllPerformancesForConcert[AllPerformancesForConcert.Count-1].Performance.Date.ToString("dd MMM yyyy")}";
             UpdateButton();
         }
 
@@ -144,7 +148,15 @@ namespace ConcertBookingApp.ViewModels
                 };
             }
 
-            await Shell.Current.GoToAsync(nameof(CheckoutPage));
+            AddedToCart = true;
+            _ = ResetCartButton();
+            //await Shell.Current.GoToAsync(nameof(CheckoutPage));
+        }
+
+        private async Task ResetCartButton()
+        {
+            await Task.Delay(3000);
+            AddedToCart = false;
         }
     }
 }

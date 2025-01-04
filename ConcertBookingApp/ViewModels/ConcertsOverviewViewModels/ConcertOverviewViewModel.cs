@@ -39,18 +39,20 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             UpdateConcerts(_concertDTOs);
         }
 
-        private void UpdateConcerts(List<Concert> concerts)
+        private void UpdateConcerts(List<Concert> updatedConcerts)
         {
             Concerts.Clear();
-            foreach (var concert in concerts)
+            OnPropertyChanged(nameof(Concerts));
+
+            foreach (var concert in updatedConcerts)
             {
                 Concerts.Add(concert);
             }
 
             ConcertCount = Concerts.Count;
             OnPropertyChanged(nameof(Concerts));
-            OnPropertyChanged(nameof(ConcertCount));
         }
+
 
         private void FilterConcerts(string? searchText = null, List<Concert>? concerts = null)
         {
