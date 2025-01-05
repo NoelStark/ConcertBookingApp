@@ -13,6 +13,11 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
     public partial class ConcertDetailsViewModel
     {
         [RelayCommand]
+        async Task GoBack()
+        {
+            await Shell.Current.GoToAsync($"///ConcertOverviewPage");
+        }
+        [RelayCommand]
         void IncreaseQuantity(BookingPerformance bookingPerformance)
         {
             string value = "Increase";
