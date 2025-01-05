@@ -55,7 +55,15 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 };
             }
 
-            await Shell.Current.GoToAsync(nameof(CheckoutPage));
+            AddedToCart = true;
+            _ = ResetCartButton();
+        }
+        
+        private async Task ResetCartButton()
+        {
+            await Task.Delay(3000);
+            AddedToCart = false;
         }
     }
 }
+

@@ -32,6 +32,9 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         [ObservableProperty]
         private bool canBeClicked = false;
 
+        [ObservableProperty] private string date = string.Empty;
+        [ObservableProperty] private bool addedToCart = false;
+
         public ObservableCollection<BookingPerformance> AllPerformancesForConcert { get; set; } = new ObservableCollection<BookingPerformance>();
     }
 }
