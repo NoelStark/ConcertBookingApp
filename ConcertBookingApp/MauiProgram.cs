@@ -14,6 +14,8 @@ using System;
 using ConcertBookingApp.ViewModels.BookingViewModels;
 using Microsoft.EntityFrameworkCore.Storage;
 using ConcertBookingApp.Data.Database;
+using ConcertBookingApp.ViewModels.CheckoutViewModels;
+using ConcertBookingApp.ViewModels.ConcertDetailsViewModels;
 
 
 namespace ConcertBookingApp

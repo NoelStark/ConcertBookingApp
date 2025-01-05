@@ -1,11 +1,12 @@
+using ConcertBookingApp.ViewModels.CheckoutViewModels;
 using ConcertBookingApp.Services;
 using ConcertBookingApp.ViewModels;
+using ConcertBookingApp.ViewModels.CheckoutViewModels;
 
 namespace ConcertBookingApp.Views;
 
 public partial class CheckoutPage : ContentPage
 {
-	//private readonly BookingsPageViewModel viewmodel;
 	public CheckoutPage(CheckoutViewModel checkoutviewmodel)
 	{
 		InitializeComponent();

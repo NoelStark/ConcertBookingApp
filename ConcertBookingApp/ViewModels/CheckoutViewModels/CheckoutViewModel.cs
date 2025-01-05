@@ -15,45 +15,18 @@ using ConcertBookingApp.Views;
 using SharedResources.DTOs;
 using SharedResources.Models;
 using ConcertBookingApp.Data.Database;
+using CommunityToolkit.Mvvm.Input;
 
-namespace ConcertBookingApp.ViewModels
+
+namespace ConcertBookingApp.ViewModels.CheckoutViewModels
 {
     public partial class CheckoutViewModel : ObservableObject
     {
         private readonly BookingService _bookingService;
         private readonly ConcertService _concertService;
         private readonly IMapper _mapper;
-
-        [ObservableProperty]
-        private double totalPrice = 0;
-
-        [ObservableProperty]
-        private int totalAmountOfItems = 0;
-
-        [ObservableProperty]
-        private bool canBeClicked = false;
-
-        [ObservableProperty]
-        private bool addTicketsVisible = true;
-
-        [ObservableProperty]
-        private Concert concert;
-
-        [ObservableProperty]
-        private Performance performance;
-
-        [ObservableProperty]
-        private Booking booking;
-
-        [ObservableProperty]
-        private BookingPerformance bookingPerformance;
-
-        [ObservableProperty]
-        private List<Booking> allBookings = new List<Booking>();
         
-        public List<Concert> allConcerts;
-        public ObservableCollection<BookingPerformance> FlattenedBookingPerformances { get; set; } = new ObservableCollection<BookingPerformance>();
-        public ObservableCollection<Concert> SelectedConcerts { get; set; } = new ObservableCollection<Concert>();
+       
         public CheckoutViewModel(ConcertService concertService,BookingService bookingService, IMapper mapper)
         {
             _bookingService = bookingService;
@@ -93,7 +66,6 @@ namespace ConcertBookingApp.ViewModels
             UpdateNextButton();
         }
         
-        
         public void LoadBookings()
         {
             AllBookings.Clear();
@@ -130,48 +102,6 @@ namespace ConcertBookingApp.ViewModels
                 CanBeClicked = true;
             else
                 CanBeClicked = false;
-        }
-
-        [RelayCommand]
-        void IncreaseQuantity(BookingPerformance performance)
-        {
-            BookingPerformance chosenPerformance = _bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(b => b.Performance.PerformanceId == performance.Performance.PerformanceId);
-            
-            chosenPerformance.SeatsBooked++;
-            chosenPerformance.Performance.AvailableSeats--;
-            FillFlattenedPerformances();
-            UpdatePrice();
-        }
-
-        [RelayCommand]
-        void DecreaseQuantity(BookingPerformance performanceDTO)
-        {
-            BookingPerformance chosenPerformance = _bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(b => b.Performance.PerformanceId == performanceDTO.Performance.PerformanceId);
-
-            chosenPerformance.SeatsBooked--;
-            chosenPerformance.Performance.AvailableSeats++;
-            if (chosenPerformance.SeatsBooked == 0)
-            {
-                Booking findBooking = _bookingService.CurrentBooking;
-                findBooking.BookingPerformances.Remove(chosenPerformance);
-                if (!findBooking.BookingPerformances.Any())
-                    _bookingService.CurrentBooking = null;
-            }
-            FillFlattenedPerformances();
-            UpdatePrice();
-        }
-
-
-        [RelayCommand]
-        private async Task GoBack()
-        {
-            await Shell.Current.GoToAsync("///ConcertOverviewPage");
-        }
-
-        [RelayCommand]
-        private async Task Continue()
-        {
-            await Shell.Current.GoToAsync(nameof(PaymentPage));
         }
     }
 }
