@@ -18,7 +18,9 @@
         <Frame Grid.Row="0" HeightRequest="250" Padding="0" CornerRadius="0" BorderColor="Transparent">
             <Grid RowDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
                 <Image Source="{Binding Concert.ImageUrl}" Aspect="Fill" HorizontalOptions="Fill" VerticalOptions="Fill"></Image>
-
+                <ImageButton HeightRequest="30" VerticalOptions="Start" HorizontalOptions="Start" Margin="20,30,20,0"
+                             Source="backarrow.png"
+                             Command="{Binding GoBackCommand}"/>
 
                     <ImageButton HeightRequest="25" VerticalOptions="Start" HorizontalOptions="End" Margin="20,30,20,0"
                              Source="{Binding Concert.IsFavorite, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Heart'}"

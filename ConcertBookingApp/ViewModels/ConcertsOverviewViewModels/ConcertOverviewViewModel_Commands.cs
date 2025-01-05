@@ -27,7 +27,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             };
             string serializedConcert = JsonSerializer.Serialize(concert, options);
             string encodedConcert = Uri.EscapeDataString(serializedConcert);
-            await Shell.Current.GoToAsync($"ConcertDetailsPage?concert={encodedConcert}");
+            await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={encodedConcert}");
         }
 
         [RelayCommand]
