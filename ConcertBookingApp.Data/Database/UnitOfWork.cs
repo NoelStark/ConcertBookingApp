@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ConcertBookingApp.Data.Repositorys;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,27 +10,28 @@ namespace ConcertBookingApp.Data.Database
 {
     public class UnitOfWork
     {
-        private readonly ApplicationDbContext _applicationDb;
+        private protected readonly ApplicationDbContext _dbContext;
+
+        private IPerformanceRepository _performanceRepository;
+        private IConcertRepository _concertRepository;
+        private IBookingRepository _bookingRepository;
+        private IBookingPerformanceRepository _bookingPerformanceRepository;
         public UnitOfWork(ApplicationDbContext applicationDb) 
         {
-            _applicationDb = applicationDb;
+            _dbContext = applicationDb;
         }
+        public IConcertRepository Concert { get => _concertRepository = new ConcertRepository(_dbContext);}
+        public IPerformanceRepository Performance { get => _performanceRepository = new PerformanceRepository(_dbContext); }
+        public IBookingRepository Booking { get => _bookingRepository = new BookingRepository(_dbContext); }
+        public IBookingPerformanceRepository BookingPerformance { get => _bookingPerformanceRepository = new BookingPerformanceRepository(_dbContext); }
 
         public void Dispose()
         {
-            _applicationDb.Dispose();
+            _dbContext.Dispose();
         }
-
-        public void Save()
+        public async Task Save()
         {
-            _applicationDb.SaveChanges();
+           await _dbContext.SaveChangesAsync();
         }
-
-        public ApplicationDbContext DatabaseConnection()
-        {
-            return _applicationDb;
-        }
-
-
     }
 }

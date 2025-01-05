@@ -1,4 +1,5 @@
 using ConcertBookingApp.ViewModels;
+using ConcertBookingApp.ViewModels.ConcertDetailsViewModels;
 
 namespace ConcertBookingApp.Views;
 

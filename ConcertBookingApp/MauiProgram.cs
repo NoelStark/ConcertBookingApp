@@ -13,6 +13,9 @@ using Microsoft.Extensions.Configuration;
 using System;
 using ConcertBookingApp.ViewModels.BookingViewModels;
 using Microsoft.EntityFrameworkCore.Storage;
+using ConcertBookingApp.Data.Database;
+using ConcertBookingApp.ViewModels.CheckoutViewModels;
+using ConcertBookingApp.ViewModels.ConcertDetailsViewModels;
 
 
 namespace ConcertBookingApp
@@ -51,6 +54,7 @@ namespace ConcertBookingApp
             builder.Services.AddTransient<PaymentPage>();
             builder.Services.AddSingleton<BookingViewModel>();
             builder.Services.AddTransient<BookingsPage>();
+            builder.Services.AddTransient<ApplicationDbContext>();
 
             builder.Services.AddSingleton(x =>
                 new HttpClient { BaseAddress = new Uri("http://10.0.2.2:7139") });
@@ -66,6 +70,7 @@ namespace ConcertBookingApp
             builder.Logging.AddDebug();
 #endif
 
+           
             return builder.Build();
         }
     }
