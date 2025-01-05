@@ -22,8 +22,12 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
         {
             BookingPerformance chosenPerformance = _bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(b => b.Performance.PerformanceId == performance.Performance.PerformanceId);
 
-            chosenPerformance.SeatsBooked++;
-            chosenPerformance.Performance.AvailableSeats--;
+            if(chosenPerformance.Performance.AvailableSeats != 0)
+            {
+                chosenPerformance.SeatsBooked++;
+                chosenPerformance.Performance.AvailableSeats--;
+            }
+
             FillFlattenedPerformances();
             UpdatePrice();
         }
@@ -40,7 +44,7 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
                 Booking findBooking = _bookingService.CurrentBooking;
                 findBooking.BookingPerformances.Remove(chosenPerformance);
                 if (!findBooking.BookingPerformances.Any())
-                    _bookingService.CurrentBooking = null;
+                    _bookingService.CurrentBooking = new Booking();
             }
             FillFlattenedPerformances();
             UpdatePrice();

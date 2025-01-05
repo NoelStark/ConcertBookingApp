@@ -24,6 +24,7 @@ namespace ConcertBookingApp.Data.Database
         public IPerformanceRepository Performance { get => _performanceRepository = new PerformanceRepository(_dbContext); }
         public IBookingRepository Booking { get => _bookingRepository = new BookingRepository(_dbContext); }
         public IBookingPerformanceRepository BookingPerformance { get => _bookingPerformanceRepository = new BookingPerformanceRepository(_dbContext); }
+
         public void Dispose()
         {
             _dbContext.Dispose();

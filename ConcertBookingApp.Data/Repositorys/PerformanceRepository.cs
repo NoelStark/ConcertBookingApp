@@ -24,7 +24,6 @@ namespace ConcertBookingApp.Data.Repositorys
             _dbContext.Performances.Remove(performance);
             await _dbContext.SaveChangesAsync();
         }
-
         public async Task<List<Performance>> GetAllPerfromances()
         {
             return await _dbContext.Performances.ToListAsync();
