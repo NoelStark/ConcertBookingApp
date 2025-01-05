@@ -9,6 +9,6 @@ namespace ConcertBookingApp.Data.Repositorys
 {
     public interface IConcertRepository : IGenericRepository<Concert>
     {
-        Task<List<Concert>> GetAllPerfromances();
+        Task<List<Concert>> GetAllConcerts();
     }
 }

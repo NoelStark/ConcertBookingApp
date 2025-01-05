@@ -10,15 +10,12 @@ namespace ConcertBookingApp.Data.Repositorys
 {
     public class ConcertRepository : GenericRepository<Concert>, IConcertRepository
     {
-
         public ConcertRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
-
-        public async Task<List<Concert>> GetAllPerfromances()
+        public async Task<List<Concert>> GetAllConcerts()
         {
-            List<Concert> allConcerts = _dbContext.Concerts.ToList();
-            return allConcerts;
+            return _dbContext.Concerts.ToList();
         }
     }
 }
