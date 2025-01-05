@@ -199,7 +199,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         private void UpdateCardType(string value)
         {
             string cardType = ValidationHelper.GetCardType(value);
-
+            typeofCard = cardType;
             if (!string.IsNullOrEmpty(cardType))
             {
                 CardImage = cardType switch

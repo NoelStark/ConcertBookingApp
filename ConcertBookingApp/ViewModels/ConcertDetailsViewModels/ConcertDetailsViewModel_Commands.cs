@@ -39,6 +39,11 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         private async Task BuyTickets()
         {
             List<BookingPerformance> hasse = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
+            foreach (var performance in hasse)
+            {
+                performance.ImageURL = Concert.ImageUrl;
+                performance.Title = Concert.Name;
+            }
             if (bookingService.CurrentBooking != null)
             {
                 Booking currentBooking = bookingService.CurrentBooking;

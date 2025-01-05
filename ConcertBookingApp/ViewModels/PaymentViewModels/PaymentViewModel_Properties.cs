@@ -51,6 +51,8 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         [ObservableProperty]
         private bool isValidForm = false;
 
+        private string typeofCard = string.Empty;
+
 
         private readonly Dictionary<string, string> _lastValidValues = new Dictionary<string, string>
         {

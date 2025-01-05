@@ -32,13 +32,22 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
             {
                 if (_userService.CurrentUser != null)
                 {
+                    _userService.CurrentUser.Email = Email;
+                    _userService.CurrentUser.Name = Name;
+                    _userService.CurrentUser.CreditCardNumber = CreditCardNumber;
+                    _userService.CurrentUser.CreditCardType = typeofCard;
+                }
+                else
+                {
                     _userService.CurrentUser = new User
                     {
                         Email = Email,
-                        Name = FirstName + " " + LastName,
+                        Name = Name,
+                        CreditCardNumber = CreditCardNumber,
+                        CreditCardType = typeofCard
                     };
                 }
-                await Shell.Current.GoToAsync("ConcertOverviewPage");
+                await Shell.Current.GoToAsync("ConfirmationPage");
 
             }
             shouldSwitchSection = !shouldSwitchSection;

@@ -27,7 +27,7 @@
                 Icon="cart.png"
                 Title="Cart"
                 ContentTemplate="{DataTemplate local:CheckoutPage}"
-                Route="CheckoutPage" />
+                Route="CheckoutPage"/>
         
     </TabBar>
     <ShellContent
@@ -39,6 +39,10 @@
         Title="PaymentPage"
         ContentTemplate="{DataTemplate local:PaymentPage}"
         Route="PaymentPage" />
+    <ShellContent
+        Title="Confirmation"
+        ContentTemplate="{DataTemplate local:ConfirmationPage}"
+        Route="ConfirmationPage" />
 
 
 

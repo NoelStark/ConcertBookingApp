@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using ConcertBookingApp.Data.Database;
 using ConcertBookingApp.ViewModels.CheckoutViewModels;
 using ConcertBookingApp.ViewModels.ConcertDetailsViewModels;
+using ConcertBookingApp.ViewModels.ConfirmationViewModels;
 
 
 namespace ConcertBookingApp
@@ -40,10 +41,11 @@ namespace ConcertBookingApp
 
 
             builder.Services.AddSingleton<ConcertOverviewViewModel>();
-            builder.Services.AddSingleton<ConcertDetailsViewModel>();
+            builder.Services.AddTransient<ConcertDetailsViewModel>();
             builder.Services.AddTransient<CheckoutViewModel>();
             builder.Services.AddTransient<PaymentViewModel>();
             builder.Services.AddTransient<BookingViewModel>();
+            builder.Services.AddTransient<ConfirmationViewModel>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -52,10 +54,11 @@ namespace ConcertBookingApp
             builder.Services.AddSingleton<UserService>();
 
             builder.Services.AddSingleton<ConcertOverviewPage>();
-            builder.Services.AddSingleton<ConcertDetailsPage>();
+            builder.Services.AddTransient<ConcertDetailsPage>();
             builder.Services.AddTransient<CheckoutPage>();
             builder.Services.AddTransient<PaymentPage>();
             builder.Services.AddTransient<BookingsPage>();
+            builder.Services.AddTransient<ConfirmationPage>();
 
             builder.Services.AddTransient<ApplicationDbContext>();
 
