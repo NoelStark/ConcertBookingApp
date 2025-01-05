@@ -5,22 +5,27 @@
              xmlns:viewmodels="clr-namespace:ConcertBookingApp.ViewModels.ConcertDetailsViewModels"
              xmlns:models="clr-namespace:SharedResources.Models;assembly=SharedResources"
              xmlns:converters="clr-namespace:ConcertBookingApp.Converters"
+             xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels.ConcertsOverviewViewModels"
              x:DataType="viewmodels:ConcertDetailsViewModel"
              Title="ConcertDetailsPage">
 
     <ContentPage.Resources>
         <converters:BoolToOppositeConverter x:Key="BoolToOppositeConverter"/>
+        <converters:BoolToColorConverter x:Key="BoolToColorConverter"/>
     </ContentPage.Resources>
     <ScrollView>
         <Grid RowDefinitions="Auto, Auto, Auto, Auto, Auto" RowSpacing="5">
         <Frame Grid.Row="0" HeightRequest="250" Padding="0" CornerRadius="0" BorderColor="Transparent">
             <Grid RowDefinitions="Auto, *, Auto" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
                 <Image Source="{Binding Concert.ImageUrl}" Aspect="Fill" HorizontalOptions="Fill" VerticalOptions="Fill"></Image>
-                
-                <ImageButton Source="heart.png" HeightRequest="25" VerticalOptions="Start" HorizontalOptions="Start" Margin="20,30,20,0"></ImageButton>
-                <ImageButton Source="heart.png" HeightRequest="25" VerticalOptions="Start" HorizontalOptions="End" Margin="20,30,20,0"></ImageButton>
 
-                <HorizontalStackLayout Margin="20,80,0,0">
+
+                    <ImageButton HeightRequest="25" VerticalOptions="Start" HorizontalOptions="End" Margin="20,30,20,0"
+                             Source="{Binding Concert.IsFavorite, Converter={StaticResource BoolToColorConverter}, ConverterParameter='Heart'}"
+                             Command="{Binding MakeFavoriteCommand}"
+                             />
+
+                    <HorizontalStackLayout Margin="20,80,0,0">
                     <Frame HeightRequest="30" WidthRequest="80" BackgroundColor="{StaticResource Primary}" Padding="0" CornerRadius="20" BorderColor="Transparent">
                         <HorizontalStackLayout Spacing="5" VerticalOptions="Center" HorizontalOptions="Center">
                             <Image Source="headphones.png" WidthRequest="15"></Image>

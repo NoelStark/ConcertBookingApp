@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ConcertBookingApp.Views;
 using SharedResources.Models;
 using CommunityToolkit.Mvvm.Input;
+//using ConcertBookingApp.Data.Models;
 
 namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
 {
@@ -58,11 +59,16 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             AddedToCart = true;
             _ = ResetCartButton();
         }
-        
-        private async Task ResetCartButton()
+
+        [RelayCommand]
+        private void MakeFavorite()
         {
-            await Task.Delay(3000);
-            AddedToCart = false;
+            //Changes the color of the heart
+            if (concert == null) return;
+            concert.IsFavorite = !concert.IsFavorite;
+            OnPropertyChanged(nameof(concert.IsFavorite));
+
+            //Not Implemented
         }
     }
 }

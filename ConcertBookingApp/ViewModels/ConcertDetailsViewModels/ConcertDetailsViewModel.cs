@@ -76,5 +76,11 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             List<BookingPerformance> result = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
             CanBeClicked = result.Any();
         }
+
+        private async Task ResetCartButton()
+        {
+            await Task.Delay(2000);
+            AddedToCart = false;
+        }
     }
 }
