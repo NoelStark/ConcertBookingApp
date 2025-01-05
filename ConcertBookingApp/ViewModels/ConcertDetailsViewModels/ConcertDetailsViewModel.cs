@@ -14,6 +14,7 @@ using ConcertBookingApp.Services;
 using ConcertBookingApp.Views;
 using SharedResources.DTOs;
 using SharedResources.Models;
+using ConcertBookingApp.Data.Database;
 
 namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
 {
@@ -22,6 +23,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
     {
         private readonly BookingService bookingService;
         private readonly ConcertService _concertService;
+        private readonly UnitOfWork _unitOfWork;
 
         public string ConvertFromJson
         {
@@ -62,6 +64,18 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             {
                 AllPerformancesForConcert.Add(performance);
             }
+
+            foreach(var performance in AllPerformancesForConcert)
+            { 
+                var hasse = bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(a => a.Performance.PerformanceId == performance.Performance.PerformanceId);
+                if (hasse != null)
+                {
+                    performance.Performance.AvailableSeats -= hasse.SeatsBooked;
+                    performance.SeatsBooked = hasse.SeatsBooked;
+                }
+            }
+
+
             OnPropertyChanged(nameof(AllPerformancesForConcert));
             Performance =AllPerformancesForConcert[0].Performance;
             Performance.Date = AllPerformancesForConcert[0].Performance.Date;

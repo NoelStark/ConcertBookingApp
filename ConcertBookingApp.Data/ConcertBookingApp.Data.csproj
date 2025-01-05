@@ -25,9 +25,9 @@
 	  </None>
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Migrations\" />
+	  <ProjectReference Include="..\Shared Resources\SharedResources.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Shared Resources\SharedResources.csproj" />
+	  <Folder Include="Migrations\" />
 	</ItemGroup>
 </Project>

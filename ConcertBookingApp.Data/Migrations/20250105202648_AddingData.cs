@@ -42,15 +42,15 @@ namespace ConcertBookingApp.Data.Migrations
                 columns: new[] { "PerformanceId", "AvailableSeats", "ConcertId", "Date", "Location", "Price", "TotalSeats" },
                 values: new object[,]
                 {
-                    { 1, 0, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
-                    { 2, 0, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
-                    { 3, 0, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
-                    { 4, 0, 2, new DateTime(2024, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
-                    { 6, 0, 2, new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
-                    { 7, 0, 2, new DateTime(2024, 10, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
-                    { 8, 0, 3, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
-                    { 9, 0, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
-                    { 10, 0, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 }
+                    { 1, 5, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 2, 150, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 3, 200, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
+                    { 4, 5, 2, new DateTime(2024, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 6, 150, 2, new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 7, 200, 2, new DateTime(2024, 10, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
+                    { 8, 5, 3, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 9, 150, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 10, 200, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 }
                 });
 
             migrationBuilder.InsertData(
