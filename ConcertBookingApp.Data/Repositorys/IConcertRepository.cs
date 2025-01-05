@@ -1,4 +1,4 @@
-﻿using ConcertBookingApp.Data.Models;
+﻿using SharedResources.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +10,7 @@ namespace ConcertBookingApp.Data.Repositorys
     public interface IConcertRepository : IGenericRepository<Concert>
     {
         Task<List<Concert>> GetAllConcerts();
+        
+        Task<Concert> GetConcertForPerformance(int performanceId);
     }
 }

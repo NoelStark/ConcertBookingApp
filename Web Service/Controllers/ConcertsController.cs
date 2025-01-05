@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ConcertBookingApp.Data.Database;
 using Microsoft.AspNetCore.Mvc;
 using SharedResources.Data;
 using SharedResources.DTOs;
@@ -10,11 +11,11 @@ namespace WebService.Controllers
     [Route("[controller]")]
     public class ConcertsController : Controller
     {
-        private readonly ConcertRepository _concertRepository;
         private readonly IMapper _mapper;
-        public ConcertsController(ConcertRepository concertRepository, IMapper mapper)
+        private readonly UnitOfWork _unitOfWork;
+        public ConcertsController(UnitOfWork unitOfWork, IMapper mapper)
         {
-            _concertRepository = concertRepository;
+            _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
         [HttpGet]
@@ -22,7 +23,12 @@ namespace WebService.Controllers
         {
             try
             {
-                var concerts = _concertRepository.GetAllConcerts();
+                var concerts = await _unitOfWork.Concert.GetAllConcerts();
+                List<Performance> performances = await _unitOfWork.Performance.GetAllPerformances();
+                foreach (var concert in concerts)
+                {
+                    concert.Performances = performances.Where(x => x.ConcertId == concert.ConcertId).ToList();
+                }
                 return Ok(_mapper.Map<List<ConcertDTO>>(concerts));
             }
             catch (Exception ex)
@@ -35,14 +41,14 @@ namespace WebService.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPerformancesForConcert(int id)
         {
-            List<Performance> performances = _concertRepository.GetPerformances(id);
+            List<Performance> performances = await _unitOfWork.Performance.GetPerformancesForConcert(id);
             return Ok(_mapper.Map<List<PerformanceDTO>>(performances));
         }
 
         [HttpGet("performance/{performanceId}")]
         public async Task<IActionResult> GetConcertForPerformance(int performanceId)
         {
-            var concert = _concertRepository.GetConcertForPerformance(performanceId);
+            var concert = _unitOfWork.Concert.GetConcertForPerformance(performanceId);
             return Ok(_mapper.Map<ConcertDTO>(concert));
         }
 

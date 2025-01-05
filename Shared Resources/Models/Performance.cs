@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace SharedResources.Models
 {
     public partial class Performance : ObservableObject
     {
+        [Key]
         public int PerformanceId { get; set; } = 0;
         public int ConcertId { get; set; } = 0;
         public DateTime Date { get; set; } = new DateTime();
@@ -20,6 +22,6 @@ namespace SharedResources.Models
         public double Price { get; set; } = 0;
         //public Concert Concert { get; set; } = null;
 
-        public BookingPerformance BookingPerformance { get; set; }
+        public List<BookingPerformance> BookingPerformances { get; set; }
     }
 }

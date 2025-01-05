@@ -89,18 +89,21 @@ namespace SharedResources.Data
                 }
             };
         }
-        
+        //Klar
         public List<Concert> GetAllConcerts()
         {
             return AllConcerts;
         }
 
+        //Klar
         public Concert GetConcertForPerformance(int performanceId)
         {
             Concert? concert = AllConcerts.FirstOrDefault(x => x.Performances.Any(y => y.PerformanceId == performanceId));
             if (concert == null) return new Concert();
             return concert;
         }
+
+        //Klar
         public List<Performance> GetPerformances(int concertId)
         {
             List<Performance> performances = AllConcerts.FirstOrDefault(x => x.ConcertId == concertId ).Performances;

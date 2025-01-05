@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250103153045_Initialzing")]
+    [Migration("20250105154500_Initialzing")]
     partial class Initialzing
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace ConcertBookingApp.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Booking", b =>
+            modelBuilder.Entity("SharedResources.Models.Booking", b =>
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
@@ -46,13 +46,28 @@ namespace ConcertBookingApp.Data.Migrations
                     b.ToTable("Bookings");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.BookingPerformance", b =>
+            modelBuilder.Entity("SharedResources.Models.BookingPerformance", b =>
                 {
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
 
                     b.Property<int>("PerformanceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SeatsBooked")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BookingId", "PerformanceId");
 
@@ -61,7 +76,7 @@ namespace ConcertBookingApp.Data.Migrations
                     b.ToTable("BookingPerformances");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Category", b =>
+            modelBuilder.Entity("SharedResources.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -73,6 +88,9 @@ namespace ConcertBookingApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsSelected")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -82,7 +100,7 @@ namespace ConcertBookingApp.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Concert", b =>
+            modelBuilder.Entity("SharedResources.Models.Concert", b =>
                 {
                     b.Property<int>("ConcertId")
                         .ValueGeneratedOnAdd()
@@ -102,6 +120,9 @@ namespace ConcertBookingApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -111,13 +132,16 @@ namespace ConcertBookingApp.Data.Migrations
                     b.ToTable("Concerts");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Performance", b =>
+            modelBuilder.Entity("SharedResources.Models.Performance", b =>
                 {
                     b.Property<int>("PerformanceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PerformanceId"));
+
+                    b.Property<int>("AvailableSeats")
+                        .HasColumnType("int");
 
                     b.Property<int>("ConcertId")
                         .HasColumnType("int");
@@ -142,7 +166,7 @@ namespace ConcertBookingApp.Data.Migrations
                     b.ToTable("Performances");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.User", b =>
+            modelBuilder.Entity("SharedResources.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -166,24 +190,24 @@ namespace ConcertBookingApp.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Booking", b =>
+            modelBuilder.Entity("SharedResources.Models.Booking", b =>
                 {
-                    b.HasOne("ConcertBookingApp.Data.Models.User", null)
+                    b.HasOne("SharedResources.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.BookingPerformance", b =>
+            modelBuilder.Entity("SharedResources.Models.BookingPerformance", b =>
                 {
-                    b.HasOne("ConcertBookingApp.Data.Models.Booking", "Booking")
+                    b.HasOne("SharedResources.Models.Booking", "Booking")
                         .WithMany("BookingPerformances")
                         .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ConcertBookingApp.Data.Models.Performance", "Performance")
+                    b.HasOne("SharedResources.Models.Performance", "Performance")
                         .WithMany("BookingPerformances")
                         .HasForeignKey("PerformanceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -194,26 +218,26 @@ namespace ConcertBookingApp.Data.Migrations
                     b.Navigation("Performance");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Performance", b =>
+            modelBuilder.Entity("SharedResources.Models.Performance", b =>
                 {
-                    b.HasOne("ConcertBookingApp.Data.Models.Concert", null)
+                    b.HasOne("SharedResources.Models.Concert", null)
                         .WithMany("Performances")
                         .HasForeignKey("ConcertId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Booking", b =>
+            modelBuilder.Entity("SharedResources.Models.Booking", b =>
                 {
                     b.Navigation("BookingPerformances");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Concert", b =>
+            modelBuilder.Entity("SharedResources.Models.Concert", b =>
                 {
                     b.Navigation("Performances");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Performance", b =>
+            modelBuilder.Entity("SharedResources.Models.Performance", b =>
                 {
                     b.Navigation("BookingPerformances");
                 });

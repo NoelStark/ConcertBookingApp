@@ -1,5 +1,5 @@
 ﻿using ConcertBookingApp.Data.Database;
-using ConcertBookingApp.Data.Models;
+using SharedResources.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +10,9 @@ namespace ConcertBookingApp.Data.Repositorys
 {
     public interface IPerformanceRepository : IGenericRepository<Performance>
     {
-        Task<Performance> FindPerformance(Performance performance);
-        Task RemoveSelectedPerformance(Performance performance);
-        Task<List<Performance>> GetAllPerfromances();
+        Task<Performance> FindPerformance(int performanceId);
+        Task RemoveSelectedPerformance(int performanceId);
+        Task<List<Performance>> GetAllPerformances();
+        Task<List<Performance>> GetPerformancesForConcert(int concertId);
     }
 }

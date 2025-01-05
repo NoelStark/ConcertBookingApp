@@ -54,7 +54,7 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
                     {
                         Performance = bookingPerformance.Performance,
                         SeatsBooked = bookingPerformance.SeatsBooked,
-                        ImageURL = concert.ImageUrl,
+                        ImageURL = concert.ImageUrl, 
                         Genre = concert.Genre,
                         Title = concert.Name
                     });

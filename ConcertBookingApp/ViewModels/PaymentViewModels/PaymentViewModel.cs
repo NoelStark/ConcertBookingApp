@@ -19,6 +19,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         public bool showError = false;
     }
 
+    [QueryProperty(nameof(TotalCartCost), "totalPrice")]
     public partial class PaymentViewModel : ObservableObject
     {
 
@@ -187,7 +188,13 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
                 ExpireDate = _lastValidValues["Date"];
             }
         }
-       
+
+        partial void OnAgreeToTermsChanged(bool value)
+        {
+            AgreeToTerms = value;
+            ValidateForm();
+        }
+
 
         private void UpdateCardType(string value)
         {

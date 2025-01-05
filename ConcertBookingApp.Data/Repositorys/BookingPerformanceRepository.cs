@@ -1,5 +1,5 @@
 ﻿using ConcertBookingApp.Data.Database;
-using ConcertBookingApp.Data.Models;
+using SharedResources.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

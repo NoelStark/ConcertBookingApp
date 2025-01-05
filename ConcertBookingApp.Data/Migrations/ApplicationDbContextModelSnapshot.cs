@@ -22,7 +22,7 @@ namespace ConcertBookingApp.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Booking", b =>
+            modelBuilder.Entity("SharedResources.Models.Booking", b =>
                 {
                     b.Property<int>("BookingId")
                         .ValueGeneratedOnAdd()
@@ -51,13 +51,28 @@ namespace ConcertBookingApp.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.BookingPerformance", b =>
+            modelBuilder.Entity("SharedResources.Models.BookingPerformance", b =>
                 {
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
 
                     b.Property<int>("PerformanceId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SeatsBooked")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BookingId", "PerformanceId");
 
@@ -69,11 +84,15 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             BookingId = 1,
-                            PerformanceId = 1
+                            PerformanceId = 1,
+                            Genre = "",
+                            ImageURL = "",
+                            SeatsBooked = 0,
+                            Title = ""
                         });
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Category", b =>
+            modelBuilder.Entity("SharedResources.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -85,6 +104,9 @@ namespace ConcertBookingApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsSelected")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -94,7 +116,7 @@ namespace ConcertBookingApp.Data.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Concert", b =>
+            modelBuilder.Entity("SharedResources.Models.Concert", b =>
                 {
                     b.Property<int>("ConcertId")
                         .ValueGeneratedOnAdd()
@@ -114,6 +136,9 @@ namespace ConcertBookingApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -126,36 +151,42 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             ConcertId = 1,
-                            Description = "Pop Pulse Festival",
+                            Description = "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.",
                             Genre = "Pop",
                             ImageUrl = "edm.png",
+                            IsFavorite = false,
                             Name = "Pop Pulse Festival"
                         },
                         new
                         {
                             ConcertId = 2,
-                            Description = "Starlight Pop Jazz",
+                            Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
                             Genre = "Jazz",
                             ImageUrl = "testconcert.png",
+                            IsFavorite = false,
                             Name = "Starlight Pop Jazz"
                         },
                         new
                         {
                             ConcertId = 3,
-                            Description = "Classical",
+                            Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
                             Genre = "Classical",
                             ImageUrl = "edm.png",
+                            IsFavorite = false,
                             Name = "Classical"
                         });
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Performance", b =>
+            modelBuilder.Entity("SharedResources.Models.Performance", b =>
                 {
                     b.Property<int>("PerformanceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PerformanceId"));
+
+                    b.Property<int>("AvailableSeats")
+                        .HasColumnType("int");
 
                     b.Property<int>("ConcertId")
                         .HasColumnType("int");
@@ -183,6 +214,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 1,
+                            AvailableSeats = 0,
                             ConcertId = 1,
                             Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -192,6 +224,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 2,
+                            AvailableSeats = 0,
                             ConcertId = 1,
                             Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -201,6 +234,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 3,
+                            AvailableSeats = 0,
                             ConcertId = 1,
                             Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -210,6 +244,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 4,
+                            AvailableSeats = 0,
                             ConcertId = 2,
                             Date = new DateTime(2024, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -219,6 +254,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 6,
+                            AvailableSeats = 0,
                             ConcertId = 2,
                             Date = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -228,6 +264,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 7,
+                            AvailableSeats = 0,
                             ConcertId = 2,
                             Date = new DateTime(2024, 10, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -237,6 +274,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 8,
+                            AvailableSeats = 0,
                             ConcertId = 3,
                             Date = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -246,6 +284,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 9,
+                            AvailableSeats = 0,
                             ConcertId = 3,
                             Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -255,6 +294,7 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 10,
+                            AvailableSeats = 0,
                             ConcertId = 3,
                             Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
@@ -263,7 +303,7 @@ namespace ConcertBookingApp.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.User", b =>
+            modelBuilder.Entity("SharedResources.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -301,24 +341,24 @@ namespace ConcertBookingApp.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Booking", b =>
+            modelBuilder.Entity("SharedResources.Models.Booking", b =>
                 {
-                    b.HasOne("ConcertBookingApp.Data.Models.User", null)
+                    b.HasOne("SharedResources.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.BookingPerformance", b =>
+            modelBuilder.Entity("SharedResources.Models.BookingPerformance", b =>
                 {
-                    b.HasOne("ConcertBookingApp.Data.Models.Booking", "Booking")
+                    b.HasOne("SharedResources.Models.Booking", "Booking")
                         .WithMany("BookingPerformances")
                         .HasForeignKey("BookingId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ConcertBookingApp.Data.Models.Performance", "Performance")
+                    b.HasOne("SharedResources.Models.Performance", "Performance")
                         .WithMany("BookingPerformances")
                         .HasForeignKey("PerformanceId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -329,26 +369,26 @@ namespace ConcertBookingApp.Data.Migrations
                     b.Navigation("Performance");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Performance", b =>
+            modelBuilder.Entity("SharedResources.Models.Performance", b =>
                 {
-                    b.HasOne("ConcertBookingApp.Data.Models.Concert", null)
+                    b.HasOne("SharedResources.Models.Concert", null)
                         .WithMany("Performances")
                         .HasForeignKey("ConcertId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Booking", b =>
+            modelBuilder.Entity("SharedResources.Models.Booking", b =>
                 {
                     b.Navigation("BookingPerformances");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Concert", b =>
+            modelBuilder.Entity("SharedResources.Models.Concert", b =>
                 {
                     b.Navigation("Performances");
                 });
 
-            modelBuilder.Entity("ConcertBookingApp.Data.Models.Performance", b =>
+            modelBuilder.Entity("SharedResources.Models.Performance", b =>
                 {
                     b.Navigation("BookingPerformances");
                 });

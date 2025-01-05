@@ -1,3 +1,5 @@
+using ConcertBookingApp.Data.Database;
+using Microsoft.EntityFrameworkCore;
 using SharedResources.Data;
 using SharedResources.Mapping;
 
@@ -11,7 +13,9 @@ namespace WebService
 
             // Add services to the container
             builder.Services.AddControllers();
-            builder.Services.AddSingleton<ConcertRepository>();
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<UnitOfWork>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
             builder.Services.AddEndpointsApiExplorer();

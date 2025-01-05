@@ -54,13 +54,13 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
         [RelayCommand]
         private async Task GoBack()
         {
-            await Shell.Current.GoToAsync("///ConcertOverviewPage");
+            await Shell.Current.GoToAsync("ConcertOverviewPage");
         }
 
         [RelayCommand]
         private async Task Continue()
         {
-            await Shell.Current.GoToAsync(nameof(PaymentPage));
+            await Shell.Current.GoToAsync($"PaymentPage?totalPrice={TotalPrice}");
         }
     }
 }

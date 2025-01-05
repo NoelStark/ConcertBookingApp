@@ -15,12 +15,12 @@ namespace ConcertBookingApp.Data.Migrations
         {
             migrationBuilder.InsertData(
                 table: "Concerts",
-                columns: new[] { "ConcertId", "Description", "Genre", "ImageUrl", "Name" },
+                columns: new[] { "ConcertId", "Description", "Genre", "ImageUrl", "IsFavorite", "Name" },
                 values: new object[,]
                 {
-                    { 1, "Pop Pulse Festival", "Pop", "edm.png", "Pop Pulse Festival" },
-                    { 2, "Starlight Pop Jazz", "Jazz", "testconcert.png", "Starlight Pop Jazz" },
-                    { 3, "Classical", "Classical", "edm.png", "Classical" }
+                    { 1, "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.", "Pop", "edm.png", false, "Pop Pulse Festival" },
+                    { 2, "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.", "Jazz", "testconcert.png", false, "Starlight Pop Jazz" },
+                    { 3, "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.", "Classical", "edm.png", false, "Classical" }
                 });
 
             migrationBuilder.InsertData(
@@ -39,24 +39,24 @@ namespace ConcertBookingApp.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Performances",
-                columns: new[] { "PerformanceId", "ConcertId", "Date", "Location", "Price", "TotalSeats" },
+                columns: new[] { "PerformanceId", "AvailableSeats", "ConcertId", "Date", "Location", "Price", "TotalSeats" },
                 values: new object[,]
                 {
-                    { 1, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
-                    { 2, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
-                    { 3, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
-                    { 4, 2, new DateTime(2024, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
-                    { 6, 2, new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
-                    { 7, 2, new DateTime(2024, 10, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
-                    { 8, 3, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
-                    { 9, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
-                    { 10, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 }
+                    { 1, 0, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 2, 0, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 3, 0, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
+                    { 4, 0, 2, new DateTime(2024, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 6, 0, 2, new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 7, 0, 2, new DateTime(2024, 10, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
+                    { 8, 0, 3, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 9, 0, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 10, 0, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 }
                 });
 
             migrationBuilder.InsertData(
                 table: "BookingPerformances",
-                columns: new[] { "BookingId", "PerformanceId" },
-                values: new object[] { 1, 1 });
+                columns: new[] { "BookingId", "PerformanceId", "Genre", "ImageURL", "SeatsBooked", "Title" },
+                values: new object[] { 1, 1, "", "", 0, "" });
         }
 
         /// <inheritdoc />

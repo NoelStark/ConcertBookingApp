@@ -5,7 +5,7 @@
              xmlns:models="clr-namespace:SharedResources.Models;assembly=SharedResources"
              x:DataType="vm:BookingViewModel"
              x:Class="ConcertBookingApp.Views.BookingsPage"
-             Title="BookingsPage">
+             Title="Bookings">
     <Grid RowDefinitions="Auto, Auto, Auto, Auto">
         <Grid Grid.Row="0" RowDefinitions="*, *" Margin="20,20,20,0">
             <Label Text="CurrentBooking" Grid.Row="0" FontSize="24" FontAttributes="Bold"/>

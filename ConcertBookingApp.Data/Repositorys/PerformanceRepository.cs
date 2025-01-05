@@ -1,5 +1,5 @@
 ﻿using ConcertBookingApp.Data.Database;
-using ConcertBookingApp.Data.Models;
+using SharedResources.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -14,19 +14,27 @@ namespace ConcertBookingApp.Data.Repositorys
         public PerformanceRepository(ApplicationDbContext dbContext) : base(dbContext)
         {
         }
-        public async Task<Performance> FindPerformance(Performance performance)
+        public async Task<Performance> FindPerformance(int performanceId)
         {
-            return await _dbContext.Performances.FirstOrDefaultAsync(a => a.PerformanceId == performance.PerformanceId);
+            return await _dbContext.Performances.FirstOrDefaultAsync(a => a.PerformanceId == performanceId);
         }
 
-        public async Task RemoveSelectedPerformance(Performance performance)
+        public async Task RemoveSelectedPerformance(int performanceId)
         {
+            Performance? performance = await _dbContext.Performances.FirstOrDefaultAsync(x => x.PerformanceId == performanceId);
             _dbContext.Performances.Remove(performance);
             await _dbContext.SaveChangesAsync();
         }
-        public async Task<List<Performance>> GetAllPerfromances()
+        public async Task<List<Performance>> GetAllPerformances()
         {
             return await _dbContext.Performances.ToListAsync();
+        }
+
+       
+
+        public async Task<List<Performance>> GetPerformancesForConcert(int concertId)
+        {
+            return _dbContext.Concerts.SelectMany(x => x.Performances).Where(x => x.ConcertId == concertId).ToList();
         }
     }
 }

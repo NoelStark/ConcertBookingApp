@@ -39,21 +39,24 @@ namespace ConcertBookingApp
                 });
 
 
+            builder.Services.AddSingleton<ConcertOverviewViewModel>();
+            builder.Services.AddSingleton<ConcertDetailsViewModel>();
+            builder.Services.AddTransient<CheckoutViewModel>();
+            builder.Services.AddTransient<PaymentViewModel>();
+            builder.Services.AddTransient<BookingViewModel>();
+
             builder.Services.AddAutoMapper(typeof(MappingProfile));
+
             builder.Services.AddSingleton<BookingService>();
             builder.Services.AddSingleton<ConcertService>();
             builder.Services.AddSingleton<UserService>();
-            //builder.Services.AddSingleton<ConcertRepository>();
-            builder.Services.AddTransient<ConcertOverviewPage>();
-            builder.Services.AddSingleton<ConcertOverviewViewModel>();
-            builder.Services.AddSingleton<ConcertDetailsViewModel>();
-            builder.Services.AddTransient<ConcertDetailsPage>();
+
+            builder.Services.AddSingleton<ConcertOverviewPage>();
+            builder.Services.AddSingleton<ConcertDetailsPage>();
             builder.Services.AddTransient<CheckoutPage>();
-            builder.Services.AddTransient<CheckoutViewModel>();
-            builder.Services.AddSingleton<PaymentViewModel>();
             builder.Services.AddTransient<PaymentPage>();
-            builder.Services.AddSingleton<BookingViewModel>();
             builder.Services.AddTransient<BookingsPage>();
+
             builder.Services.AddTransient<ApplicationDbContext>();
 
             builder.Services.AddSingleton(x =>

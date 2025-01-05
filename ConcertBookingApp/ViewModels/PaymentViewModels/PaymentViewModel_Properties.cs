@@ -35,7 +35,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         [ObservableProperty] private string expireDate;
         [ObservableProperty] private string cardImage;
         [ObservableProperty] private string cVC;
-        [ObservableProperty] private int totalCartCost;
+        [ObservableProperty] private double totalCartCost;
 
         [ObservableProperty] private ValidationState creditValidation = new ValidationState();
 

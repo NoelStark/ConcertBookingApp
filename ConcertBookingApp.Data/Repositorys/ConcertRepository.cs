@@ -1,5 +1,6 @@
 ﻿using ConcertBookingApp.Data.Database;
-using ConcertBookingApp.Data.Models;
+using SharedResources.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,13 @@ namespace ConcertBookingApp.Data.Repositorys
         {
             return _dbContext.Concerts.ToList();
         }
+
+        public async Task<Concert> GetConcertForPerformance(int performanceId)
+        {
+            Concert? concert = await _dbContext.Concerts.FirstOrDefaultAsync(x => x.Performances.Any(y => y.PerformanceId == performanceId));
+            if (concert == null) return new Concert();
+            return concert;
+        }
+
     }
 }
