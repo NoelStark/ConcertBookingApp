@@ -21,10 +21,11 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         void IncreaseQuantity(BookingPerformance bookingPerformance)
         {
             string value = "Increase";
-            bookingPerformance.SeatsBooked++;
-            bookingPerformance.Performance.AvailableSeats--;
-            if (bookingPerformance.Performance.AvailableSeats == 0)
-                AddTicketsVisible = false;
+            if (bookingPerformance.Performance.AvailableSeats != 0)
+            {
+                bookingPerformance.SeatsBooked++;
+                bookingPerformance.Performance.AvailableSeats--;
+            }
             UpdateButton();
         }
 
@@ -55,14 +56,14 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 foreach (var performance in hasse)
                 {
                     BookingPerformance alreadyexist = bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(a => a.Performance.PerformanceId == performance.Performance.PerformanceId);
-                    currentBooking.BookingPerformances.Add(performance);
+
                     if (alreadyexist != null)
                     {
-                        performance.SeatsBooked += alreadyexist.SeatsBooked;
-                        performance.Performance.AvailableSeats = performance.Performance.TotalSeats - performance.SeatsBooked;
-                        currentBooking.BookingPerformances.Remove(alreadyexist);
+                        alreadyexist.SeatsBooked += performance.SeatsBooked;
+                        alreadyexist.Performance.AvailableSeats = alreadyexist.Performance.TotalSeats - alreadyexist.SeatsBooked;
                     }
-                    
+                    else
+                        currentBooking.BookingPerformances.Add(performance);
                 }
             }
             else

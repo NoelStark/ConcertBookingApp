@@ -71,7 +71,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 if (hasse != null)
                 {
                     performance.Performance.AvailableSeats -= hasse.SeatsBooked;
-                    performance.SeatsBooked = hasse.SeatsBooked;
+                    //performance.SeatsBooked = hasse.SeatsBooked;
                 }
             }
 
@@ -95,6 +95,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         {
             await Task.Delay(2000);
             AddedToCart = false;
+            //_ = LoadPerfomances();
         }
     }
 }
