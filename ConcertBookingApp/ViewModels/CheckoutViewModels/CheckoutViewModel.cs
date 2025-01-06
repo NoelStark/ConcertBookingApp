@@ -35,7 +35,7 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
             _= Initialize();
         }
 
-        private async Task Initialize()
+        public async Task Initialize()
         {
             UpdatePrice();
             allConcerts = await _concertService.GetAllConcerts();
