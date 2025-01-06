@@ -12,9 +12,7 @@ namespace Shared_Resources.DTOs
     {
         public int BookingId { get; set; }
         public int PerformanceId { get; set; }
-
-        [ObservableProperty]
-        private int seatsBooked = 0;
+        public int SeatsBooked { get; set; }
        
     }
 }
