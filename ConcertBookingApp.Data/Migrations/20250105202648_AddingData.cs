@@ -42,6 +42,7 @@ namespace ConcertBookingApp.Data.Migrations
                 columns: new[] { "PerformanceId", "AvailableSeats", "ConcertId", "Date", "Location", "Price", "TotalSeats" },
                 values: new object[,]
                 {
+<<<<<<<< HEAD:ConcertBookingApp.Data/Migrations/20250105202648_AddingData.cs
                     { 1, 5, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
                     { 2, 150, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
                     { 3, 200, 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
@@ -51,6 +52,17 @@ namespace ConcertBookingApp.Data.Migrations
                     { 8, 5, 3, new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
                     { 9, 150, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
                     { 10, 200, 3, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 }
+========
+                    { 1, 5, 1, new DateTime(2024, 12, 14, 12, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 2, 150, 1, new DateTime(2024, 12, 15, 14, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 3, 200, 1, new DateTime(2024, 12, 16, 16, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
+                    { 4, 5, 2, new DateTime(2024, 10, 12, 15, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 6, 150, 2, new DateTime(2024, 10, 13, 13, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 7, 200, 2, new DateTime(2024, 10, 14, 17, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
+                    { 8, 5, 3, new DateTime(2025, 1, 2, 20, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 5 },
+                    { 9, 150, 3, new DateTime(2025, 1, 3, 21, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 10, 200, 3, new DateTime(2025, 1, 4, 22, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 }
+>>>>>>>> Noel:ConcertBookingApp.Data/Migrations/20250106112045_AddingData.cs
                 });
 
             migrationBuilder.InsertData(

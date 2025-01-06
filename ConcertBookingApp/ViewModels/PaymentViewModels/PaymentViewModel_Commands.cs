@@ -47,7 +47,10 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
                         CreditCardType = typeofCard
                     };
                 }
-                await Shell.Current.GoToAsync("ConfirmationPage");
+                Preferences.Set("HasPayed", true);
+                int bookingId = await _bookingService.SaveBooking(_bookingService.CurrentBooking);
+                await _bookingService.SavePerformances(_bookingService.CurrentBooking.BookingPerformances, bookingId);
+                //await Shell.Current.GoToAsync($"///ConfirmationPage?totalPrice={TotalCartCost}");
 
             }
             shouldSwitchSection = !shouldSwitchSection;
