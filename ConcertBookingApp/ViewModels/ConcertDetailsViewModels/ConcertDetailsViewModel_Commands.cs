@@ -70,7 +70,6 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 bookingService.CurrentBooking = new Booking
                 {
                     BookingPerformances = new List<BookingPerformance>(hasse)
-
                 };
             }
 
