@@ -65,7 +65,7 @@ namespace Web_Service.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        [HttpGet("/Performances{id}")]
+        [HttpGet("Performances/{id}")]
         public async Task<IActionResult> GetPerformancesForBooking(int id)
         {
             try
@@ -77,6 +77,20 @@ namespace Web_Service.Controllers
             {
                 Console.WriteLine($"Error: {ex.Message}");
                 return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("CancelPerformance/{bookingPerformanceId}/{bookingId}")]
+        public async Task<IActionResult> CancelPerformance(int bookingPerformanceId, int bookingId)
+        {
+            try
+            {
+                await _unitOfWork.BookingPerformance.CancelPerformance(bookingPerformanceId, bookingId);
+                return Ok("Performance Cancelled");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server error");
             }
         }
     }

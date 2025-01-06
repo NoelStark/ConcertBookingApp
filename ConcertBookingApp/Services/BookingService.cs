@@ -30,7 +30,7 @@ namespace ConcertBookingApp.Services
             try
             {
                 var response = await _httpClient.GetAsync($"Booking/{id}");
-                var bookingDTOs = await response.Content.ReadFromJsonAsync<List<ConcertDTO>>();
+                var bookingDTOs = await response.Content.ReadFromJsonAsync<List<BookingDTO>>();
                 List<Booking> bookings = _mapper.Map<List<Booking>>(bookingDTOs);
                 return bookings;
             }
@@ -91,6 +91,12 @@ namespace ConcertBookingApp.Services
             }
 
             return new List<BookingPerformance>();
+        }
+
+        public async Task<string> CancelBooking(int bookingPerformanceId, int bookingId)
+        {
+            var response = await _httpClient.GetAsync($"Booking/CancelPerformance/{bookingPerformanceId}/{bookingId}");
+            return response.StatusCode.ToString();
         }
     }
 }

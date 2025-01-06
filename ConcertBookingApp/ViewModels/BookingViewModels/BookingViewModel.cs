@@ -29,23 +29,34 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
 
         public async Task AddPerformances()
         {
-            var hasPayed = Preferences.Get("HasPayed", false);
-            if (!hasPayed) return;
-            foreach (var performance in _bookingService.CurrentBooking.BookingPerformances)
+            //var hasPayed = Preferences.Get("HasPayed", false);
+            //if (!hasPayed) return;
+
+            List<Booking> bookings = await _bookingService.GetAllBookings(1);
+
+            foreach (var booking in bookings)
             {
-                Concert concert = await _concertService.GetConcertForPerformance(performance.Performance.PerformanceId);
-                performance.Title = concert.Name;
-                performance.ImageURL = concert.ImageUrl;
-                Performances.Add(performance);
+                booking.BookingPerformances = await _bookingService.GetPerformancesForBooking(booking.BookingId);
+
+                foreach (var performance in booking.BookingPerformances)
+                {
+                    Performance findPerformance = await _concertService.GetPerformance(performance.PerformanceId);
+                    Concert concert = await _concertService.GetConcertForPerformance(performance.PerformanceId);
+                    performance.Title = concert.Name;
+                    performance.ImageURL = concert.ImageUrl;
+                    performance.Performance = findPerformance;
+                    Performances.Add(performance);
+                }
             }
         }
 
         [RelayCommand]
-        public void CancelBooking(BookingPerformance performance)
+        public async void CancelBooking(BookingPerformance performance)
         {
             Performances.Remove(performance);
             OnPropertyChanged(nameof(Performances));
-            //if(Performances.Count == 0) _bookingService.CurrentBooking.Remove()
+            await _bookingService.CancelBooking(performance.PerformanceId, performance.BookingId);
+            
         }
     }
 }

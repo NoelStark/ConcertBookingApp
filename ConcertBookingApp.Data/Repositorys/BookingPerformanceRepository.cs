@@ -26,5 +26,11 @@ namespace ConcertBookingApp.Data.Repositorys
             }
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task CancelPerformance(int id, int bookingId)
+        {
+            var performance = _dbContext.BookingPerformances.FirstOrDefault(x => x.PerformanceId == id && x.BookingId == bookingId);
+            _dbContext.BookingPerformances.Remove(performance);
+        }
     }
 }

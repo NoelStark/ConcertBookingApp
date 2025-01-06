@@ -51,9 +51,17 @@ namespace ConcertBookingApp.Services
             List<Performance> performances= _mapper.Map<List<Performance>>(await response.Content.ReadFromJsonAsync<List<PerformanceDTO>>());
             return performances;
         }
+
+        public async Task<Performance> GetPerformance(int performanceId)
+        {
+            var response = await _httpClient.GetAsync($"Concerts/Performance/{performanceId}");
+            Performance performance =
+                _mapper.Map<Performance>(await response.Content.ReadFromJsonAsync<PerformanceDTO>());
+            return performance;
+        }
         public async Task<Concert> GetConcertForPerformance(int performanceId)
         {
-            var response = await _httpClient.GetAsync($"Concerts/performance/{performanceId}");
+            var response = await _httpClient.GetAsync($"Concerts/GetPerformances/{performanceId}");
             Concert concert = _mapper.Map<Concert>(await response.Content.ReadFromJsonAsync<ConcertDTO>());
 
             return concert;

@@ -30,8 +30,6 @@ namespace ConcertBookingApp.Data.Repositorys
             return await _dbContext.Performances.ToListAsync();
         }
 
-       
-
         public async Task<List<Performance>> GetPerformancesForConcert(int concertId)
         {
             return _dbContext.Concerts.SelectMany(x => x.Performances).Where(x => x.ConcertId == concertId).ToList();
