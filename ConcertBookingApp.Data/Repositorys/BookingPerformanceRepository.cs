@@ -18,5 +18,13 @@ namespace ConcertBookingApp.Data.Repositorys
         {
             return _dbContext.BookingPerformances.FirstOrDefault(a => a.Performance.PerformanceId == bookingPerfromance.Performance.PerformanceId);
         }
+        public async Task SavePerformances(List<BookingPerformance> performances)
+        {
+            foreach (var performance in performances)
+            {
+                _dbContext.BookingPerformances.Add(performance);
+            }
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

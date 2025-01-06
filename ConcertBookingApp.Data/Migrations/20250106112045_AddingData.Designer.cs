@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250105154500_Initialzing")]
-    partial class Initialzing
+    [Migration("20250106112045_AddingData")]
+    partial class AddingData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,14 @@ namespace ConcertBookingApp.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Bookings");
+
+                    b.HasData(
+                        new
+                        {
+                            BookingId = 1,
+                            BookingDate = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 1
+                        });
                 });
 
             modelBuilder.Entity("SharedResources.Models.BookingPerformance", b =>
@@ -74,6 +82,17 @@ namespace ConcertBookingApp.Data.Migrations
                     b.HasIndex("PerformanceId");
 
                     b.ToTable("BookingPerformances");
+
+                    b.HasData(
+                        new
+                        {
+                            BookingId = 1,
+                            PerformanceId = 1,
+                            Genre = "",
+                            ImageURL = "",
+                            SeatsBooked = 0,
+                            Title = ""
+                        });
                 });
 
             modelBuilder.Entity("SharedResources.Models.Category", b =>
@@ -130,6 +149,35 @@ namespace ConcertBookingApp.Data.Migrations
                     b.HasKey("ConcertId");
 
                     b.ToTable("Concerts");
+
+                    b.HasData(
+                        new
+                        {
+                            ConcertId = 1,
+                            Description = "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.",
+                            Genre = "Pop",
+                            ImageUrl = "edm.png",
+                            IsFavorite = false,
+                            Name = "Pop Pulse Festival"
+                        },
+                        new
+                        {
+                            ConcertId = 2,
+                            Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
+                            Genre = "Jazz",
+                            ImageUrl = "testconcert.png",
+                            IsFavorite = false,
+                            Name = "Starlight Pop Jazz"
+                        },
+                        new
+                        {
+                            ConcertId = 3,
+                            Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
+                            Genre = "Classical",
+                            ImageUrl = "edm.png",
+                            IsFavorite = false,
+                            Name = "Classical"
+                        });
                 });
 
             modelBuilder.Entity("SharedResources.Models.Performance", b =>
@@ -164,6 +212,98 @@ namespace ConcertBookingApp.Data.Migrations
                     b.HasIndex("ConcertId");
 
                     b.ToTable("Performances");
+
+                    b.HasData(
+                        new
+                        {
+                            PerformanceId = 1,
+                            AvailableSeats = 5,
+                            ConcertId = 1,
+                            Date = new DateTime(2024, 12, 14, 12, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 100.0,
+                            TotalSeats = 5
+                        },
+                        new
+                        {
+                            PerformanceId = 2,
+                            AvailableSeats = 150,
+                            ConcertId = 1,
+                            Date = new DateTime(2024, 12, 15, 14, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 200.0,
+                            TotalSeats = 150
+                        },
+                        new
+                        {
+                            PerformanceId = 3,
+                            AvailableSeats = 200,
+                            ConcertId = 1,
+                            Date = new DateTime(2024, 12, 16, 16, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 300.0,
+                            TotalSeats = 200
+                        },
+                        new
+                        {
+                            PerformanceId = 4,
+                            AvailableSeats = 5,
+                            ConcertId = 2,
+                            Date = new DateTime(2024, 10, 12, 15, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 100.0,
+                            TotalSeats = 5
+                        },
+                        new
+                        {
+                            PerformanceId = 6,
+                            AvailableSeats = 150,
+                            ConcertId = 2,
+                            Date = new DateTime(2024, 10, 13, 13, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 200.0,
+                            TotalSeats = 150
+                        },
+                        new
+                        {
+                            PerformanceId = 7,
+                            AvailableSeats = 200,
+                            ConcertId = 2,
+                            Date = new DateTime(2024, 10, 14, 17, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 300.0,
+                            TotalSeats = 200
+                        },
+                        new
+                        {
+                            PerformanceId = 8,
+                            AvailableSeats = 5,
+                            ConcertId = 3,
+                            Date = new DateTime(2025, 1, 2, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 100.0,
+                            TotalSeats = 5
+                        },
+                        new
+                        {
+                            PerformanceId = 9,
+                            AvailableSeats = 150,
+                            ConcertId = 3,
+                            Date = new DateTime(2025, 1, 3, 21, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 200.0,
+                            TotalSeats = 150
+                        },
+                        new
+                        {
+                            PerformanceId = 10,
+                            AvailableSeats = 200,
+                            ConcertId = 3,
+                            Date = new DateTime(2025, 1, 4, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Aspvägen",
+                            Price = 300.0,
+                            TotalSeats = 200
+                        });
                 });
 
             modelBuilder.Entity("SharedResources.Models.User", b =>
@@ -188,6 +328,20 @@ namespace ConcertBookingApp.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            Email = "johndoe@example.com",
+                            Name = "John Doe"
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            Email = "janesmith@example.com",
+                            Name = "Jane Smith"
+                        });
                 });
 
             modelBuilder.Entity("SharedResources.Models.Booking", b =>

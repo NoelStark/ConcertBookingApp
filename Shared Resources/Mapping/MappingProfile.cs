@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Shared_Resources.DTOs;
 using SharedResources.DTOs;
 using SharedResources.Models;
 
@@ -22,6 +23,8 @@ namespace SharedResources.Mapping
                     dest => dest.Performances,
                     opt => opt.MapFrom(src => src.Dates.Select(date => new Performance{Date = date})));
             CreateMap<Performance, PerformanceDTO>().ReverseMap();
+            CreateMap<Booking, BookingDTO>().ReverseMap();
+            CreateMap<BookingPerformance, BookingPerformanceDTO>().ReverseMap();
         }
     }
 }

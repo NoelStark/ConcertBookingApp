@@ -16,13 +16,16 @@ namespace SharedResources.Models
 
         [ObservableProperty]
         private int seatsBooked = 0;
-        public Booking Booking { get; set; } = null!;
-        public Performance Performance { get; set; } = null!;
+        public Booking? Booking { get; set; } = null;
+        public Performance? Performance { get; set; } = null;
 
+        [NotMapped]
         [ObservableProperty]
         public string imageURL = string.Empty;
+        [NotMapped]
         [ObservableProperty]
         public string title = string.Empty;
+        [NotMapped]
         [ObservableProperty]
         public string genre = string.Empty;
     }

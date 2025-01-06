@@ -214,9 +214,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 1,
-                            AvailableSeats = 0,
+                            AvailableSeats = 5,
                             ConcertId = 1,
-                            Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2024, 12, 14, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 100.0,
                             TotalSeats = 5
@@ -224,9 +224,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 2,
-                            AvailableSeats = 0,
+                            AvailableSeats = 150,
                             ConcertId = 1,
-                            Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2024, 12, 15, 14, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 200.0,
                             TotalSeats = 150
@@ -234,9 +234,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 3,
-                            AvailableSeats = 0,
+                            AvailableSeats = 200,
                             ConcertId = 1,
-                            Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2024, 12, 16, 16, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 300.0,
                             TotalSeats = 200
@@ -244,9 +244,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 4,
-                            AvailableSeats = 0,
+                            AvailableSeats = 5,
                             ConcertId = 2,
-                            Date = new DateTime(2024, 10, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2024, 10, 12, 15, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 100.0,
                             TotalSeats = 5
@@ -254,9 +254,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 6,
-                            AvailableSeats = 0,
+                            AvailableSeats = 150,
                             ConcertId = 2,
-                            Date = new DateTime(2024, 7, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2024, 10, 13, 13, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 200.0,
                             TotalSeats = 150
@@ -264,9 +264,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 7,
-                            AvailableSeats = 0,
+                            AvailableSeats = 200,
                             ConcertId = 2,
-                            Date = new DateTime(2024, 10, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2024, 10, 14, 17, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 300.0,
                             TotalSeats = 200
@@ -274,9 +274,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 8,
-                            AvailableSeats = 0,
+                            AvailableSeats = 5,
                             ConcertId = 3,
-                            Date = new DateTime(2024, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 2, 20, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 100.0,
                             TotalSeats = 5
@@ -284,9 +284,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 9,
-                            AvailableSeats = 0,
+                            AvailableSeats = 150,
                             ConcertId = 3,
-                            Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 3, 21, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 200.0,
                             TotalSeats = 150
@@ -294,9 +294,9 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 10,
-                            AvailableSeats = 0,
+                            AvailableSeats = 200,
                             ConcertId = 3,
-                            Date = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Date = new DateTime(2025, 1, 4, 22, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 300.0,
                             TotalSeats = 200

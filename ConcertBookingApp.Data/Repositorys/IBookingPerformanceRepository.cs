@@ -10,5 +10,6 @@ namespace ConcertBookingApp.Data.Repositorys
     public interface IBookingPerformanceRepository : IGenericRepository<BookingPerformance>
     {
         Task<BookingPerformance> FindBookingPerformance(BookingPerformance bookingPerfromance);
+        Task SavePerformances(List<BookingPerformance> performances);
     }
 }

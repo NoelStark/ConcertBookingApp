@@ -75,7 +75,7 @@ namespace ConcertBookingApp
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
+            Preferences.Clear();
            
             return builder.Build();
         }

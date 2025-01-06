@@ -14,9 +14,9 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         [ObservableProperty] private bool isVisible = true;
 
         //Personal Information
-        [ObservableProperty] private string firstName;
-        [ObservableProperty] private string lastName;
-        [ObservableProperty] private string email;
+        [ObservableProperty] private string firstName = string.Empty;
+        [ObservableProperty] private string lastName = string.Empty;
+        [ObservableProperty] private string email = string.Empty;
         [ObservableProperty] private bool showErrorEmail = false;
 
         //Payment Information
@@ -31,11 +31,11 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         [ObservableProperty] private bool showCreditError = false;
 
         [ObservableProperty] private string name = string.Empty;
-        [ObservableProperty] private string creditCardNumber;
-        [ObservableProperty] private string expireDate;
-        [ObservableProperty] private string cardImage;
-        [ObservableProperty] private string cVC;
-        [ObservableProperty] private double totalCartCost;
+        [ObservableProperty] private string creditCardNumber = string.Empty;
+        [ObservableProperty] private string expireDate = string.Empty;
+        [ObservableProperty] private string cardImage = string.Empty;
+        [ObservableProperty] private string cVC = string.Empty;
+        [ObservableProperty] private double totalCartCost = 0;
 
         [ObservableProperty] private ValidationState creditValidation = new ValidationState();
 
@@ -66,9 +66,11 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         };
 
         private readonly UserService _userService;
-        public PaymentViewModel(UserService userService)
+        private readonly BookingService _bookingService;
+        public PaymentViewModel(UserService userService, BookingService bookingService)
         {
             _userService = userService;
+            _bookingService = bookingService;
         }
     }
 }

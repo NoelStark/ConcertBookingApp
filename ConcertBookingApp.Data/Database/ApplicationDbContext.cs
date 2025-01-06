@@ -66,15 +66,15 @@ namespace ConcertBookingApp.Data.Database
     );
 
             modelBuilder.Entity<Performance>().HasData(
-                new Performance { PerformanceId = 1, ConcertId = 1, TotalSeats = 5, Date = DateTime.Parse("2024-12-14"), Location = "Aspvägen", Price = 100, AvailableSeats = 5},
-                new Performance { PerformanceId = 2, ConcertId = 1, TotalSeats = 150, Date = DateTime.Parse("2024-12-14"), Location = "Aspvägen", Price = 200, AvailableSeats = 150 },
-                new Performance { PerformanceId = 3, ConcertId = 1, TotalSeats = 200, Date = DateTime.Parse("2024-12-14"), Location = "Aspvägen", Price = 300, AvailableSeats = 200 },
-                new Performance { PerformanceId = 4, ConcertId = 2, TotalSeats = 5, Date = DateTime.Parse("2024-10-12"), Location = "Aspvägen", Price = 100, AvailableSeats = 5 },
-                new Performance { PerformanceId = 6, ConcertId = 2, TotalSeats = 150, Date = DateTime.Parse("2024-07-04"), Location = "Aspvägen", Price = 200, AvailableSeats = 150 },
-                new Performance { PerformanceId = 7, ConcertId = 2, TotalSeats = 200, Date = DateTime.Parse("2024-10-13"), Location = "Aspvägen", Price = 300, AvailableSeats = 200 },
-                new Performance { PerformanceId = 8, ConcertId = 3, TotalSeats = 5, Date = DateTime.Parse("2024-01-02"), Location = "Aspvägen", Price = 100, AvailableSeats = 5 },
-                new Performance { PerformanceId = 9, ConcertId = 3, TotalSeats = 150, Date = DateTime.Parse("2024-12-14"), Location = "Aspvägen", Price = 200, AvailableSeats = 150 },
-                new Performance { PerformanceId = 10, ConcertId = 3, TotalSeats = 200, Date = DateTime.Parse("2024-12-14"), Location = "Aspvägen", Price = 300 , AvailableSeats = 200}
+                new Performance { PerformanceId = 1, ConcertId = 1, TotalSeats = 5, Date = DateTime.Parse("2024-12-14 12:00"), Location = "Aspvägen", Price = 100, AvailableSeats = 5},
+                new Performance { PerformanceId = 2, ConcertId = 1, TotalSeats = 150, Date = DateTime.Parse("2024-12-15 14:00"), Location = "Aspvägen", Price = 200, AvailableSeats = 150 },
+                new Performance { PerformanceId = 3, ConcertId = 1, TotalSeats = 200, Date = DateTime.Parse("2024-12-16 16:00"), Location = "Aspvägen", Price = 300, AvailableSeats = 200 },
+                new Performance { PerformanceId = 4, ConcertId = 2, TotalSeats = 5, Date = DateTime.Parse("2024-10-12 15:00"), Location = "Aspvägen", Price = 100, AvailableSeats = 5 },
+                new Performance { PerformanceId = 6, ConcertId = 2, TotalSeats = 150, Date = DateTime.Parse("2024-10-13 13:00"), Location = "Aspvägen", Price = 200, AvailableSeats = 150 },
+                new Performance { PerformanceId = 7, ConcertId = 2, TotalSeats = 200, Date = DateTime.Parse("2024-10-14 17:00"), Location = "Aspvägen", Price = 300, AvailableSeats = 200 },
+                new Performance { PerformanceId = 8, ConcertId = 3, TotalSeats = 5, Date = DateTime.Parse("2025-01-02 20:00"), Location = "Aspvägen", Price = 100, AvailableSeats = 5 },
+                new Performance { PerformanceId = 9, ConcertId = 3, TotalSeats = 150, Date = DateTime.Parse("2025-01-03 21:00"), Location = "Aspvägen", Price = 200, AvailableSeats = 150 },
+                new Performance { PerformanceId = 10, ConcertId = 3, TotalSeats = 200, Date = DateTime.Parse("2025-01-04 22:00"), Location = "Aspvägen", Price = 300 , AvailableSeats = 200}
             );
 
             modelBuilder.Entity<User>().HasData(

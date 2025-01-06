@@ -27,8 +27,10 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
             _= AddPerformances();
         }
 
-        private async Task AddPerformances()
+        public async Task AddPerformances()
         {
+            var hasPayed = Preferences.Get("HasPayed", false);
+            if (!hasPayed) return;
             foreach (var performance in _bookingService.CurrentBooking.BookingPerformances)
             {
                 Concert concert = await _concertService.GetConcertForPerformance(performance.Performance.PerformanceId);

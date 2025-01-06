@@ -35,7 +35,7 @@
                 <Label Text="Payment " HorizontalOptions="End" FontSize="16"/>
             </Grid>
         </Grid>
-        <BoxView HeightRequest="1" Color="DimGray" HorizontalOptions="FillAndExpand" Margin="20,25,20,0" Grid.Row="1"/>
+        <BoxView HeightRequest="1" Color="DimGray" HorizontalOptions="FillAndExpand" Margin="20,0,20,0" Grid.Row="1"/>
         
         <Grid Grid.Row="3" HorizontalOptions="FillAndExpand" Margin="20,10,20,20">
             <Label Text="Total: " FontAttributes="Bold" FontSize="Medium"/>
@@ -67,7 +67,7 @@
 
                                 <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="Gray" VerticalOptions="Fill" HorizontalOptions="Center" Margin="0,20,0,20"/>
 
-                                <Grid Grid.Column="2" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,20,0,0" RowSpacing="16">
+                                <Grid Grid.Column="2" RowDefinitions="Auto,Auto,Auto,Auto" Margin="0,20,0,0" RowSpacing="12">
                                     <Label Grid.Row="0" Text="{Binding Title}" TextColor="White" FontSize="20" FontAttributes="Bold">
                                         <Label.Shadow>
                                             <Shadow Brush="Black" Offset="0,2" Radius="8"/>
@@ -78,6 +78,10 @@
                                         <Label Text="{Binding Performance.Location}" TextColor="White" VerticalOptions="Center"/>
                                     </HorizontalStackLayout>
                                     <HorizontalStackLayout Grid.Row="2" Spacing="10">
+                                        <Image Source="clock.png"/>
+                                        <Label Text="{Binding Performance.Date, StringFormat='{0:hh:mm tt}'}" TextColor="White" VerticalOptions="Center"/>
+                                    </HorizontalStackLayout>
+                                        <HorizontalStackLayout Grid.Row="3" Spacing="10">
                                         <Image Source="ticketwhite.jpg"/>
                                         <Label Text="{Binding SeatsBooked, StringFormat='{0} Ticket(s)'}" TextColor="White" VerticalOptions="Center"/>
                                     </HorizontalStackLayout>

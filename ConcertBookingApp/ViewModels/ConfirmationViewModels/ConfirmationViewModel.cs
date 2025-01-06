@@ -11,7 +11,8 @@ using SharedResources.Models;
 
 namespace ConcertBookingApp.ViewModels.ConfirmationViewModels
 {
-	public partial class ConfirmationViewModel : ObservableObject
+    [QueryProperty(nameof(TotalCartCost), "totalPrice")]
+    public partial class ConfirmationViewModel : ObservableObject
 	{
 		private readonly UserService _userService;
         private readonly BookingService _bookingService;

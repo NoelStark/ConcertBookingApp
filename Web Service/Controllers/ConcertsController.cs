@@ -48,7 +48,7 @@ namespace WebService.Controllers
         [HttpGet("performance/{performanceId}")]
         public async Task<IActionResult> GetConcertForPerformance(int performanceId)
         {
-            var concert = _unitOfWork.Concert.GetConcertForPerformance(performanceId);
+            var concert = await _unitOfWork.Concert.GetConcertForPerformance(performanceId);
             return Ok(_mapper.Map<ConcertDTO>(concert));
         }
 
