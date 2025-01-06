@@ -12,11 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:ConcertBookingApp.Data/Migrations/20250105202648_AddingData.Designer.cs
     [Migration("20250105202648_AddingData")]
-========
-    [Migration("20250106112045_AddingData")]
->>>>>>>> Noel:ConcertBookingApp.Data/Migrations/20250106112045_AddingData.Designer.cs
+
     partial class AddingData
     {
         /// <inheritdoc />

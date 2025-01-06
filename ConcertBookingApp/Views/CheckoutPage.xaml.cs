@@ -1,15 +1,22 @@
 using ConcertBookingApp.ViewModels.CheckoutViewModels;
 using ConcertBookingApp.Services;
 using ConcertBookingApp.ViewModels;
-using ConcertBookingApp.ViewModels.CheckoutViewModels;
 
 namespace ConcertBookingApp.Views;
 
 public partial class CheckoutPage : ContentPage
 {
-	public CheckoutPage(CheckoutViewModel checkoutviewmodel)
+    private CheckoutViewModel _checkoutViewModel;
+    public CheckoutPage(CheckoutViewModel checkoutviewmodel)
 	{
 		InitializeComponent();
+        _checkoutViewModel = checkoutviewmodel;
         BindingContext = checkoutviewmodel;
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _ = _checkoutViewModel.Initialize();
+    }
 }
