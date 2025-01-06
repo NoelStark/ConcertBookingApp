@@ -48,6 +48,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             {
                 performance.ImageURL = Concert.ImageUrl;
                 performance.Title = Concert.Name;
+                performance.PerformanceId = performance.Performance.PerformanceId;
             }
             if (bookingService.CurrentBooking != null)
             {
