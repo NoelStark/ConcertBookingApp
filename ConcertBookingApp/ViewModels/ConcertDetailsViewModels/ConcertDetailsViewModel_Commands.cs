@@ -54,7 +54,15 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 Booking currentBooking = bookingService.CurrentBooking;
                 foreach (var performance in hasse)
                 {
+                    BookingPerformance alreadyexist = bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(a => a.Performance.PerformanceId == performance.Performance.PerformanceId);
                     currentBooking.BookingPerformances.Add(performance);
+                    if (alreadyexist != null)
+                    {
+                        performance.SeatsBooked += alreadyexist.SeatsBooked;
+                        performance.Performance.AvailableSeats = performance.Performance.TotalSeats - performance.SeatsBooked;
+                        currentBooking.BookingPerformances.Remove(alreadyexist);
+                    }
+                    
                 }
             }
             else

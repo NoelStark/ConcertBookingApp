@@ -80,7 +80,10 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
             AllBookings.Clear();
             AllBookings.Add(_bookingService.CurrentBooking);
 
+
+
             List<Performance> findPerformances = _bookingService.CurrentBooking.BookingPerformances.Select(a => a.Performance).ToList();
+
             //List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
             List<Concert> matchingConcerts = allConcerts.Where(a => findPerformances.Any(b => b.ConcertId == a.ConcertId)).ToList();
 
