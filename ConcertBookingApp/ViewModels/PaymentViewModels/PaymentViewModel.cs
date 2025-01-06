@@ -222,14 +222,14 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         {
             if (shouldSwitchSection)
             {
-                //IsValidForm = IsValidEmail && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName);
-                IsValidForm = true;
+                IsValidForm = IsValidEmail && !string.IsNullOrEmpty(FirstName) && !string.IsNullOrEmpty(LastName);
+                //IsValidForm = true;
             }
             else
             {
                 shouldSwitchSection = false;
-                //IsValidForm = IsValidCard && IsValidDate && IsValidCVC && !string.IsNullOrEmpty(Name) && AgreeToTerms;
-                IsValidForm = true;
+                IsValidForm = IsValidCard && IsValidDate && IsValidCVC && !string.IsNullOrEmpty(Name) && AgreeToTerms;
+                //IsValidForm = true;
 
             }
             SavePersonCommand.NotifyCanExecuteChanged();
