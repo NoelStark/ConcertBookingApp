@@ -12,11 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-<<<<<<<< HEAD:ConcertBookingApp.Data/Migrations/20250105202622_Initialzing.Designer.cs
     [Migration("20250105202622_Initialzing")]
-========
-    [Migration("20250106112030_Initialzing")]
->>>>>>>> Noel:ConcertBookingApp.Data/Migrations/20250106112030_Initialzing.Designer.cs
+
     partial class Initialzing
     {
         /// <inheritdoc />
