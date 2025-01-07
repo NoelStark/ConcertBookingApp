@@ -67,36 +67,5 @@
             <Button WidthRequest="150" Text="Back" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" BorderColor="{StaticResource Primary}" BorderWidth="2" Command="{Binding GoBackCommand}"/>
             <Button WidthRequest="150" Text="Next" BackgroundColor="{StaticResource Accent}" FontSize="Medium" Command="{Binding ContinueCommand}" IsEnabled="{Binding CanBeClicked}"/>
         </HorizontalStackLayout>
-        <!--<VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Margin="40,20,40,0" HorizontalOptions="FillAndExpand">
-
-            <Grid ColumnDefinitions="*,Auto" HorizontalOptions="FillAndExpand">
-                <Label Text="{Binding TotalAmountOfItems, StringFormat='{0} item(s)'}" Grid.Column="0" HorizontalOptions="Start" />
-                <Label Text="{Binding TotalPriceWithoutShipping, StringFormat='{0} :-'}" FontSize="18" FontAttributes="Bold"  Grid.Column="1" HorizontalOptions="End" />
-            </Grid>
-
-            <Grid ColumnDefinitions="*,Auto" HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
-                <Label Text="Shipping Fee" Grid.Column="0" HorizontalOptions="Start" />
-                <Label Text="{Binding ShippingCost, StringFormat='{0} :-'}" FontSize="18" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="End" />
-            </Grid>
-            <BoxView HeightRequest="1" Color="Black" HorizontalOptions="FillAndExpand" Margin="0,10,0,10" />
-            <Grid ColumnDefinitions="*,Auto" HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
-                <Label Text="Total" FontSize="20" Grid.Column="0" HorizontalOptions="Start" />
-                <Label Text="{Binding TotalCartCost, StringFormat='{0} :-'}" FontSize="22" FontAttributes="Bold" Grid.Column="1" HorizontalOptions="End" />
-            </Grid>
-        </VerticalStackLayout>
-
-        <HorizontalStackLayout Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" Padding="20" Spacing="20">
-
-            <Button WidthRequest="150" Text="Back" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" 
-                BorderColor="{StaticResource Primary}" BorderWidth="2" Command="{Binding GoBackCommand}"/>
-            <Button WidthRequest="150" Text="Next" FontSize="Medium" Command="{Binding ContinueCommand}"/>
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Center" Padding="20" Spacing="20">
-
-            <Button WidthRequest="150" Text="Back" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" 
-                BorderColor="{StaticResource Primary}" BorderWidth="2" Command="{Binding GoBackCommand}"/>
-            <Button WidthRequest="150" Text="Next" FontSize="Medium" BackgroundColor="{StaticResource Accent}" Command="{Binding ContinueCommand}"/>
-        </HorizontalStackLayout>-->
     </Grid>
 </ContentPage>

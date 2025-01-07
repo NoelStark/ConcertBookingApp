@@ -20,6 +20,11 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
             _userService = userservice;
         }
 
+        /// <summary>
+        /// Validation for fullname, makes sure that the user inputs is of the correct information.
+        /// Nessecary to make sure the database holds the correct information.
+        /// Its a onpropertychange binded to InputFullName, which updates when the user enters the entry
+        /// </summary>
         partial void OnInputFullNameChanged(string value)
         {
             if (!string.IsNullOrWhiteSpace(value) && nameRegex.IsMatch(value) &&!value.StartsWith(" ") &&value.Length <= 20 && !value.EndsWith("  "))
@@ -39,6 +44,12 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
 
             UpdateFullNameBorder();
         }
+
+        /// <summary>
+        /// Validation for email, makes sure that the user inputs is of the correct information.
+        /// Nessecary to make sure the database holds the correct information.
+        /// Its a onpropertychange binded to InputEmail, which updates when the user enters the entry
+        /// </summary>
         partial void OnInputEmailChanged(string value)
         {
             if (!string.IsNullOrWhiteSpace(value) && EmailRegex.IsMatch(value))
@@ -51,6 +62,9 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
             UpdateEmailBorder();
         }
 
+        /// <summary>
+        /// Updates the button if all the required fields are valid
+        /// </summary>
         private void UpdateButton()
         {
             if (FullNameIsOk == true && EmailIsOk == true)
@@ -59,6 +73,9 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
                 CanBelicked = false;
         }
 
+        /// <summary>
+        /// Updates the border color for InputFullName depending if its valid or not
+        /// </summary>
         private void UpdateFullNameBorder()
         {
             if (FullNameIsOk)
@@ -68,6 +85,9 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
             UpdateButton();
         }
 
+        /// <summary>
+        /// Updates the border color for InputEmail depending if its valid or not
+        /// </summary>
         private void UpdateEmailBorder()
         {
             if (EmailIsOk)
@@ -76,9 +96,5 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
                 EmailBorderColor = "#D22B2B";
             UpdateButton();
         }
-
-        
-
-
     }
 }

@@ -25,7 +25,12 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         private readonly ConcertService _concertService;
         private readonly UnitOfWork _unitOfWork;
         private readonly UserService _userService;
+        private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Deserializes a json string into a concert object to preserve object references and also 
+        /// trigger the loading of performances for the selected concert
+        /// </summary>
         public string ConvertFromJson
         {
             set
@@ -37,12 +42,10 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 };
                 var concertDTO = JsonSerializer.Deserialize<Concert>(decoded,options);
                 Concert = concertDTO;
-                _= LoadPerfomances();
-
+                _= LoadPerfomances(); //Callas on th emethod to load perofrmances
             }
         }
 
-        private readonly IMapper _mapper;
         public ConcertDetailsViewModel(BookingService bookingservice, UserService userService, ConcertService concertService, IMapper mapper)
         {
             bookingService = bookingservice;
@@ -50,16 +53,23 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             _mapper = mapper;
             _userService = userService;
         }
+
+        /// <summary>
+        /// This method loads all the perfromances for a selected concert, its uses mapping to only
+        /// allow the nessesary attributes for relevance of the perfromances.
+        /// 
+        /// It fills the AllPerformancesForConcert, and also each perfromances availible seats
+        /// </summary>
+        /// <returns></returns>
         private async Task LoadPerfomances()
         {
-           
             AllPerformancesForConcert.Clear();
 
             var performancesDTO = await _concertService.GetPerformancesForConcert(Concert.ConcertId);
 
             var tempPerformances = performancesDTO.Select(performanceDTO => new BookingPerformance
             {
-                Performance = _mapper.Map<Performance>(performanceDTO)
+                Performance = _mapper.Map<Performance>(performanceDTO) 
             }).ToList();
 
             foreach (var performance in tempPerformances)
@@ -73,11 +83,9 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 if (hasse != null)
                 {
                     performance.Performance.AvailableSeats -= hasse.SeatsBooked;
-                    //performance.SeatsBooked = hasse.SeatsBooked;
                 }
             }
-
-
+            //This section makes sure that the dates for the concerts to be visible to the gui
             OnPropertyChanged(nameof(AllPerformancesForConcert));
             Performance =AllPerformancesForConcert[0].Performance;
             Performance.Date = AllPerformancesForConcert[0].Performance.Date;
@@ -87,12 +95,19 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             UpdateButton();
         }
 
+        /// <summary>
+        /// This method updates the button to be clickable if the user have chosen any perfromances (seatsbooked)
+        /// </summary>
         private void UpdateButton()
         {
             List<BookingPerformance> result = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
             CanBeClicked = result.Any();
         }
 
+        /// <summary>
+        /// This resets the button after adding the items to the cart
+        /// </summary>
+        /// <returns></returns>
         private async Task ResetCartButton()
         {
             await Task.Delay(2000);
