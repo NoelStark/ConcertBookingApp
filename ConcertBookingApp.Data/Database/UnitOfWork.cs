@@ -16,6 +16,7 @@ namespace ConcertBookingApp.Data.Database
         private IConcertRepository _concertRepository;
         private IBookingRepository _bookingRepository;
         private IBookingPerformanceRepository _bookingPerformanceRepository;
+        private IUserRepository _userRepository;
         public UnitOfWork(ApplicationDbContext applicationDb) 
         {
             _dbContext = applicationDb;
@@ -24,7 +25,7 @@ namespace ConcertBookingApp.Data.Database
         public IPerformanceRepository Performance { get => _performanceRepository = new PerformanceRepository(_dbContext); }
         public IBookingRepository Booking { get => _bookingRepository = new BookingRepository(_dbContext); }
         public IBookingPerformanceRepository BookingPerformance { get => _bookingPerformanceRepository = new BookingPerformanceRepository(_dbContext); }
-
+        public IUserRepository User { get => _userRepository = new UserRepository(_dbContext); }
         public void Dispose()
         {
             _dbContext.Dispose();

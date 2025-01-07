@@ -23,15 +23,9 @@ namespace SharedResources.Mapping
                     dest => dest.Performances,
                     opt => opt.MapFrom(src => src.Dates.Select(date => new Performance{Date = date})));
             CreateMap<Performance, PerformanceDTO>().ReverseMap();
-            CreateMap<Booking, BookingDTO>()
-                .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.UserId))
-                .ReverseMap()
-                .ForMember(dest => dest.BookingPerformances, opt => opt.Ignore());
-            CreateMap<BookingPerformance, BookingPerformanceDTO>()
-                .ForMember(
-                    dest => dest.SeatsBooked,
-                    opt => opt.MapFrom(src => src.SeatsBooked))
-                .ReverseMap();
+            CreateMap<Booking, BookingDTO>().ReverseMap();
+            CreateMap<BookingPerformance, BookingPerformanceDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

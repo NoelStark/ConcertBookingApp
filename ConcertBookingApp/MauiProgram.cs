@@ -17,6 +17,7 @@ using ConcertBookingApp.Data.Database;
 using ConcertBookingApp.ViewModels.CheckoutViewModels;
 using ConcertBookingApp.ViewModels.ConcertDetailsViewModels;
 using ConcertBookingApp.ViewModels.ConfirmationViewModels;
+using ConcertBookingApp.ViewModels.LoginViewModels;
 
 
 namespace ConcertBookingApp
@@ -46,6 +47,7 @@ namespace ConcertBookingApp
             builder.Services.AddTransient<PaymentViewModel>();
             builder.Services.AddTransient<BookingViewModel>();
             builder.Services.AddTransient<ConfirmationViewModel>();
+            builder.Services.AddTransient<LoginViewModel>();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
 
@@ -53,14 +55,17 @@ namespace ConcertBookingApp
             builder.Services.AddSingleton<ConcertService>();
             builder.Services.AddSingleton<UserService>();
 
+
             builder.Services.AddSingleton<ConcertOverviewPage>();
             builder.Services.AddTransient<ConcertDetailsPage>();
             builder.Services.AddTransient<CheckoutPage>();
             builder.Services.AddTransient<PaymentPage>();
             builder.Services.AddTransient<BookingsPage>();
             builder.Services.AddTransient<ConfirmationPage>();
+            builder.Services.AddTransient<LoginPage>();
 
-            builder.Services.AddTransient<ApplicationDbContext>();
+            
+
 
             builder.Services.AddSingleton(x =>
                 new HttpClient { BaseAddress = new Uri("http://10.0.2.2:7139") });
