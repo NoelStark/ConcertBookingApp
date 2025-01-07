@@ -18,6 +18,7 @@ namespace ConcertBookingApp.ViewModels.ConfirmationViewModels
 		[RelayCommand]
 		async Task Confirm()
 		{
+			_bookingService.CurrentBooking = null;
             await Shell.Current.GoToAsync("///ConcertOverviewPage");
 
         }
