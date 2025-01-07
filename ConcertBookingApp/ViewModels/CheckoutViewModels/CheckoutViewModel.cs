@@ -47,34 +47,33 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
             Concert concert = new Concert();
             FlattenedBookingPerformances.Clear();
 
-                foreach (BookingPerformance? bookingPerformance in _bookingService.CurrentBooking.BookingPerformances)
+            foreach (BookingPerformance? bookingPerformance in _bookingService.CurrentBooking.BookingPerformances)
+            {
+                concert = SelectedConcerts.FirstOrDefault(x => x.ConcertId == bookingPerformance.Performance.ConcertId);
+                FlattenedBookingPerformances.Add(new BookingPerformance
                 {
-                    concert = SelectedConcerts.FirstOrDefault(x => x.ConcertId == bookingPerformance.Performance.ConcertId);
-                    FlattenedBookingPerformances.Add(new BookingPerformance
-                    {
-                        Performance = bookingPerformance.Performance,
-                        SeatsBooked = bookingPerformance.SeatsBooked,
-                        ImageURL = concert.ImageUrl, 
-                        Genre = concert.Genre,
-                        Title = concert.Name
-                    });
-                }
+                    Performance = bookingPerformance.Performance,
+                    SeatsBooked = bookingPerformance.SeatsBooked,
+                    ImageURL = concert.ImageUrl, 
+                    Genre = concert.Genre,
+                    Title = concert.Name
+                });
+            }
+            OnPropertyChanged(nameof(FlattenedBookingPerformances));
             UpdateNextButton();
+            
         }
         
         public void LoadBookings()
         {
-            AllBookings.Clear();
-            AllBookings.Add(_bookingService.CurrentBooking);
-
             List<Performance> findPerformances = _bookingService.CurrentBooking.BookingPerformances.Select(a => a.Performance).ToList();
 
             //List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
             List<Concert> matchingConcerts = allConcerts.Where(a => findPerformances.Any(b => b.ConcertId == a.ConcertId)).ToList();
 
-            foreach (Concert concertDTO in matchingConcerts)
+            foreach (Concert concert in matchingConcerts)
             {
-                var concert = _mapper.Map<Concert>(concertDTO);
+                //var concert = _mapper.Map<Concert>(concertDTO);
                 SelectedConcerts.Add(concert);
             }
             FillFlattenedPerformances();

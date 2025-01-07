@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SharedResources.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace ConcertBookingApp.ViewModels.ConfirmationViewModels
 		[RelayCommand]
 		async Task Confirm()
 		{
-			_bookingService.CurrentBooking = null;
+			_bookingService.CurrentBooking = new Booking();
             await Shell.Current.GoToAsync("///ConcertOverviewPage");
 
         }
