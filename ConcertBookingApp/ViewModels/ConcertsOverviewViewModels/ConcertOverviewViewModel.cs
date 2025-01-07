@@ -20,12 +20,14 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         private readonly IMapper _mapper;
         private List<Concert> _concertDTOs;
         private readonly ConcertService _concertService;
+        private readonly UserService _userService;
         public List<Concert> filteredConcerts;
 
-        public ConcertOverviewViewModel(ConcertService concertService, IMapper mapper)
+        public ConcertOverviewViewModel(ConcertService concertService, IMapper mapper, UserService userService)
         {
             _mapper = mapper;
             _concertService = concertService;
+            _userService = userService;
             Initialize();
 
 
@@ -33,6 +35,7 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 
         private async Task Initialize()
         {
+            Name = _userService.CurrentUser.Name;
             _concertDTOs = await _concertService.GetAllConcerts();
             Concerts = new ObservableCollection<Concert>(_concertDTOs);
             filteredConcerts = new List<Concert>(_concertDTOs);

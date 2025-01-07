@@ -39,7 +39,7 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
         [ObservableProperty]
         private bool emailIsOk = false;
         [ObservableProperty]
-        private bool isVisible = false;
+        private string buttonText = "Login / Create account";
 
         [ObservableProperty]
         private string lastValidName = string.Empty;

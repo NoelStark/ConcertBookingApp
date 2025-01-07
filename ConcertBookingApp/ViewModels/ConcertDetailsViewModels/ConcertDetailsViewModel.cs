@@ -37,7 +37,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 };
                 var concertDTO = JsonSerializer.Deserialize<Concert>(decoded,options);
                 Concert = concertDTO;
-                _= LoadPerfomances();
+                _= LoadPerformances();
 
             }
         }
@@ -50,7 +50,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             _mapper = mapper;
             _userService = userService;
         }
-        private async Task LoadPerfomances()
+        private async Task LoadPerformances()
         {
            
             AllPerformancesForConcert.Clear();
@@ -65,16 +65,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             foreach (var performance in tempPerformances)
             {
                 AllPerformancesForConcert.Add(performance);
-            }
-
-            foreach(var performance in AllPerformancesForConcert)
-            { 
-                var hasse = bookingService.CurrentBooking.BookingPerformances.FirstOrDefault(a => a.Performance.PerformanceId == performance.Performance.PerformanceId);
-                if (hasse != null)
-                {
-                    performance.Performance.AvailableSeats -= hasse.SeatsBooked;
-                    //performance.SeatsBooked = hasse.SeatsBooked;
-                }
+               
             }
 
 
@@ -84,6 +75,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             Performance.Location = AllPerformancesForConcert[0].Performance.Location;
             Date =
                 $"{AllPerformancesForConcert[0].Performance.Date.ToString("dd MMM yyyy")} - {AllPerformancesForConcert[AllPerformancesForConcert.Count-1].Performance.Date.ToString("dd MMM yyyy")}";
+            OnPropertyChanged(nameof(Date));
             UpdateButton();
         }
 
@@ -97,7 +89,6 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         {
             await Task.Delay(2000);
             AddedToCart = false;
-            //_ = LoadPerfomances();
         }
     }
 }
