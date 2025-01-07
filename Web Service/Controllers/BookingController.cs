@@ -42,6 +42,7 @@ namespace Web_Service.Controllers
             {
                 List<BookingPerformance> bookingPerformance = _mapper.Map<List<BookingPerformance>>(bookingPerformanceDTO);
                 await _unitOfWork.BookingPerformance.SavePerformances(bookingPerformance);
+                await _unitOfWork.Performance.UpdateSeats(bookingPerformance);
                 return Ok("Performances Saved");
             }
             catch (Exception ex)
@@ -65,7 +66,7 @@ namespace Web_Service.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
-        [HttpGet("/Performances{id}")]
+        [HttpGet("Performances/{id}")]
         public async Task<IActionResult> GetPerformancesForBooking(int id)
         {
             try
@@ -77,6 +78,20 @@ namespace Web_Service.Controllers
             {
                 Console.WriteLine($"Error: {ex.Message}");
                 return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("CancelPerformance/{bookingPerformanceId}/{bookingId}")]
+        public async Task<IActionResult> CancelPerformance(int bookingPerformanceId, int bookingId)
+        {
+            try
+            {
+                await _unitOfWork.BookingPerformance.CancelPerformance(bookingPerformanceId, bookingId);
+                return Ok("Performance Cancelled");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server error");
             }
         }
     }

@@ -14,5 +14,7 @@ namespace ConcertBookingApp.Data.Repositorys
         Task RemoveSelectedPerformance(int performanceId);
         Task<List<Performance>> GetAllPerformances();
         Task<List<Performance>> GetPerformancesForConcert(int concertId);
+        Task UpdateSeats(List<BookingPerformance> bookingPerformance);
+
     }
 }

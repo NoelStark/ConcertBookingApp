@@ -4,15 +4,27 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:ConcertBookingApp.Views"
-    Shell.FlyoutBehavior="Flyout"
+    xmlns:vm="clr-namespace:ConcertBookingApp.ViewModels.LoginViewModels"
+    xmlns:converters="clr-namespace:ConcertBookingApp.Converters"
+    x:DataType="vm:LoginViewModel"
+    Shell.FlyoutBehavior="Disabled"
     Title="ConcertBookingApp">
+
+    <Shell.Resources>
+        <converters:BoolToOppositeConverter x:Key="BoolToOppositeConverter"/>
+    </Shell.Resources>
     <TabBar>
-        
+
+        <ShellContent
+            Title="Login"
+            ContentTemplate="{DataTemplate local:LoginPage}"
+            Route="LoginPage"/>
+
         <ShellContent
             Title="Home"
             Icon="home.png"
             ContentTemplate="{DataTemplate local:ConcertOverviewPage}"
-            Route="ConcertOverviewPage" />
+            Route="ConcertOverviewPage"/>
 
     
            
@@ -20,14 +32,14 @@
             Icon="ticketblack.png"
             Title="Bookings"
             ContentTemplate="{DataTemplate local:BookingsPage}"
-            Route="BookingsPage" />
+            Route="BookingsPage"/>
 
        
             <ShellContent
                 Icon="cart.png"
                 Title="Cart"
                 ContentTemplate="{DataTemplate local:CheckoutPage}"
-                Route="CheckoutPage"/>
+                Route="CheckoutPage" />
         
     </TabBar>
     <ShellContent
@@ -44,14 +56,6 @@
         ContentTemplate="{DataTemplate local:ConfirmationPage}"
         Route="ConfirmationPage" />
 
-    <ShellContent
-    Title="Login"
-    ContentTemplate="{DataTemplate local:LoginPage}"
-    Route="LoginPage" />
 
-
-
-
-    <!--<ShellContent Title="ConcertDetailPage" ContentTemplate="{DataTemplate local:BookingsPage}" Route="ConcertDetailsPage" />-->
 
 </Shell>

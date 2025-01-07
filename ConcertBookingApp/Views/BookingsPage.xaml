@@ -6,10 +6,11 @@
              x:DataType="vm:BookingViewModel"
              x:Class="ConcertBookingApp.Views.BookingsPage"
              Title="Bookings">
+    <ScrollView>
     <Grid RowDefinitions="Auto, Auto, Auto, Auto">
         <Grid Grid.Row="0" RowDefinitions="*, *" Margin="20,20,20,0">
             <Label Text="CurrentBooking" Grid.Row="0" FontSize="24" FontAttributes="Bold"/>
-            <Label Text="See your booked events here" Grid.Row="1" FontSize="18" TextColor="#5E0ABF"/>
+            <Label Text="{Binding SubHeader}" Grid.Row="1" FontSize="18" TextColor="#5E0ABF"/>
         </Grid>
 
         <Frame BorderColor="Gray" CornerRadius="10" Padding="0" HasShadow="False" Grid.Row="1" Margin="20">
@@ -18,9 +19,8 @@
 
         <Label Text="Bookings" Grid.Row="2" Margin="20,0,20,20" FontSize="16"/>
         <!--Card-->
-        <ScrollView  Grid.Row="3" HeightRequest="520" Margin="0,0,0,20">
 
-        <CollectionView ItemsSource="{Binding Performances}">
+        <CollectionView Grid.Row="3" ItemsSource="{Binding Performances}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:BookingPerformance">
                     <Grid ColumnDefinitions="*, Auto, Auto" HeightRequest="200" BackgroundColor="White">
@@ -70,7 +70,7 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
       
-        </ScrollView>
 
     </Grid>
+</ScrollView>
 </ContentPage>

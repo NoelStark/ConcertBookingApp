@@ -39,11 +39,12 @@ namespace ConcertBookingApp.Services
 
             return new List<Concert>();
         }
-        //public ConcertDTO GetConcertById(int concertId)
-        //{
-        //    Concert concert= _concertRepository.GetAllConcerts().FirstOrDefault(x => x.ConcertId == concertId);
-        //    return _mapper.Map<ConcertDTO>(concert);
-        //}
+        public async Task<Dictionary<int,int>> GetAvailableSeats()
+        {
+            var response = await _httpClient.GetAsync("Concerts/GetAvailableSeats");
+            Dictionary<int, int> availableSeats = await response.Content.ReadFromJsonAsync<Dictionary<int, int>>();
+            return availableSeats;
+        }
 
         public async Task<List<Performance>> GetPerformancesForConcert(int concertId)
         {
@@ -51,9 +52,17 @@ namespace ConcertBookingApp.Services
             List<Performance> performances= _mapper.Map<List<Performance>>(await response.Content.ReadFromJsonAsync<List<PerformanceDTO>>());
             return performances;
         }
+
+        public async Task<Performance> GetPerformance(int performanceId)
+        {
+            var response = await _httpClient.GetAsync($"Concerts/Performance/{performanceId}");
+            Performance performance =
+                _mapper.Map<Performance>(await response.Content.ReadFromJsonAsync<PerformanceDTO>());
+            return performance;
+        }
         public async Task<Concert> GetConcertForPerformance(int performanceId)
         {
-            var response = await _httpClient.GetAsync($"Concerts/performance/{performanceId}");
+            var response = await _httpClient.GetAsync($"Concerts/GetPerformances/{performanceId}");
             Concert concert = _mapper.Map<Concert>(await response.Content.ReadFromJsonAsync<ConcertDTO>());
 
             return concert;

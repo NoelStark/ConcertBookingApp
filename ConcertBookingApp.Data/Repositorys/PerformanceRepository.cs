@@ -30,11 +30,19 @@ namespace ConcertBookingApp.Data.Repositorys
             return await _dbContext.Performances.ToListAsync();
         }
 
-       
-
         public async Task<List<Performance>> GetPerformancesForConcert(int concertId)
         {
             return _dbContext.Concerts.SelectMany(x => x.Performances).Where(x => x.ConcertId == concertId).ToList();
+        }
+        public async Task UpdateSeats(List<BookingPerformance> bookingPerformance)
+        {
+            foreach (var performance in bookingPerformance)
+            {
+                var foundPerformance = _dbContext.Performances.FirstOrDefault(x => x.PerformanceId == performance.PerformanceId);
+                foundPerformance.AvailableSeats -= performance.SeatsBooked;
+                _dbContext.Performances.Update(foundPerformance);
+            }
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

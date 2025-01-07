@@ -45,11 +45,30 @@ namespace WebService.Controllers
             return Ok(_mapper.Map<List<PerformanceDTO>>(performances));
         }
 
-        [HttpGet("performance/{performanceId}")]
+        [HttpGet("Performance/{performanceId}")]
+        public async Task<IActionResult> GetPerformance(int performanceId)
+        {
+            Performance performances = await _unitOfWork.Performance.FindPerformance(performanceId);
+            return Ok(_mapper.Map<PerformanceDTO>(performances));
+        }
+
+        [HttpGet("GetPerformances/{performanceId}")]
         public async Task<IActionResult> GetConcertForPerformance(int performanceId)
         {
             var concert = await _unitOfWork.Concert.GetConcertForPerformance(performanceId);
             return Ok(_mapper.Map<ConcertDTO>(concert));
+        }
+        [HttpGet("GetAvailableSeats")]
+        public async Task<IActionResult> GetAvailableSeats()
+        {
+            var performances = await _unitOfWork.BookingPerformance.GetPerformances();
+
+            Dictionary<int, int> seatsPerPerformance = new Dictionary<int, int>();
+            foreach (var performance in performances)
+            {
+                seatsPerPerformance[performance.PerformanceId] = performance.SeatsBooked;
+            }
+            return Ok(seatsPerPerformance);
         }
 
     }

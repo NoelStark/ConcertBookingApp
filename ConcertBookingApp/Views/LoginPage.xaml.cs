@@ -9,4 +9,10 @@ public partial class LoginPage : ContentPage
 		InitializeComponent();
         BindingContext = loginViewModel;
 	}
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        //Shell.SetTabBarIsVisible(Application.Current.MainPage, false);
+    }
 }

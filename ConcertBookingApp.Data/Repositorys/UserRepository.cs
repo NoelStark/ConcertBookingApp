@@ -20,10 +20,11 @@ namespace ConcertBookingApp.Data.Repositorys
             return await _dbContext.Users.FirstOrDefaultAsync(a => a.Name.ToLower() == fullname.ToLower() && a.Email.ToLower() == email.ToLower()) ;
         }
 
-        public async Task AddUser(User user)
+        public async Task<int> AddUser(User user)
         {
             _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
+            return user.UserId;
         }
     }
 }
