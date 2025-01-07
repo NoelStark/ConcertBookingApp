@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SharedResources.Models;
 using CommunityToolkit.Mvvm.Input;
+using ConcertBookingApp.Views;
 
 namespace ConcertBookingApp.ViewModels.LoginViewModels
 {
@@ -30,10 +31,12 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
                     Name = InputFullName,
                     Email = InputEmail,
                 };
-
+                
+                newUser.UserId = await _userService.SaveUser(newUser); ;
                 _userService.CurrentUser = newUser;
-                await _userService.SaveUser(newUser);
             }
+
+            ((AppShell)Application.Current.MainPage).RemoveTab();
             await Shell.Current.GoToAsync("///ConcertOverviewPage");
 
         }

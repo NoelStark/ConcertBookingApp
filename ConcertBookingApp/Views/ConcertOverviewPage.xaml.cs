@@ -10,4 +10,9 @@ public partial class ConcertOverviewPage : ContentPage
 		InitializeComponent();
 		BindingContext = viewModel;
 	}
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        //Shell.SetTabBarIsVisible(Application.Current.MainPage, true);
+    }
 }

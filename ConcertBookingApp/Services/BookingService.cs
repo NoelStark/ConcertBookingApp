@@ -49,8 +49,9 @@ namespace ConcertBookingApp.Services
                 var bookingDTO = _mapper.Map<BookingDTO>(booking);
                 var content = JsonSerializer.Serialize(bookingDTO);
                 var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                var bookingId = await _httpClient.PostAsync("Booking", httpContent);
-                return int.Parse(await bookingId.Content.ReadAsStringAsync());
+                var response = await _httpClient.PostAsync("Booking", httpContent);
+                var bookingId = int.Parse(await response.Content.ReadAsStringAsync());
+                return bookingId;
             }
             catch (Exception ex)
             {

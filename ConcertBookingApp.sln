@@ -5,8 +5,6 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConcertBookingApp", "ConcertBookingApp\ConcertBookingApp.csproj", "{5519AB34-AA97-4ECC-B36D-3857602B70B8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Unit Tests", "Unit Tests\Unit Tests.csproj", "{95F5EFAA-2F9F-430F-8560-93F24C783549}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebService", "Web Service\WebService.csproj", "{19D3941E-1B1B-4F40-99B0-AD266C5BE36E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedResources", "Shared Resources\SharedResources.csproj", "{C2662B75-A4C1-401E-98D7-9B9A45B7AB4D}"
@@ -25,10 +23,6 @@ Global
 		{5519AB34-AA97-4ECC-B36D-3857602B70B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5519AB34-AA97-4ECC-B36D-3857602B70B8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5519AB34-AA97-4ECC-B36D-3857602B70B8}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{95F5EFAA-2F9F-430F-8560-93F24C783549}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{95F5EFAA-2F9F-430F-8560-93F24C783549}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{95F5EFAA-2F9F-430F-8560-93F24C783549}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{95F5EFAA-2F9F-430F-8560-93F24C783549}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19D3941E-1B1B-4F40-99B0-AD266C5BE36E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19D3941E-1B1B-4F40-99B0-AD266C5BE36E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19D3941E-1B1B-4F40-99B0-AD266C5BE36E}.Release|Any CPU.ActiveCfg = Release|Any CPU

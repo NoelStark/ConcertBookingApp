@@ -42,6 +42,7 @@ namespace Web_Service.Controllers
             {
                 List<BookingPerformance> bookingPerformance = _mapper.Map<List<BookingPerformance>>(bookingPerformanceDTO);
                 await _unitOfWork.BookingPerformance.SavePerformances(bookingPerformance);
+                await _unitOfWork.Performance.UpdateSeats(bookingPerformance);
                 return Ok("Performances Saved");
             }
             catch (Exception ex)

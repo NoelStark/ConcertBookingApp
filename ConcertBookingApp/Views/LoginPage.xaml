@@ -5,7 +5,8 @@
              xmlns:model="clr-namespace:SharedResources.Models;assembly=SharedResources"
              xmlns:confirmationViewModels="clr-namespace:ConcertBookingApp.ViewModels.LoginViewModels"
              x:DataType="confirmationViewModels:LoginViewModel"
-             Title="LoginPage">
+             Title="LoginPage"
+             Shell.TabBarIsVisible="false">
 
     <Grid>
         <Image Source="concertbg.jpg" Aspect="AspectFill" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Opacity="0.6"/>

@@ -71,7 +71,8 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             {
                 bookingService.CurrentBooking = new Booking
                 {
-                    BookingPerformances = new List<BookingPerformance>(hasse)
+                    BookingPerformances = new List<BookingPerformance>(hasse),
+                    UserId = _userService.CurrentUser.UserId
                 };
             }
 

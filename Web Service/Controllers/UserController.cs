@@ -48,8 +48,8 @@ namespace Web_Service.Controllers
             try
             {
                 User user = _mapper.Map<User>(userDTO);
-                await _unitOfWork.User.AddUser(user);
-                return Ok("Saved");
+                int userId = await _unitOfWork.User.AddUser(user);
+                return Ok(userId);
             }
             catch (Exception ex)
             {

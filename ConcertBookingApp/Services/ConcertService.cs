@@ -39,11 +39,12 @@ namespace ConcertBookingApp.Services
 
             return new List<Concert>();
         }
-        //public ConcertDTO GetConcertById(int concertId)
-        //{
-        //    Concert concert= _concertRepository.GetAllConcerts().FirstOrDefault(x => x.ConcertId == concertId);
-        //    return _mapper.Map<ConcertDTO>(concert);
-        //}
+        public async Task<Dictionary<int,int>> GetAvailableSeats()
+        {
+            var response = await _httpClient.GetAsync("Concerts/GetAvailableSeats");
+            Dictionary<int, int> availableSeats = await response.Content.ReadFromJsonAsync<Dictionary<int, int>>();
+            return availableSeats;
+        }
 
         public async Task<List<Performance>> GetPerformancesForConcert(int concertId)
         {

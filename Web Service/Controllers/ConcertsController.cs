@@ -58,6 +58,18 @@ namespace WebService.Controllers
             var concert = await _unitOfWork.Concert.GetConcertForPerformance(performanceId);
             return Ok(_mapper.Map<ConcertDTO>(concert));
         }
+        [HttpGet("GetAvailableSeats")]
+        public async Task<IActionResult> GetAvailableSeats()
+        {
+            var performances = await _unitOfWork.BookingPerformance.GetPerformances();
+
+            Dictionary<int, int> seatsPerPerformance = new Dictionary<int, int>();
+            foreach (var performance in performances)
+            {
+                seatsPerPerformance[performance.PerformanceId] = performance.SeatsBooked;
+            }
+            return Ok(seatsPerPerformance);
+        }
 
     }
 }

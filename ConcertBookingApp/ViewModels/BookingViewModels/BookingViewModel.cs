@@ -16,23 +16,26 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
     {
         [ObservableProperty] private double opacity = 0.6;
         [ObservableProperty] private string searchInput = string.Empty;
+        [ObservableProperty] private string subHeader = string.Empty;
         private readonly BookingService _bookingService;
         private readonly ConcertService _concertService;
+        private readonly UserService _userService;
+        private List<BookingPerformance> _performances = new List<BookingPerformance>();
         public ObservableCollection<BookingPerformance> Performances { get; private set; }= new ObservableCollection<BookingPerformance>();
         
-        public BookingViewModel(BookingService service, ConcertService concertService)
+        public BookingViewModel(BookingService service, ConcertService concertService, UserService userService)
         {
             _bookingService = service;
             _concertService = concertService;
             _= AddPerformances();
+            _userService = userService;
         }
 
         public async Task AddPerformances()
         {
-            //var hasPayed = Preferences.Get("HasPayed", false);
-            //if (!hasPayed) return;
+            Performances.Clear();
 
-            List<Booking> bookings = await _bookingService.GetAllBookings(1);
+            List<Booking> bookings = await _bookingService.GetAllBookings(_userService.CurrentUser.UserId);
 
             foreach (var booking in bookings)
             {
@@ -46,9 +49,52 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
                     performance.ImageURL = concert.ImageUrl;
                     performance.Performance = findPerformance;
                     Performances.Add(performance);
+                    _performances.Add(performance);
                 }
             }
+
+            SubHeader = Performances.Any() ? "See your booked events here" : "You have no Bookings";
         }
+
+        private async Task Filter(string? oldValue, string newValue)
+        {
+            List<BookingPerformance> filteredConcerts = new List<BookingPerformance>();
+            await Task.Run(() =>
+            {
+                if (newValue.Length < oldValue.Length)
+                {
+                    foreach (var performance in _performances)
+                    {
+                        Performances.Add(performance);
+                    }
+                }
+                if (!string.IsNullOrEmpty(newValue))
+                {
+                    filteredConcerts = Performances.Where(x => x.Title.ToLower().Contains(newValue.ToLower())).ToList();
+                    Performances.Clear();
+                    foreach (var performance in filteredConcerts)
+                    {
+                        Performances.Add(performance);
+                    }
+                }
+                else
+                {
+                    Performances.Clear();
+                    foreach (var performance in _performances)
+                    {
+                        Performances.Add(performance);
+                    }
+
+                    return;
+                }
+            });
+        }
+        partial void OnSearchInputChanged(string? oldValue, string newValue)
+        {
+            _= Filter(oldValue, newValue);
+        }
+
+          
 
         [RelayCommand]
         public async void CancelBooking(BookingPerformance performance)
@@ -56,7 +102,7 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
             Performances.Remove(performance);
             OnPropertyChanged(nameof(Performances));
             await _bookingService.CancelBooking(performance.PerformanceId, performance.BookingId);
-            
+            SubHeader = Performances.Any() ? "See your booked events here" : "You have no Bookings";
         }
     }
 }

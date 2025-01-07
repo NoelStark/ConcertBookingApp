@@ -38,6 +38,8 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
 
         [ObservableProperty]
         private bool emailIsOk = false;
+        [ObservableProperty]
+        private bool isVisible = false;
 
         [ObservableProperty]
         private string lastValidName = string.Empty;

@@ -21,9 +21,9 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
         }
 
         [RelayCommand]
-        void GoBack()
+        async void GoBack()
         {
-
+            await Shell.Current.GoToAsync("///CheckoutPage");
         }
         [RelayCommand(CanExecute = nameof(IsValidForm))]
         async void SavePerson()
@@ -38,12 +38,15 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
                 
                 int bookingId = await _bookingService.SaveBooking(_bookingService.CurrentBooking);
                 await _bookingService.SavePerformances(_bookingService.CurrentBooking.BookingPerformances, bookingId);
-                //await Shell.Current.GoToAsync($"///ConfirmationPage?totalPrice={TotalCartCost}");
+                await Shell.Current.GoToAsync($"///ConfirmationPage?totalPrice={TotalCartCost}");
 
             }
-            shouldSwitchSection = !shouldSwitchSection;
-            IsVisible = !IsVisible;
-            ValidateForm();
+            else
+            {
+                shouldSwitchSection = !shouldSwitchSection;
+                IsVisible = !IsVisible;
+                ValidateForm();
+            }
         }
     }
 }

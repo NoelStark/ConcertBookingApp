@@ -5,7 +5,8 @@
              xmlns:viewmodels="clr-namespace:ConcertBookingApp.ViewModels.CheckoutViewModels"
              xmlns:models="clr-namespace:SharedResources.Models;assembly=SharedResources"
              x:DataType="viewmodels:CheckoutViewModel"
-             Title="CheckoutPage">
+             Title="CheckoutPage"
+             Shell.TabBarIsVisible="True">
     <!--<ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="cartremove.png" Command="{Binding ShowPopupCommand}"/>
     </ContentPage.ToolbarItems>-->

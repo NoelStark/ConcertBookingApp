@@ -41,20 +41,22 @@ namespace ConcertBookingApp.Services
 
             return new User();
         }
-        public async Task SaveUser(User user)
+        public async Task<int> SaveUser(User user)
         {
             try
             {
                 var userDto = _mapper.Map<UserDTO>(user);
                 var content = JsonSerializer.Serialize(userDto);
                 var httpContent = new StringContent(content, Encoding.UTF8, "application/json");
-                await _httpClient.PostAsync("User/SaveUser", httpContent);
+                var response = await _httpClient.PostAsync("User/SaveUser", httpContent);
+                var userId = await response.Content.ReadAsStringAsync();
+                return int.Parse(userId);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            return;
+            return 0;
         }
     }
 }

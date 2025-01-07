@@ -24,6 +24,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         private readonly BookingService bookingService;
         private readonly ConcertService _concertService;
         private readonly UnitOfWork _unitOfWork;
+        private readonly UserService _userService;
 
         public string ConvertFromJson
         {
@@ -42,11 +43,12 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         }
 
         private readonly IMapper _mapper;
-        public ConcertDetailsViewModel(BookingService bookingservice, ConcertService concertService, IMapper mapper)
+        public ConcertDetailsViewModel(BookingService bookingservice, UserService userService, ConcertService concertService, IMapper mapper)
         {
             bookingService = bookingservice;
             _concertService = concertService;
             _mapper = mapper;
+            _userService = userService;
         }
         private async Task LoadPerfomances()
         {
