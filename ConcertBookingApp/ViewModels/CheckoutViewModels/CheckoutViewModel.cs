@@ -58,20 +58,7 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
                         Genre = concert.Genre,
                         Title = concert.Name
                     });
-
-                    //AddTicketsVisible = bookingPerformance.Performance.AvailableSeats > 0;
                 }
-            //var hasse = FlattenedBookingPerformances.Where(a => a.SeatsBooked == 0).ToList();
-            
-            //foreach (var items in hasse)
-            //{
-            //    int index = 0;
-            //    index = (FlattenedBookingPerformances.IndexOf(items));
-            //    FlattenedBookingPerformances.RemoveAt(index);
-            //    AddTicketsVisible = false;
-            //    FlattenedBookingPerformances.Insert(index, items);
-            //}
-
             UpdateNextButton();
         }
         
@@ -79,8 +66,6 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
         {
             AllBookings.Clear();
             AllBookings.Add(_bookingService.CurrentBooking);
-
-
 
             List<Performance> findPerformances = _bookingService.CurrentBooking.BookingPerformances.Select(a => a.Performance).ToList();
 

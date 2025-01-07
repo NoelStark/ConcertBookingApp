@@ -32,17 +32,17 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
             {
                 if (_userService.CurrentUser != null)
                 {
-                    _userService.CurrentUser.Email = Email;
-                    _userService.CurrentUser.Name = Name;
+                    _userService.CurrentUser.Email = Email; //TaBort
+                    _userService.CurrentUser.Name = Name; //TaBort
                     _userService.CurrentUser.CreditCardNumber = CreditCardNumber;
                     _userService.CurrentUser.CreditCardType = typeofCard;
                 }
                 else
                 {
-                    _userService.CurrentUser = new User
+                    _userService.CurrentUser = new User //TaBort
                     {
                         Email = Email,
-                        Name = Name,
+                        Name = Name, 
                         CreditCardNumber = CreditCardNumber,
                         CreditCardType = typeofCard
                     };

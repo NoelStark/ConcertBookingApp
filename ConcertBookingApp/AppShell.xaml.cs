@@ -9,6 +9,7 @@ namespace ConcertBookingApp
         {
             InitializeComponent();
             //Routing.RegisterRoute("ConcertOverviewPage", typeof(ConcertOverviewPage));
+            Routing.RegisterRoute("LoginPage", typeof(LoginPage));
             Routing.RegisterRoute("ConcertDetailsPage", typeof(ConcertDetailsPage));
             Routing.RegisterRoute("CheckoutPage", typeof(CheckoutPage));
             Routing.RegisterRoute("BookingsPage", typeof(BookingsPage));

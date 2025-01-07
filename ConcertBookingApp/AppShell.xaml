@@ -44,6 +44,11 @@
         ContentTemplate="{DataTemplate local:ConfirmationPage}"
         Route="ConfirmationPage" />
 
+    <ShellContent
+    Title="Login"
+    ContentTemplate="{DataTemplate local:LoginPage}"
+    Route="LoginPage" />
+
 
 
 
