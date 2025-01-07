@@ -64,8 +64,7 @@ namespace ConcertBookingApp
             builder.Services.AddTransient<ConfirmationPage>();
             builder.Services.AddTransient<LoginPage>();
 
-            builder.Services.AddTransient<ApplicationDbContext>();
-            builder.Services.AddTransient<UnitOfWork>();
+            
 
 
             builder.Services.AddSingleton(x =>

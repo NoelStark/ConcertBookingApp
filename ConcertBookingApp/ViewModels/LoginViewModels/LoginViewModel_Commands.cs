@@ -16,19 +16,26 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
             if (InputFullName.EndsWith(" "))
                 InputFullName = InputFullName.TrimEnd();
 
-            User userExist = await _unitOfWork.User.FindUser(InputFullName, InputEmail);
-            if (userExist != null)
+
+
+            User userExist = await _userService.DoesUserExist(InputFullName, InputEmail);
+            if (userExist.Name != string.Empty && userExist.Email != string.Empty)
+            {
                 _userService.CurrentUser = userExist;
+            }
             else
             {
-                _userService.CurrentUser = new User
+                User newUser = new User
                 {
                     Name = InputFullName,
                     Email = InputEmail,
                 };
-            }
 
+                _userService.CurrentUser = newUser;
+                await _userService.SaveUser(newUser);
+            }
             await Shell.Current.GoToAsync("///ConcertOverviewPage");
+
         }
     }
 }

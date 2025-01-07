@@ -25,6 +25,7 @@ namespace SharedResources.Mapping
             CreateMap<Performance, PerformanceDTO>().ReverseMap();
             CreateMap<Booking, BookingDTO>().ReverseMap();
             CreateMap<BookingPerformance, BookingPerformanceDTO>().ReverseMap();
+            CreateMap<User, UserDTO>().ReverseMap();
         }
     }
 }

@@ -15,10 +15,9 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
 {
     public partial class LoginViewModel : ObservableObject
     {
-        public LoginViewModel(UnitOfWork unitOfWork, UserService userservice)
+        public LoginViewModel( UserService userservice)
         {
             _userService = userservice;
-            _unitOfWork = unitOfWork;
         }
 
         partial void OnInputFullNameChanged(string value)

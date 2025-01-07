@@ -28,12 +28,10 @@ namespace ConcertBookingApp.Data.Repositorys
             await _dbContext.SaveChangesAsync();
         }
 
-        //TODO Remove hard coded user id
         public async Task<int> SaveBooking(Booking booking)
         {
             try
             {
-                booking.UserId = 1;
                 _dbContext.Bookings.Add(booking);
                 await _dbContext.SaveChangesAsync();
                 return booking.BookingId;

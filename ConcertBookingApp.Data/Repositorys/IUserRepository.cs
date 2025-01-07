@@ -10,5 +10,6 @@ namespace ConcertBookingApp.Data.Repositorys
     public interface IUserRepository : IGenericRepository<User>
     {
         Task<User> FindUser(string firstName, string email);
+        Task AddUser(User user);
     }
 }
