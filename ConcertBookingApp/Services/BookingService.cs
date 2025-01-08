@@ -15,16 +15,19 @@ namespace ConcertBookingApp.Services
     public class BookingService
     {
         private readonly IMapper _mapper;
-        //private readonly ConcertRepository _concertRepository;
         private readonly HttpClient _httpClient;
         public BookingService(IMapper mapper, HttpClient httpClient)
         {
-            //_concertRepository = concertRepository;
             _mapper = mapper;
             _httpClient = httpClient;
         }
         public Booking? CurrentBooking { get; set; } =  null;
 
+        /// <summary>
+        /// Method to get all bookings for a specific user and takes the user id as a parameter
+        /// sends an HTTP GET request to the api to retrieve a list of BookingDTO objects and then maps them to Booking objects
+        /// which then will returns the list.
+        /// </summary>
         public async Task<List<Booking>> GetAllBookings(int id)
         {
             try
@@ -42,6 +45,11 @@ namespace ConcertBookingApp.Services
             return new List<Booking>();
         }
 
+        /// <summary>
+        /// Method to save a new booking, take the booking as a parameter
+        /// Maps a Booking object to a BookingDTO and then serializes it to json format, then it sends it to the api with post
+        /// If the save is successfull it retrieves and returns the id of the saved booking as an integer
+        /// </summary>
         public async Task<int> SaveBooking(Booking booking)
         {
             try
@@ -60,6 +68,12 @@ namespace ConcertBookingApp.Services
 
             return 0;
         }
+
+        /// <summary>
+        /// Method to save performances for a booking, it takes a list of bookingperfromances and bookingid as a parmeter
+        /// it applies to the booking for each performance in the list, maps them to BookingPerformanceDTO objects and then
+        /// serializes them into json format which will then be sent to the api with post
+        /// </summary>
         public async Task SavePerformances(List<BookingPerformance> bookingPerformances, int bookingId)
         {
             try
@@ -76,6 +90,11 @@ namespace ConcertBookingApp.Services
             }
         }
 
+        /// <summary>
+        /// Method to get performances from a booking id, it takes the booking id as a parameter
+        /// the parameter will be sendt as a HTTP GET request to the api
+        /// Gets a list of BookingPerformanceDTO objects and then maps them to BookingPerformance objects and then returns the list.
+        /// </summary>
         public async Task<List<BookingPerformance>> GetPerformancesForBooking(int id)
         {
             try
@@ -94,6 +113,10 @@ namespace ConcertBookingApp.Services
             return new List<BookingPerformance>();
         }
 
+        /// <summary>
+        /// This method cancels a booking for a bookingperfromance using the booking id and bookingperfromance id
+        /// Sends an HTTP GET request to the api and returns the response status code
+        /// </summary>
         public async Task<string> CancelBooking(int bookingPerformanceId, int bookingId)
         {
             var response = await _httpClient.GetAsync($"Booking/CancelPerformance/{bookingPerformanceId}/{bookingId}");
