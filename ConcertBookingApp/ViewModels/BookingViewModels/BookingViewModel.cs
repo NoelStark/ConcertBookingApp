@@ -18,7 +18,7 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
         {
             _bookingService = service;
             _concertService = concertService;
-            _= AddPerformances();
+            _ = AddPerformances();
             _userService = userService;
         }
         /// <summary>
@@ -28,7 +28,7 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
         public async Task AddPerformances()
         {
             Performances.Clear();
-
+            _performances.Clear();
             List<Booking> bookings = await _bookingService.GetAllBookings(_userService.CurrentUser.UserId);
 
             //Goes through every booking and the performances to fill the GUI with
@@ -66,6 +66,7 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
                 //If the user deletes a letter
                 if (newValue.Length < oldValue.Length)
                 {
+                    Performances.Clear();
                     foreach (var performance in _performances)
                     {
                         Performances.Add(performance);
@@ -75,8 +76,8 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
                 //Assuming the searchbar has information, filtering happens based on title
                 if (!string.IsNullOrEmpty(newValue))
                 {
-                    filteredConcerts = Performances.Where(x => x.Title.ToLower().Contains(newValue.ToLower())).ToList();
                     Performances.Clear();
+                    filteredConcerts = _performances.Where(x => x.Title.ToLower().Contains(newValue.ToLower())).ToList();
                     foreach (var performance in filteredConcerts)
                     {
                         Performances.Add(performance);
