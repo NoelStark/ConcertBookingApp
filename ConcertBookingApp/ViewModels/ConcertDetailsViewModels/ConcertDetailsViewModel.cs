@@ -92,6 +92,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             Performance.Location = AllPerformancesForConcert[0].Performance.Location;
             Date =
                 $"{AllPerformancesForConcert[0].Performance.Date.ToString("dd MMM yyyy")} - {AllPerformancesForConcert[AllPerformancesForConcert.Count-1].Performance.Date.ToString("dd MMM yyyy")}";
+            OnPropertyChanged(nameof(Date));
             UpdateButton();
         }
 
@@ -112,7 +113,6 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         {
             await Task.Delay(2000);
             AddedToCart = false;
-            //_ = LoadPerfomances();
         }
     }
 }

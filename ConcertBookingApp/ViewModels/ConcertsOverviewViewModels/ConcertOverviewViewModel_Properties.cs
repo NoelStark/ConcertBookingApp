@@ -17,12 +17,12 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
         [ObservableProperty] private bool isVisible = false;
         [ObservableProperty] private int concertCount;
         [ObservableProperty] private CalendarDateRange? rangeSelected;
-        //private string _lastSearchInput = string.Empty;
-        //private List<Concert> _cachedConcerts = AllConcerts;
+        [ObservableProperty] private string name = string.Empty;
         private List<Category> _selectedCategories = new List<Category>();
         private DateTime? startDate = null;
         private DateTime? endDate = null;
         private List<Concert> concerts = new List<Concert>();
+        
 
         partial void OnSearchInputChanged(string value)
         {

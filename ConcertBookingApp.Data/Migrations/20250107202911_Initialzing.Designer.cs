@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250105202648_AddingData")]
-    partial class AddingData
+    [Migration("20250107202911_Initialzing")]
+    partial class Initialzing
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,24 @@ namespace ConcertBookingApp.Data.Migrations
                             BookingId = 1,
                             BookingDate = new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             UserId = 1
+                        },
+                        new
+                        {
+                            BookingId = 2,
+                            BookingDate = new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 2
+                        },
+                        new
+                        {
+                            BookingId = 3,
+                            BookingDate = new DateTime(2025, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 3
+                        },
+                        new
+                        {
+                            BookingId = 4,
+                            BookingDate = new DateTime(2025, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UserId = 4
                         });
                 });
 
@@ -62,20 +80,8 @@ namespace ConcertBookingApp.Data.Migrations
                     b.Property<int>("PerformanceId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Genre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("SeatsBooked")
                         .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("BookingId", "PerformanceId");
 
@@ -88,35 +94,50 @@ namespace ConcertBookingApp.Data.Migrations
                         {
                             BookingId = 1,
                             PerformanceId = 1,
-                            Genre = "",
-                            ImageURL = "",
-                            SeatsBooked = 0,
-                            Title = ""
+                            SeatsBooked = 0
+                        },
+                        new
+                        {
+                            BookingId = 1,
+                            PerformanceId = 2,
+                            SeatsBooked = 0
+                        },
+                        new
+                        {
+                            BookingId = 2,
+                            PerformanceId = 2,
+                            SeatsBooked = 0
+                        },
+                        new
+                        {
+                            BookingId = 2,
+                            PerformanceId = 3,
+                            SeatsBooked = 0
+                        },
+                        new
+                        {
+                            BookingId = 3,
+                            PerformanceId = 11,
+                            SeatsBooked = 0
+                        },
+                        new
+                        {
+                            BookingId = 3,
+                            PerformanceId = 12,
+                            SeatsBooked = 0
+                        },
+                        new
+                        {
+                            BookingId = 4,
+                            PerformanceId = 12,
+                            SeatsBooked = 0
+                        },
+                        new
+                        {
+                            BookingId = 4,
+                            PerformanceId = 13,
+                            SeatsBooked = 0
                         });
-                });
-
-            modelBuilder.Entity("SharedResources.Models.Category", b =>
-                {
-                    b.Property<int>("CategoryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
-
-                    b.Property<string>("ImageSource")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsSelected")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CategoryId");
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("SharedResources.Models.Concert", b =>
@@ -172,11 +193,20 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             ConcertId = 3,
-                            Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.",
+                            Description = "An enchanting evening of timeless symphonies and masterful compositions performed by world-renowned orchestras and soloists.",
                             Genre = "Classical",
                             ImageUrl = "edm.png",
                             IsFavorite = false,
                             Name = "Classical"
+                        },
+                        new
+                        {
+                            ConcertId = 4,
+                            Description = "An electrifying night filled with pulsating beats, mesmerizing light shows, and high-energy performances by top EDM DJs.",
+                            Genre = "EDM",
+                            ImageUrl = "edm_festival.png",
+                            IsFavorite = false,
+                            Name = "Electric Vibes Festival"
                         });
                 });
 
@@ -217,12 +247,12 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 1,
-                            AvailableSeats = 5,
+                            AvailableSeats = 100,
                             ConcertId = 1,
                             Date = new DateTime(2024, 12, 14, 12, 0, 0, 0, DateTimeKind.Unspecified),
                             Location = "Aspvägen",
                             Price = 100.0,
-                            TotalSeats = 5
+                            TotalSeats = 100
                         },
                         new
                         {
@@ -247,12 +277,12 @@ namespace ConcertBookingApp.Data.Migrations
                         new
                         {
                             PerformanceId = 4,
-                            AvailableSeats = 5,
+                            AvailableSeats = 100,
                             ConcertId = 2,
                             Date = new DateTime(2024, 10, 12, 15, 0, 0, 0, DateTimeKind.Unspecified),
-                            Location = "Aspvägen",
+                            Location = "Gökgatan",
                             Price = 100.0,
-                            TotalSeats = 5
+                            TotalSeats = 100
                         },
                         new
                         {
@@ -260,7 +290,7 @@ namespace ConcertBookingApp.Data.Migrations
                             AvailableSeats = 150,
                             ConcertId = 2,
                             Date = new DateTime(2024, 10, 13, 13, 0, 0, 0, DateTimeKind.Unspecified),
-                            Location = "Aspvägen",
+                            Location = "Gökgatan",
                             Price = 200.0,
                             TotalSeats = 150
                         },
@@ -270,19 +300,19 @@ namespace ConcertBookingApp.Data.Migrations
                             AvailableSeats = 200,
                             ConcertId = 2,
                             Date = new DateTime(2024, 10, 14, 17, 0, 0, 0, DateTimeKind.Unspecified),
-                            Location = "Aspvägen",
+                            Location = "Gökgatan",
                             Price = 300.0,
                             TotalSeats = 200
                         },
                         new
                         {
                             PerformanceId = 8,
-                            AvailableSeats = 5,
+                            AvailableSeats = 100,
                             ConcertId = 3,
                             Date = new DateTime(2025, 1, 2, 20, 0, 0, 0, DateTimeKind.Unspecified),
-                            Location = "Aspvägen",
+                            Location = "Solvägen",
                             Price = 100.0,
-                            TotalSeats = 5
+                            TotalSeats = 100
                         },
                         new
                         {
@@ -290,7 +320,7 @@ namespace ConcertBookingApp.Data.Migrations
                             AvailableSeats = 150,
                             ConcertId = 3,
                             Date = new DateTime(2025, 1, 3, 21, 0, 0, 0, DateTimeKind.Unspecified),
-                            Location = "Aspvägen",
+                            Location = "Solvägen",
                             Price = 200.0,
                             TotalSeats = 150
                         },
@@ -300,9 +330,39 @@ namespace ConcertBookingApp.Data.Migrations
                             AvailableSeats = 200,
                             ConcertId = 3,
                             Date = new DateTime(2025, 1, 4, 22, 0, 0, 0, DateTimeKind.Unspecified),
-                            Location = "Aspvägen",
+                            Location = "Solvägen",
                             Price = 300.0,
                             TotalSeats = 200
+                        },
+                        new
+                        {
+                            PerformanceId = 11,
+                            AvailableSeats = 300,
+                            ConcertId = 4,
+                            Date = new DateTime(2025, 3, 10, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Höstvägen",
+                            Price = 150.0,
+                            TotalSeats = 300
+                        },
+                        new
+                        {
+                            PerformanceId = 12,
+                            AvailableSeats = 400,
+                            ConcertId = 4,
+                            Date = new DateTime(2025, 3, 11, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Höstvägen",
+                            Price = 180.0,
+                            TotalSeats = 400
+                        },
+                        new
+                        {
+                            PerformanceId = 13,
+                            AvailableSeats = 500,
+                            ConcertId = 4,
+                            Date = new DateTime(2025, 3, 12, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Location = "Höstvägen",
+                            Price = 200.0,
+                            TotalSeats = 500
                         });
                 });
 
@@ -341,6 +401,18 @@ namespace ConcertBookingApp.Data.Migrations
                             UserId = 2,
                             Email = "janesmith@example.com",
                             Name = "Jane Smith"
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            Email = "alicejohnson@example.com",
+                            Name = "Alice Johnson"
+                        },
+                        new
+                        {
+                            UserId = 4,
+                            Email = "bobbrown@example.com",
+                            Name = "Bob Brown"
                         });
                 });
 

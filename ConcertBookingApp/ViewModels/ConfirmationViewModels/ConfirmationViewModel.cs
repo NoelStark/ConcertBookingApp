@@ -29,6 +29,7 @@ namespace ConcertBookingApp.ViewModels.ConfirmationViewModels
 		/// </summary>
 		public void Reinitialize()
         {
+            Name = _userService.CurrentUser.Name;
             Performances.Clear();
             foreach (var performance in _bookingService.CurrentBooking.BookingPerformances)
             {

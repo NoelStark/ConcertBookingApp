@@ -20,13 +20,12 @@ namespace SharedResources.Models
         public Performance? Performance { get; set; } = null;
 
         [NotMapped]
-        [ObservableProperty]
-        public string imageURL = string.Empty;
+        [ObservableProperty] private string imageURL = string.Empty;
+
         [NotMapped]
-        [ObservableProperty]
-        public string title = string.Empty;
+        [ObservableProperty] private string title = string.Empty;
+
         [NotMapped]
-        [ObservableProperty]
-        public string genre = string.Empty;
+        [ObservableProperty] private string genre = string.Empty;
     }
 }

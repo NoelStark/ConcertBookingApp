@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace ConcertBookingApp.Data.Migrations
 {
     /// <inheritdoc />
@@ -11,21 +13,6 @@ namespace ConcertBookingApp.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Categories",
-                columns: table => new
-                {
-                    CategoryId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageSource = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsSelected = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Categories", x => x.CategoryId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Concerts",
                 columns: table => new
@@ -107,10 +94,7 @@ namespace ConcertBookingApp.Data.Migrations
                 {
                     BookingId = table.Column<int>(type: "int", nullable: false),
                     PerformanceId = table.Column<int>(type: "int", nullable: false),
-                    SeatsBooked = table.Column<int>(type: "int", nullable: false),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SeatsBooked = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,6 +111,73 @@ namespace ConcertBookingApp.Data.Migrations
                         principalTable: "Performances",
                         principalColumn: "PerformanceId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Concerts",
+                columns: new[] { "ConcertId", "Description", "Genre", "ImageUrl", "IsFavorite", "Name" },
+                values: new object[,]
+                {
+                    { 1, "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.", "Pop", "edm.png", false, "Pop Pulse Festival" },
+                    { 2, "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.", "Jazz", "testconcert.png", false, "Starlight Pop Jazz" },
+                    { 3, "An enchanting evening of timeless symphonies and masterful compositions performed by world-renowned orchestras and soloists.", "Classical", "edm.png", false, "Classical" },
+                    { 4, "An electrifying night filled with pulsating beats, mesmerizing light shows, and high-energy performances by top EDM DJs.", "EDM", "edm_festival.png", false, "Electric Vibes Festival" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "UserId", "Email", "Name" },
+                values: new object[,]
+                {
+                    { 1, "johndoe@example.com", "John Doe" },
+                    { 2, "janesmith@example.com", "Jane Smith" },
+                    { 3, "alicejohnson@example.com", "Alice Johnson" },
+                    { 4, "bobbrown@example.com", "Bob Brown" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Bookings",
+                columns: new[] { "BookingId", "BookingDate", "UserId" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2024, 12, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 3, new DateTime(2025, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 3 },
+                    { 4, new DateTime(2025, 3, 11, 0, 0, 0, 0, DateTimeKind.Unspecified), 4 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Performances",
+                columns: new[] { "PerformanceId", "AvailableSeats", "ConcertId", "Date", "Location", "Price", "TotalSeats" },
+                values: new object[,]
+                {
+                    { 1, 100, 1, new DateTime(2024, 12, 14, 12, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 100 },
+                    { 2, 150, 1, new DateTime(2024, 12, 15, 14, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 3, 200, 1, new DateTime(2024, 12, 16, 16, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
+                    { 4, 100, 2, new DateTime(2024, 10, 12, 15, 0, 0, 0, DateTimeKind.Unspecified), "Gökgatan", 100.0, 100 },
+                    { 6, 150, 2, new DateTime(2024, 10, 13, 13, 0, 0, 0, DateTimeKind.Unspecified), "Gökgatan", 200.0, 150 },
+                    { 7, 200, 2, new DateTime(2024, 10, 14, 17, 0, 0, 0, DateTimeKind.Unspecified), "Gökgatan", 300.0, 200 },
+                    { 8, 100, 3, new DateTime(2025, 1, 2, 20, 0, 0, 0, DateTimeKind.Unspecified), "Solvägen", 100.0, 100 },
+                    { 9, 150, 3, new DateTime(2025, 1, 3, 21, 0, 0, 0, DateTimeKind.Unspecified), "Solvägen", 200.0, 150 },
+                    { 10, 200, 3, new DateTime(2025, 1, 4, 22, 0, 0, 0, DateTimeKind.Unspecified), "Solvägen", 300.0, 200 },
+                    { 11, 300, 4, new DateTime(2025, 3, 10, 18, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 150.0, 300 },
+                    { 12, 400, 4, new DateTime(2025, 3, 11, 19, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 180.0, 400 },
+                    { 13, 500, 4, new DateTime(2025, 3, 12, 20, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 200.0, 500 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "BookingPerformances",
+                columns: new[] { "BookingId", "PerformanceId", "SeatsBooked" },
+                values: new object[,]
+                {
+                    { 1, 1, 0 },
+                    { 1, 2, 0 },
+                    { 2, 2, 0 },
+                    { 2, 3, 0 },
+                    { 3, 11, 0 },
+                    { 3, 12, 0 },
+                    { 4, 12, 0 },
+                    { 4, 13, 0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -156,9 +207,6 @@ namespace ConcertBookingApp.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "BookingPerformances");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Bookings");

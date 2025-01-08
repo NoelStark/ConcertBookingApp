@@ -19,6 +19,10 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
         [RelayCommand]
         private async void ValidateUser()
         {
+            if (isLoading) return;
+
+            isLoading = true;
+            ButtonText = "Loading...";
             if (InputFullName.EndsWith(" "))
                 InputFullName = InputFullName.TrimEnd();
 
@@ -41,7 +45,7 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
             //redirects to the application
             ((AppShell)Application.Current.MainPage).RemoveTab();
             await Shell.Current.GoToAsync("///ConcertOverviewPage");
-
+            isLoading = false;
         }
     }
 }

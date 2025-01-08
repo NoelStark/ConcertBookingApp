@@ -8,7 +8,7 @@
              xmlns:behaviors="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="vm:ConcertOverviewViewModel"
              x:Class="ConcertBookingApp.Views.ConcertOverviewPage"
-             Title="ConcertOverviewPage"
+             Title="Concerts"
              Shell.TabBarIsVisible="True">
 
     <ContentPage.Resources>
@@ -34,7 +34,7 @@
 
     <Grid RowDefinitions="Auto, Auto ,Auto,Auto,Auto, *" Margin="20,0,20,0">
         <VerticalStackLayout  Grid.Row="0">
-            <Label FontSize="20" FontAttributes="Bold" Text="Hello John"/>
+            <Label FontSize="20" FontAttributes="Bold" Text="{Binding Name, StringFormat='Hello, {0}'}"/>
             <Label FontSize="16" Text="{Binding ConcertCount, StringFormat='There are {0} event(s) near you'}" Margin="0,5,0,0" HorizontalOptions="Start" TextColor="#5E0ABF"/>
         </VerticalStackLayout>
 
