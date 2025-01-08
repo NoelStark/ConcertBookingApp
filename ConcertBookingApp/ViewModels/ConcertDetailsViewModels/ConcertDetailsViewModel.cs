@@ -127,7 +127,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         {
             await Task.Delay(2000);
             AddedToCart = false;
-            _ = LoadPerformances();
+            _ = LoadPerfomances();
 
         }
     }
