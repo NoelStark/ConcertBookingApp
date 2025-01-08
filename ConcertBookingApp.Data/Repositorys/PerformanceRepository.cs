@@ -44,5 +44,12 @@ namespace ConcertBookingApp.Data.Repositorys
             }
             await _dbContext.SaveChangesAsync();
         }
+
+        public async Task UpdateSeatsForPerformance(int id, int quantity)
+        {
+            var performance = _dbContext.Performances.FirstOrDefault(x => x.PerformanceId == id);
+            performance.AvailableSeats += quantity;
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

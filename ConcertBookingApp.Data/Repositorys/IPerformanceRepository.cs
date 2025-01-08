@@ -15,6 +15,7 @@ namespace ConcertBookingApp.Data.Repositorys
         Task<List<Performance>> GetAllPerformances();
         Task<List<Performance>> GetPerformancesForConcert(int concertId);
         Task UpdateSeats(List<BookingPerformance> bookingPerformance);
+        Task UpdateSeatsForPerformance(int id, int quantity);
 
     }
 }

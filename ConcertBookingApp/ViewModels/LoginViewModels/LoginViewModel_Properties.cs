@@ -43,7 +43,7 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
 
         [ObservableProperty]
         private string lastValidName = string.Empty;
-
+        private bool isLoading;
         /// <summary>
         /// Regex to that are used for to validate the users input, makes sure thet they are matching the regex
         /// </summary>
