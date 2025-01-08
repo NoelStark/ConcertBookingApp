@@ -52,21 +52,21 @@ namespace ConcertBookingApp.Data.Database
                 new Concert { ConcertId = 3, Description = "An enchanting evening of timeless symphonies and masterful compositions performed by world-renowned orchestras and soloists.", Genre = "Classical", ImageUrl = "classical.jpg", Name = "Classical" },
                 new Concert { ConcertId = 4, Description = "An electrifying night filled with pulsating beats, mesmerizing light shows, and high-energy performances by top EDM DJs.", Genre = "EDM", ImageUrl = "edm.jpg", Name = "Electric Vibes Festival" }
             );
-
             modelBuilder.Entity<Performance>().HasData(
-              new Performance { PerformanceId = 1, ConcertId = 1, TotalSeats = 100, Date = DateTime.Parse("2024-12-14 12:00"), Location = "Aspvägen", Price = 100, AvailableSeats = 100 },
-              new Performance { PerformanceId = 2, ConcertId = 1, TotalSeats = 150, Date = DateTime.Parse("2024-12-15 14:00"), Location = "Aspvägen", Price = 200, AvailableSeats = 150 },
-              new Performance { PerformanceId = 3, ConcertId = 1, TotalSeats = 200, Date = DateTime.Parse("2024-12-16 16:00"), Location = "Aspvägen", Price = 300, AvailableSeats = 200 },
-              new Performance { PerformanceId = 4, ConcertId = 2, TotalSeats = 100, Date = DateTime.Parse("2024-10-12 15:00"), Location = "Gökgatan", Price = 100, AvailableSeats = 100 },
-              new Performance { PerformanceId = 6, ConcertId = 2, TotalSeats = 150, Date = DateTime.Parse("2024-10-13 13:00"), Location = "Gökgatan", Price = 200, AvailableSeats = 150 },
-              new Performance { PerformanceId = 7, ConcertId = 2, TotalSeats = 200, Date = DateTime.Parse("2024-10-14 17:00"), Location = "Gökgatan", Price = 300, AvailableSeats = 200 },
-              new Performance { PerformanceId = 8, ConcertId = 3, TotalSeats = 100, Date = DateTime.Parse("2025-01-02 20:00"), Location = "Solvägen", Price = 100, AvailableSeats = 100 },
-              new Performance { PerformanceId = 9, ConcertId = 3, TotalSeats = 150, Date = DateTime.Parse("2025-01-03 21:00"), Location = "Solvägen", Price = 200, AvailableSeats = 150 },
-              new Performance { PerformanceId = 10, ConcertId = 3, TotalSeats = 200, Date = DateTime.Parse("2025-01-04 22:00"), Location = "Solvägen", Price = 300, AvailableSeats = 200 },
-              new Performance { PerformanceId = 11, ConcertId = 4, TotalSeats = 300, Date = DateTime.Parse("2025-03-10 18:00"), Location = "Höstvägen", Price = 150, AvailableSeats = 300 },
-              new Performance { PerformanceId = 12, ConcertId = 4, TotalSeats = 400, Date = DateTime.Parse("2025-03-11 19:00"), Location = "Höstvägen", Price = 180, AvailableSeats = 400 },
-              new Performance { PerformanceId = 13, ConcertId = 4, TotalSeats = 500, Date = DateTime.Parse("2025-03-12 20:00"), Location = "Höstvägen", Price = 200, AvailableSeats = 500 }
+                new Performance { PerformanceId = 1, ConcertId = 1, TotalSeats = 100, Date = DateTime.Parse("2024-12-14 12:00"), Location = "Aspvägen", Price = 100, AvailableSeats = 100 - 2 },
+                new Performance { PerformanceId = 2, ConcertId = 1, TotalSeats = 150, Date = DateTime.Parse("2024-12-15 14:00"), Location = "Aspvägen", Price = 200, AvailableSeats = 150 - (3 + 4) },
+                new Performance { PerformanceId = 3, ConcertId = 1, TotalSeats = 200, Date = DateTime.Parse("2024-12-16 16:00"), Location = "Aspvägen", Price = 300, AvailableSeats = 200 - 1 },
+                new Performance { PerformanceId = 4, ConcertId = 2, TotalSeats = 100, Date = DateTime.Parse("2024-10-12 15:00"), Location = "Gökgatan", Price = 100, AvailableSeats = 100 },
+                new Performance { PerformanceId = 6, ConcertId = 2, TotalSeats = 150, Date = DateTime.Parse("2024-10-13 13:00"), Location = "Gökgatan", Price = 200, AvailableSeats = 150 },
+                new Performance { PerformanceId = 7, ConcertId = 2, TotalSeats = 200, Date = DateTime.Parse("2024-10-14 17:00"), Location = "Gökgatan", Price = 300, AvailableSeats = 200 },
+                new Performance { PerformanceId = 8, ConcertId = 3, TotalSeats = 100, Date = DateTime.Parse("2025-01-02 20:00"), Location = "Solvägen", Price = 100, AvailableSeats = 100 },
+                new Performance { PerformanceId = 9, ConcertId = 3, TotalSeats = 150, Date = DateTime.Parse("2025-01-03 21:00"), Location = "Solvägen", Price = 200, AvailableSeats = 150 },
+                new Performance { PerformanceId = 10, ConcertId = 3, TotalSeats = 200, Date = DateTime.Parse("2025-01-04 22:00"), Location = "Solvägen", Price = 300, AvailableSeats = 200 },
+                new Performance { PerformanceId = 11, ConcertId = 4, TotalSeats = 300, Date = DateTime.Parse("2025-03-10 18:00"), Location = "Höstvägen", Price = 150, AvailableSeats = 300 - 5 },
+                new Performance { PerformanceId = 12, ConcertId = 4, TotalSeats = 400, Date = DateTime.Parse("2025-03-11 19:00"), Location = "Höstvägen", Price = 180, AvailableSeats = 400 - (2 + 3) },
+                new Performance { PerformanceId = 13, ConcertId = 4, TotalSeats = 500, Date = DateTime.Parse("2025-03-12 20:00"), Location = "Höstvägen", Price = 200, AvailableSeats = 500 - 4 }
             );
+
 
             modelBuilder.Entity<User>().HasData(
                 new User { UserId = 1, Name = "John Doe", Email = "johndoe@example.com" },
@@ -83,14 +83,14 @@ namespace ConcertBookingApp.Data.Database
             );
 
             modelBuilder.Entity<BookingPerformance>().HasData(
-                new BookingPerformance { BookingId = 1, PerformanceId = 1 },
-                new BookingPerformance { BookingId = 1, PerformanceId = 2 },
-                new BookingPerformance { BookingId = 2, PerformanceId = 2 },
-                new BookingPerformance { BookingId = 2, PerformanceId = 3 },
-                new BookingPerformance { BookingId = 3, PerformanceId = 11 },
-                new BookingPerformance { BookingId = 3, PerformanceId = 12 },
-                new BookingPerformance { BookingId = 4, PerformanceId = 12 },
-                new BookingPerformance { BookingId = 4, PerformanceId = 13 }
+                new BookingPerformance { BookingId = 1, PerformanceId = 1, SeatsBooked = 2 },
+                new BookingPerformance { BookingId = 1, PerformanceId = 2, SeatsBooked = 3 },
+                new BookingPerformance { BookingId = 2, PerformanceId = 2, SeatsBooked = 4 },
+                new BookingPerformance { BookingId = 2, PerformanceId = 3, SeatsBooked = 1 },
+                new BookingPerformance { BookingId = 3, PerformanceId = 11, SeatsBooked = 5 }, 
+                new BookingPerformance { BookingId = 3, PerformanceId = 12, SeatsBooked = 2 },
+                new BookingPerformance { BookingId = 4, PerformanceId = 12, SeatsBooked = 3 },
+                new BookingPerformance { BookingId = 4, PerformanceId = 13, SeatsBooked = 4 }
             );
 
 

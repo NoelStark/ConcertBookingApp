@@ -151,18 +151,18 @@ namespace ConcertBookingApp.Data.Migrations
                 columns: new[] { "PerformanceId", "AvailableSeats", "ConcertId", "Date", "Location", "Price", "TotalSeats" },
                 values: new object[,]
                 {
-                    { 1, 100, 1, new DateTime(2024, 12, 14, 12, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 100 },
-                    { 2, 150, 1, new DateTime(2024, 12, 15, 14, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
-                    { 3, 200, 1, new DateTime(2024, 12, 16, 16, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
+                    { 1, 98, 1, new DateTime(2024, 12, 14, 12, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 100.0, 100 },
+                    { 2, 143, 1, new DateTime(2024, 12, 15, 14, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 200.0, 150 },
+                    { 3, 199, 1, new DateTime(2024, 12, 16, 16, 0, 0, 0, DateTimeKind.Unspecified), "Aspvägen", 300.0, 200 },
                     { 4, 100, 2, new DateTime(2024, 10, 12, 15, 0, 0, 0, DateTimeKind.Unspecified), "Gökgatan", 100.0, 100 },
                     { 6, 150, 2, new DateTime(2024, 10, 13, 13, 0, 0, 0, DateTimeKind.Unspecified), "Gökgatan", 200.0, 150 },
                     { 7, 200, 2, new DateTime(2024, 10, 14, 17, 0, 0, 0, DateTimeKind.Unspecified), "Gökgatan", 300.0, 200 },
                     { 8, 100, 3, new DateTime(2025, 1, 2, 20, 0, 0, 0, DateTimeKind.Unspecified), "Solvägen", 100.0, 100 },
                     { 9, 150, 3, new DateTime(2025, 1, 3, 21, 0, 0, 0, DateTimeKind.Unspecified), "Solvägen", 200.0, 150 },
                     { 10, 200, 3, new DateTime(2025, 1, 4, 22, 0, 0, 0, DateTimeKind.Unspecified), "Solvägen", 300.0, 200 },
-                    { 11, 300, 4, new DateTime(2025, 3, 10, 18, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 150.0, 300 },
-                    { 12, 400, 4, new DateTime(2025, 3, 11, 19, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 180.0, 400 },
-                    { 13, 500, 4, new DateTime(2025, 3, 12, 20, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 200.0, 500 }
+                    { 11, 295, 4, new DateTime(2025, 3, 10, 18, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 150.0, 300 },
+                    { 12, 395, 4, new DateTime(2025, 3, 11, 19, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 180.0, 400 },
+                    { 13, 496, 4, new DateTime(2025, 3, 12, 20, 0, 0, 0, DateTimeKind.Unspecified), "Höstvägen", 200.0, 500 }
                 });
 
             migrationBuilder.InsertData(
@@ -170,14 +170,14 @@ namespace ConcertBookingApp.Data.Migrations
                 columns: new[] { "BookingId", "PerformanceId", "SeatsBooked" },
                 values: new object[,]
                 {
-                    { 1, 1, 0 },
-                    { 1, 2, 0 },
-                    { 2, 2, 0 },
-                    { 2, 3, 0 },
-                    { 3, 11, 0 },
-                    { 3, 12, 0 },
-                    { 4, 12, 0 },
-                    { 4, 13, 0 }
+                    { 1, 1, 2 },
+                    { 1, 2, 3 },
+                    { 2, 2, 4 },
+                    { 2, 3, 1 },
+                    { 3, 11, 5 },
+                    { 3, 12, 2 },
+                    { 4, 12, 3 },
+                    { 4, 13, 4 }
                 });
 
             migrationBuilder.CreateIndex(

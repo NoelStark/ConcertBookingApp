@@ -12,17 +12,8 @@ using SharedResources.Models;
 
 namespace ConcertBookingApp.ViewModels.BookingViewModels
 {
-    public partial class BookingViewModel : ObservableObject
+    public partial class BookingViewModel
     {
-        [ObservableProperty] private double opacity = 0.6;
-        [ObservableProperty] private string searchInput = string.Empty;
-        [ObservableProperty] private string subHeader = string.Empty;
-        private readonly BookingService _bookingService;
-        private readonly ConcertService _concertService;
-        private readonly UserService _userService;
-        private List<BookingPerformance> _performances = new List<BookingPerformance>();
-        public ObservableCollection<BookingPerformance> Performances { get; private set; }= new ObservableCollection<BookingPerformance>();
-        
         public BookingViewModel(BookingService service, ConcertService concertService, UserService userService)
         {
             _bookingService = service;
@@ -88,21 +79,6 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
                     return;
                 }
             });
-        }
-        partial void OnSearchInputChanged(string? oldValue, string newValue)
-        {
-            _= Filter(oldValue, newValue);
-        }
-
-          
-
-        [RelayCommand]
-        public async void CancelBooking(BookingPerformance performance)
-        {
-            Performances.Remove(performance);
-            OnPropertyChanged(nameof(Performances));
-            await _bookingService.CancelBooking(performance.PerformanceId, performance.BookingId);
-            SubHeader = Performances.Any() ? "See your booked events here" : "You have no Bookings";
         }
     }
 }
