@@ -21,13 +21,17 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
             _= AddPerformances();
             _userService = userService;
         }
-
+        /// <summary>
+        /// The method that adds all the bookings to the GUI
+        /// </summary>
+        /// <returns></returns>
         public async Task AddPerformances()
         {
             Performances.Clear();
 
             List<Booking> bookings = await _bookingService.GetAllBookings(_userService.CurrentUser.UserId);
 
+            //Goes through every booking and the performances to fill the GUI with
             foreach (var booking in bookings)
             {
                 booking.BookingPerformances = await _bookingService.GetPerformancesForBooking(booking.BookingId);
@@ -44,14 +48,22 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
                 }
             }
 
+            //Alters the text based on if the user has booked tickets or not
             SubHeader = Performances.Any() ? "See your booked events here" : "You have no Bookings";
         }
 
+        /// <summary>
+        /// Filtering for the searchbar that checks new vs old values to fill the gui with appropriate bookings
+        /// </summary>
+        /// <param name="oldValue"></param>
+        /// <param name="newValue"></param>
+        /// <returns></returns>
         private async Task Filter(string? oldValue, string newValue)
         {
             List<BookingPerformance> filteredConcerts = new List<BookingPerformance>();
             await Task.Run(() =>
             {
+                //If the user deletes a letter
                 if (newValue.Length < oldValue.Length)
                 {
                     foreach (var performance in _performances)
@@ -59,6 +71,8 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
                         Performances.Add(performance);
                     }
                 }
+
+                //Assuming the searchbar has information, filtering happens based on title
                 if (!string.IsNullOrEmpty(newValue))
                 {
                     filteredConcerts = Performances.Where(x => x.Title.ToLower().Contains(newValue.ToLower())).ToList();
@@ -70,6 +84,7 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
                 }
                 else
                 {
+                    //If the searchbar is empty, reset the performances
                     Performances.Clear();
                     foreach (var performance in _performances)
                     {

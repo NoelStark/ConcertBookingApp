@@ -17,6 +17,12 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
     public partial class ConcertOverviewViewModel
     {
 
+        /// <summary>
+        ///  Method that directs the GUI to a different page
+        ///  when pressing a concert
+        /// </summary>
+        /// <param name="concert">The clicked concert</param>
+        /// <returns></returns>
         [RelayCommand]
         private async Task InspectConcert(Concert concert)
         {
@@ -30,9 +36,15 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             await Shell.Current.GoToAsync($"///ConcertDetailsPage?concert={encodedConcert}");
         }
 
+        /// <summary>
+        /// Whenever a categorical filter is pressed, this method is called
+        /// </summary>
+        /// <param name="value">The category pressed</param>
         [RelayCommand]
         private void SelectedFilter(Category value)
         {
+            //Changes color and filters the concerts
+
             Category? category = Categories.FirstOrDefault(x => x.Title == value.Title);
             if (category == null) return;
 
@@ -42,6 +54,10 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             FilterConcerts();
         }
 
+        /// <summary>
+        /// If the heart of a concert is pressed, the color of the heart changes
+        /// </summary>
+        /// <param name="value"></param>
         [RelayCommand]
         private void MakeFavorite(Concert value)
         {
@@ -53,6 +69,11 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
 
             //Not Implemented
         }
+
+        /// <summary>
+        /// When a range of dates is selected, it filter based on dates
+        /// </summary>
+        /// <param name="selectedRange">A range of dates, a start and end date</param>
         [RelayCommand]
         void SelectionChanged(CalendarDateRange selectedRange)
         {

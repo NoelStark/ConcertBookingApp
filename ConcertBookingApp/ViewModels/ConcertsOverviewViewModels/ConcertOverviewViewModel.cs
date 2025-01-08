@@ -28,11 +28,13 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             _mapper = mapper;
             _concertService = concertService;
             _userService = userService;
-            Initialize();
-
+            _= Initialize();
 
         }
-
+        /// <summary>
+        /// Runs every time the view appears to initial the data needed
+        /// </summary>
+        /// <returns></returns>
         private async Task Initialize()
         {
             Name = _userService.CurrentUser.Name;
@@ -42,6 +44,10 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             UpdateConcerts(_concertDTOs);
         }
 
+        /// <summary>
+        /// Method that gets called every time the UI needs updating
+        /// </summary>
+        /// <param name="updatedConcerts"></param>
         private void UpdateConcerts(List<Concert> updatedConcerts)
         {
             Concerts.Clear();
@@ -56,11 +62,17 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
             OnPropertyChanged(nameof(Concerts));
         }
 
-
+        /// <summary>
+        /// Responsible for all the filtering 
+        /// </summary>
+        /// <param name="searchText">If the user used the searchbar</param>
+        /// <param name="concerts">Contains a potential list of concerts</param>
         private void FilterConcerts(string? searchText = null, List<Concert>? concerts = null)
         {
+            //If no list was provided, fill it with all concerts
             concerts ??= this._concertDTOs;
 
+            //Filtering based on searchbar
             if (!string.IsNullOrEmpty(searchText))
             {
                 concerts = concerts.Where(c =>
@@ -68,12 +80,14 @@ namespace ConcertBookingApp.ViewModels.ConcertsOverviewViewModels
                     c.Name.ToLower().Contains(searchText.ToLower())).ToList();
             }
 
+            //Filtering based on dates
             if (startDate != null && endDate != null)
             {
                 concerts = concerts.Where(c =>
                     c.Performances.Any(p => p.Date > startDate && p.Date < endDate)).ToList();
             }
 
+            //Filtering based on categories
             if (_selectedCategories.Any())
             {
                 var selectedCategories = Categories.Where(x => x.IsSelected).ToList();

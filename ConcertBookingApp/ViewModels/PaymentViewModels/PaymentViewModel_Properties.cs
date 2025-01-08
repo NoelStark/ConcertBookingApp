@@ -53,7 +53,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
 
         private string typeofCard = string.Empty;
 
-
+        //Contains last valid values for each field for error handling
         private readonly Dictionary<string, string> _lastValidValues = new Dictionary<string, string>
         {
             { "FirstName", string.Empty },

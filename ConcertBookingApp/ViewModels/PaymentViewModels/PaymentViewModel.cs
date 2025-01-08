@@ -38,10 +38,19 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
             ValidateAndSetValue("LastName", value, "Name", x => LastName = x);
         }
 
+        /// <summary>
+        /// The method that takes input and passes is to further methods
+        /// to validate whether the input is valid or not
+        /// </summary>
+        /// <param name="key">What field is changes</param>
+        /// <param name="value">The new value thats in the field</param>
+        /// <param name="validationType">What Regex should be used</param>
+        /// <param name="setterAction">An action that changes value of the field</param>
         private void ValidateAndSetValue(string key, string value, string validationType, Action<string> setterAction)
         {
             bool isValid =
                 ValidationHelper.ValidateInput(value, validationType, _lastValidValues[key], out var validatedInput);
+            //If the Validation returns to be valid information
             if (isValid)
             {
                 _lastValidValues[key] = validatedInput;
@@ -52,6 +61,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
                 if(!string.IsNullOrEmpty(value))
                     setterAction(_lastValidValues[key]);
             }
+            //A constant check if all fields are valid or not
             ValidateForm();
 
         }
@@ -65,6 +75,7 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
 
         partial void OnCVCChanged(string value)
         {
+            //Checks if the input is valid or not
             if (value.Length <= 3)
             {
                 CVC = value;
@@ -75,6 +86,12 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
                 CVC = _lastValidValues["CVC"];
         }
 
+        /// <summary>
+        /// Updates the UI where border color updates
+        /// </summary>
+        /// <param name="valid">If the input is valid</param>
+        /// <param name="fieldType">The field that should be updated</param>
+        /// <param name="border">A specific border that should be updated</param>
         private void UpdateFieldState(bool valid, string fieldType, ValidationState border)
         {
             if (valid)
@@ -90,6 +107,13 @@ namespace ConcertBookingApp.ViewModels.PaymentViewModels
             ValidateForm();
         }
 
+        /// <summary>
+        /// Based on what field it is, adjust the variables needing to be changed
+        /// for UI and future methods to know if the input is valid or not
+        /// </summary>
+        /// <param name="fieldType">What type of field should be updated</param>
+        /// <param name="isValid">Updates an observable property based on if field is valid</param>
+        /// <param name="showError">If input is invalid, an error should shown</param>
         private void SetFieldState(string fieldType, bool isValid, bool showError)
         {
             switch (fieldType)
