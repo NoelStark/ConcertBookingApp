@@ -10,6 +10,10 @@ namespace ConcertBookingApp.ViewModels.BookingViewModels
 {
     public partial class BookingViewModel
     {
+        /// <summary>
+        /// When the cancel button of the booking is pressed, it removes from UI and database
+        /// </summary>
+        /// <param name="performance"></param>
 
         [RelayCommand]
         public async void CancelBooking(BookingPerformance performance)
