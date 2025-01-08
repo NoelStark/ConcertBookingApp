@@ -120,7 +120,8 @@ namespace Web_Service.Controllers
             //Passes the IDs on to the unit of work
             try
             {
-                await _unitOfWork.BookingPerformance.CancelPerformance(bookingPerformanceId, bookingId);
+                int seatsToAdjust = await _unitOfWork.BookingPerformance.CancelPerformance(bookingPerformanceId, bookingId);
+                await _unitOfWork.Performance.UpdateSeatsForPerformance(bookingPerformanceId, seatsToAdjust);
                 return Ok("Performance Cancelled");
             }
             catch (Exception ex)

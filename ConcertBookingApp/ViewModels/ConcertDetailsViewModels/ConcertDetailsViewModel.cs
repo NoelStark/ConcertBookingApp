@@ -64,6 +64,20 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
 
             foreach (var performance in tempPerformances)
             {
+                var t = new List<BookingPerformance>();
+                if (bookingService.CurrentBooking != null)
+                {
+
+                    foreach (var booking in bookingService.CurrentBooking.BookingPerformances)
+                    {
+                        if (performance.Performance.PerformanceId == booking.PerformanceId)
+                        {
+                            performance.Performance.AvailableSeats -= booking.SeatsBooked;
+                        }
+                    }
+                }
+
+                
                 AllPerformancesForConcert.Add(performance);
                
             }
@@ -89,6 +103,8 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
         {
             await Task.Delay(2000);
             AddedToCart = false;
+            _ = LoadPerformances();
+
         }
     }
 }

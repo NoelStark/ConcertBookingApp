@@ -118,10 +118,10 @@ namespace ConcertBookingApp.Data.Migrations
                 columns: new[] { "ConcertId", "Description", "Genre", "ImageUrl", "IsFavorite", "Name" },
                 values: new object[,]
                 {
-                    { 1, "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.", "Pop", "edm.png", false, "Pop Pulse Festival" },
+                    { 1, "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.", "Pop", "pop.png", false, "Pop Pulse Festival" },
                     { 2, "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.", "Jazz", "testconcert.png", false, "Starlight Pop Jazz" },
-                    { 3, "An enchanting evening of timeless symphonies and masterful compositions performed by world-renowned orchestras and soloists.", "Classical", "edm.png", false, "Classical" },
-                    { 4, "An electrifying night filled with pulsating beats, mesmerizing light shows, and high-energy performances by top EDM DJs.", "EDM", "edm_festival.png", false, "Electric Vibes Festival" }
+                    { 3, "An enchanting evening of timeless symphonies and masterful compositions performed by world-renowned orchestras and soloists.", "Classical", "classical.jpg", false, "Classical" },
+                    { 4, "An electrifying night filled with pulsating beats, mesmerizing light shows, and high-energy performances by top EDM DJs.", "EDM", "edm.jpg", false, "Electric Vibes Festival" }
                 });
 
             migrationBuilder.InsertData(

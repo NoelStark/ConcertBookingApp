@@ -11,7 +11,6 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
 {
     public partial class LoginViewModel
     {
-        private bool isLoading;
         [RelayCommand]
         private async void ValidateUser()
         {

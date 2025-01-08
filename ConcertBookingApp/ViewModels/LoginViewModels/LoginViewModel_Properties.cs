@@ -44,6 +44,9 @@ namespace ConcertBookingApp.ViewModels.LoginViewModels
         [ObservableProperty]
         private string lastValidName = string.Empty;
 
+        private bool isLoading;
+
+
         Regex nameRegex = new Regex("^[a-zA-Z]+( ?[a-zA-Z]*)*$", RegexOptions.IgnoreCase);
         private static readonly Regex EmailRegex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
     }

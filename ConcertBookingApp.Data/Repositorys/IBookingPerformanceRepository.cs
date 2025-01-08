@@ -11,7 +11,7 @@ namespace ConcertBookingApp.Data.Repositorys
     {
         Task<BookingPerformance> FindBookingPerformance(BookingPerformance bookingPerfromance);
         Task SavePerformances(List<BookingPerformance> performances);
-        Task CancelPerformance(int id, int bookingId);
+        Task<int> CancelPerformance(int id, int bookingId);
         Task<List<BookingPerformance>> GetPerformances();
     }
 }

@@ -87,7 +87,6 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             if (concert == null) return;
             concert.IsFavorite = !concert.IsFavorite;
             OnPropertyChanged(nameof(concert.IsFavorite));
-
             //Not Implemented
         }
     }

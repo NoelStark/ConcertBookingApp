@@ -47,10 +47,10 @@ namespace ConcertBookingApp.Data.Database
                 .HasForeignKey(b => b.UserId);
 
             modelBuilder.Entity<Concert>().HasData(
-                new Concert { ConcertId = 1, Description = "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.", Genre = "Pop", ImageUrl = "edm.png", Name = "Pop Pulse Festival" },
+                new Concert { ConcertId = 1, Description = "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.", Genre = "Pop", ImageUrl = "pop.png", Name = "Pop Pulse Festival" },
                 new Concert { ConcertId = 2, Description = "A vibrant concert featuring a mix of iconic pop hits and fresh, emerging talent under dazzling lights.", Genre = "Jazz", ImageUrl = "testconcert.png", Name = "Starlight Pop Jazz" },
-                new Concert { ConcertId = 3, Description = "An enchanting evening of timeless symphonies and masterful compositions performed by world-renowned orchestras and soloists.", Genre = "Classical", ImageUrl = "edm.png", Name = "Classical" },
-                new Concert { ConcertId = 4, Description = "An electrifying night filled with pulsating beats, mesmerizing light shows, and high-energy performances by top EDM DJs.", Genre = "EDM", ImageUrl = "edm_festival.png", Name = "Electric Vibes Festival" }
+                new Concert { ConcertId = 3, Description = "An enchanting evening of timeless symphonies and masterful compositions performed by world-renowned orchestras and soloists.", Genre = "Classical", ImageUrl = "classical.jpg", Name = "Classical" },
+                new Concert { ConcertId = 4, Description = "An electrifying night filled with pulsating beats, mesmerizing light shows, and high-energy performances by top EDM DJs.", Genre = "EDM", ImageUrl = "edm.jpg", Name = "Electric Vibes Festival" }
             );
 
             modelBuilder.Entity<Performance>().HasData(

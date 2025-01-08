@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConcertBookingApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250107202911_Initialzing")]
+    [Migration("20250108103608_Initialzing")]
     partial class Initialzing
     {
         /// <inheritdoc />
@@ -177,7 +177,7 @@ namespace ConcertBookingApp.Data.Migrations
                             ConcertId = 1,
                             Description = "A high-energy event celebrating chart-topping hits and electrifying performances by popular pop artists.",
                             Genre = "Pop",
-                            ImageUrl = "edm.png",
+                            ImageUrl = "pop.png",
                             IsFavorite = false,
                             Name = "Pop Pulse Festival"
                         },
@@ -195,7 +195,7 @@ namespace ConcertBookingApp.Data.Migrations
                             ConcertId = 3,
                             Description = "An enchanting evening of timeless symphonies and masterful compositions performed by world-renowned orchestras and soloists.",
                             Genre = "Classical",
-                            ImageUrl = "edm.png",
+                            ImageUrl = "classical.jpg",
                             IsFavorite = false,
                             Name = "Classical"
                         },
@@ -204,7 +204,7 @@ namespace ConcertBookingApp.Data.Migrations
                             ConcertId = 4,
                             Description = "An electrifying night filled with pulsating beats, mesmerizing light shows, and high-energy performances by top EDM DJs.",
                             Genre = "EDM",
-                            ImageUrl = "edm_festival.png",
+                            ImageUrl = "edm.jpg",
                             IsFavorite = false,
                             Name = "Electric Vibes Festival"
                         });
