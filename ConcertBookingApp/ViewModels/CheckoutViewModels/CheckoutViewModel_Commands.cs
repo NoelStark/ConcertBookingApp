@@ -17,6 +17,11 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
 {
     public partial class CheckoutViewModel
     {
+        /// <summary>
+        /// This method allows the user to increase the quantity of a perfornance.
+        /// The user can increase the quantity unleass the avalible seats are greater than 0
+        /// </summary>
+        
         [RelayCommand]
         private void IncreaseQuantity(BookingPerformance performance)
         {
@@ -28,9 +33,15 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
                 chosenPerformance.Performance.AvailableSeats--;
             }
 
-            FillFlattenedPerformances();
+            FillFlattenedPerformances(); //Updates the gui with correct quantity for each perfromance
             UpdatePrice();
         }
+
+        /// <summary>
+        /// This method lets the user to decrease quantity of perfromances
+        /// If the quantity is 0 it removes the performance from the current booking and its bookingperfromance
+        /// if the cart have no bookingperformances it will remove the old booking and reset it by adding a new clean booking
+        /// </summary>
 
         [RelayCommand]
         private void DecreaseQuantity(BookingPerformance performanceDTO)
@@ -52,13 +63,13 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
 
 
         [RelayCommand]
-        private async Task GoBack()
+        private async Task GoBack() //Lets user direct to the last page
         {
             await Shell.Current.GoToAsync("///ConcertOverviewPage");
         }
 
         [RelayCommand]
-        private async Task Continue()
+        private async Task Continue() //Lets user direct to the next page
         {
             await Shell.Current.GoToAsync($"///PaymentPage?totalPrice={TotalPrice}");
         }

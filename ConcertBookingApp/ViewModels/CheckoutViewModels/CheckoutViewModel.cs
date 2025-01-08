@@ -26,7 +26,6 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
         private readonly ConcertService _concertService;
         private readonly IMapper _mapper;
         
-       
         public CheckoutViewModel(ConcertService concertService,BookingService bookingService, IMapper mapper)
         {
             _bookingService = bookingService;
@@ -34,7 +33,10 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
             _mapper = mapper;
             _= Initialize();
         }
-
+        /// <summary>
+        /// Initialize the view with all relevent properties etc
+        /// </summary>
+        /// <returns></returns>
         public async Task Initialize()
         {
             UpdatePrice();
@@ -42,6 +44,11 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
             LoadBookings();
         }
 
+        /// <summary>
+        /// Populates FlattenedBookingPerformances by mapping data from BookingPerformances 
+        /// and their related Concert objects. It ensuring that the GUI updates correct with each performances
+        /// that is in cart
+        /// </summary>
         private void FillFlattenedPerformances()
         {
             Concert concert = new Concert();
@@ -63,22 +70,27 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
             UpdateNextButton();
             
         }
-        
+        /// <summary>
+        /// Loadbookings method loads all the selected concerts by checking all the performancs the user
+        /// have added to cart.
+        /// </summary>
         public void LoadBookings()
         {
             List<Performance> findPerformances = _bookingService.CurrentBooking.BookingPerformances.Select(a => a.Performance).ToList();
-
-            //List<BookingPerformance> findBookingPerformances = AllBookings.SelectMany(a => a.BookingPerformances).ToList();
             List<Concert> matchingConcerts = allConcerts.Where(a => findPerformances.Any(b => b.ConcertId == a.ConcertId)).ToList();
 
             foreach (Concert concert in matchingConcerts)
             {
-                //var concert = _mapper.Map<Concert>(concertDTO);
                 SelectedConcerts.Add(concert);
             }
             FillFlattenedPerformances();
         }
 
+        /// <summary>
+        /// This method updates the current price in the cart
+        /// It takes each performance seatsbooked * the performance price. It also calculates the total perfromances in the cart.
+        /// If theres no items in cart, the it sets the values to 0
+        /// </summary>
         private void UpdatePrice()
         {
             if (_bookingService.CurrentBooking != null)
@@ -92,6 +104,9 @@ namespace ConcertBookingApp.ViewModels.CheckoutViewModels
                 TotalAmountOfItems = 0;
             }
         }
+        /// <summary>
+        /// This method updates the button that it's clickable if user have any performances in cart
+        /// </summary>
         private void UpdateNextButton()
         {
             if (FlattenedBookingPerformances.Any())

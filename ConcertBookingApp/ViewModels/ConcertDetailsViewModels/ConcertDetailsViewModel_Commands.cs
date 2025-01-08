@@ -12,11 +12,18 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
 {
     public partial class ConcertDetailsViewModel
     {
+
         [RelayCommand]
-        async Task GoBack()
+        async Task GoBack() //Lets the user direct to the last page
         {
             await Shell.Current.GoToAsync($"///ConcertOverviewPage");
         }
+
+        /// <summary>
+        /// This method allows the user to increase the quantity of a perfornance.
+        /// The user can increase the quantity unleass the avalible seats are greater than 0
+        /// </summary>
+
         [RelayCommand]
         void IncreaseQuantity(BookingPerformance bookingPerformance)
         {
@@ -28,6 +35,11 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             }
             UpdateButton();
         }
+
+        /// <summary>
+        /// This method lets the user to decrease quantity of perfromances
+        /// If the quantity is 0 it removes the performance from the current booking and its bookingperfromance
+        /// </summary>
 
         [RelayCommand]
         void DecreaseQuantity(BookingPerformance bookingPerformance)
@@ -41,17 +53,25 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
             }
         }
 
+        /// <summary>
+        /// Lets the user to buy tickets, its connected to the button. 
+        /// </summary>
+        /// <returns></returns>
+
+
         [RelayCommand]
         private async Task BuyTickets()
         {
+            //Filter performances with booked seats from all performances for the concert.
             List<BookingPerformance> hasse = AllPerformancesForConcert.Where(x => x.SeatsBooked > 0).ToList();
             foreach (var performance in hasse)
             {
+                //Update the performance details with concert information.
                 performance.ImageURL = Concert.ImageUrl;
                 performance.Title = Concert.Name;
                 performance.PerformanceId = performance.Performance.PerformanceId;
             }
-            if (bookingService.CurrentBooking != null)
+            if (bookingService.CurrentBooking != null)  //If there's an existing booking, update it with the new performances seatsbooked and also decrease the availible seats
             {
                 Booking currentBooking = bookingService.CurrentBooking;
                 foreach (var performance in hasse)
@@ -67,7 +87,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                         currentBooking.BookingPerformances.Add(performance);
                 }
             }
-            else
+            else //Else it creates a new booking
             {
                 bookingService.CurrentBooking = new Booking
                 {
@@ -76,6 +96,7 @@ namespace ConcertBookingApp.ViewModels.ConcertDetailsViewModels
                 };
             }
 
+            //resets the button for the gui
             AddedToCart = true;
             _ = ResetCartButton();
         }
